@@ -101,9 +101,11 @@
 
 		<div class="guide-wrap container-fluid">
 			<div class="row">
-				<aside class="col-lg-3 col-md-4 guide-sidebar d-none d-md-block">
+				<aside class="col-lg-3 col-md-4 guide-sidebar">
 					<div class="guide-sidebar-inner">
-						<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
+						<button class="guide-sidebar-toggle d-md-none" type="button" data-toggle="collapse" data-target="#guide-toc" aria-expanded="false" aria-controls="guide-toc">Contents</button>
+						<div class="collapse d-md-block" id="guide-toc">
+							<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
 <nav>
 <ul>
 <li><a class="toc-h2" href="#todays-assignment">Today’s assignment</a></li>
@@ -129,6 +131,7 @@ and GPU code with Pytorch</a></li>
 Introduction to Pytorch and Computation Graph Toolkits</a></li>
 </ul>
 </nav>
+						</div>
 					</div>
 				</aside>
 				<main class="col-lg-9 col-md-8 guide-main">
