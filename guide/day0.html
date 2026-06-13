@@ -1,0 +1,2136 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Day 0 Basic Tutorials &middot; LxMLS Lab Guide</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="../files/css" rel="stylesheet">
+		<link rel="stylesheet" href="../files/open-iconic-bootstrap.min.css">
+		<link rel="stylesheet" href="../files/flaticon.css">
+		<link rel="stylesheet" href="../files/icomoon.css">
+		<link rel="stylesheet" href="../files/style.css">
+		<link rel="stylesheet" href="assets/highlight/github.min.css">
+		<link rel="stylesheet" href="assets/guide.css">
+		<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: [['\\(', '\\)']],
+				displayMath: [['\\[', '\\]']],
+				tags: 'ams',
+				macros: {
+					"D": ["\\frac{\\partial #1}{\\partial #2}", 2],
+					"F": "\\boldsymbol{f}",
+					"Ind": "\\textbf{1}",
+					"KL": "\\mathop{\\rm KL}",
+					"Max": "\\max",
+					"Min": "\\min",
+					"Q": "\\mathcal{Q}",
+					"V": "\\mathcal{V}",
+					"Vs": "\\mathcal{S}",
+					"W": "\\boldsymbol{w}",
+					"X": "\\mathcal{X}",
+					"Xp": "\\mathbf{E}",
+					"XpD": "\\mathbf{\\widehat{E}}",
+					"Y": "\\mathcal{Y}",
+					"argmax": "\\operatorname*{arg\\,max}",
+					"argmin": "\\operatorname*{arg\\,min}",
+					"auxq": "q(\\hseq \\mid \\sent)",
+					"bX": "\\mathbf{X}",
+					"bY": "\\mathbf{Y}",
+					"bZ": "\\mathbf{Z}",
+					"bm": ["\\boldsymbol{#1}", 1],
+					"bx": "\\mathbf{x}",
+					"by": "\\mathbf{y}",
+					"bz": "\\mathbf{z}",
+					"chaptername": "Day",
+					"code": ["\\texttt{#1}", 1],
+					"ensuremath": ["#1", 1],
+					"hs": "\\by",
+					"hseq": "\\bar{\\by}",
+					"hv": "{y}",
+					"hvocab": "\\mathbf{Y}",
+					"independent": "{\\perp\\!\\!\\!\\perp}",
+					"ip": ["#1\\cdot#2 ", 2],
+					"joint": "p_{\\theta}(\\sent ,\\hseq)",
+					"len": ["||#1||", 1],
+					"likelihood": "\\mathcal{L}",
+					"marginal": "p_{\\theta}(\\sent)",
+					"nll": "{\\rm \\emph{null}}",
+					"obj": "\\mathcal{O}",
+					"obs": "\\bx",
+					"pd": ["\\frac{\\partial#1}{\\partial#2}", 2],
+					"pdd": ["\\frac{\\partial^2 #1}{\\partial #2^2}", 2],
+					"pos": "Part-of-Speech",
+					"posi": "Part-of-Speech induction",
+					"posterior": "p_{\\theta}(\\hseq \\mid \\sent)",
+					"sent": "\\bar{\\bx}",
+					"setQ": "\\Q_{\\sent}",
+					"st": "\\operatorname*{s.t.}",
+					"state": "{s}",
+					"statevocab": "\\Lambda",
+					"trex": "\\bar{\\bx},\\bar{\\by} \\in \\mathcal{D}",
+					"vect": ["\\boldsymbol{#1}", 1],
+					"vectornorm": ["\\left|\\left|#1\\right|\\right|_{#2}", 2],
+					"vocab": "\\Sigma",
+					"vv": "{v}"
+				}
+			},
+			options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+		};
+		</script>
+		<script id="MathJax-script" async src="assets/mathjax/tex-chtml.js"></script>
+	</head>
+	<body class="guide-body">
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" href="../index.html"><img alt="LxMLS 2026" src="../images/lxmls-logo.png" width="33%" style="margin:0 5% 0 0"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"> Menu</button>
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="../index.html#about" class="nav-link">About</a></li>
+						<li class="nav-item"><a href="../index.html#dates" class="nav-link">Dates</a></li>
+						<li class="nav-item"><a href="../index.html#faq" class="nav-link">FAQ</a></li>
+						<li class="nav-item"><a href="../index.html#schedule" class="nav-link">Schedule</a></li>
+						<li class="nav-item"><a href="../index.html#speakers" class="nav-link">Speakers</a></li>
+						<li class="nav-item"><a href="../index.html#organizers" class="nav-link">Organizers</a></li>
+						<li class="nav-item active"><a href="index.html" class="nav-link">Guide</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="guide-wrap container-fluid">
+			<div class="row">
+				<aside class="col-lg-3 col-md-4 guide-sidebar d-none d-md-block">
+					<div class="guide-sidebar-inner">
+						<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
+<nav>
+<ul>
+<li><a class="toc-h2" href="#todays-assignment">Today’s assignment</a></li>
+<li><a class="toc-h2" href="#manually-installing-the-tools-in-your-own-computer">Manually
+Installing the Tools in your own Computer</a></li>
+<li><a class="toc-h3" href="#desktops-vs.-laptops">Desktops vs. Laptops</a></li>
+<li><a class="toc-h3" href="#basic-install-and-troubleshooting">Basic Install and
+Troubleshooting</a></li>
+<li><a class="toc-h3" href="#deciding-on-the-ide-and-interactive-shell-to-use">Deciding on
+the IDE and interactive shell to use</a></li>
+<li><a class="toc-h3" href="#jupyter-notebook">Jupyter Notebook</a></li>
+<li><a class="toc-h2" href="#sec:SolvingExercises">Solving the Exercises</a></li>
+<li><a class="toc-h2" href="#sec:Python">Python</a></li>
+<li><a class="toc-h3" href="#python-basics">Python Basics</a></li>
+<li><a class="toc-h3" href="#python-by-example">Python by Example</a></li>
+<li><a class="toc-h3" href="#exceptions">Exceptions</a></li>
+<li><a class="toc-h3" href="#matplotlib-plotting-in-python">Matplotlib – Plotting in
+Python</a></li>
+<li><a class="toc-h3" href="#numpy-scientific-computing-with-python">Numpy – Scientific
+Computing with Python</a></li>
+<li><a class="toc-h2" href="#essential-linear-algebra">Essential Linear Algebra</a></li>
+<li><a class="toc-h3" href="#notation">Notation</a></li>
+<li><a class="toc-h3" href="#some-matrix-operations-and-properties">Some Matrix Operations
+and Properties</a></li>
+<li><a class="toc-h3" href="#norms">Norms</a></li>
+<li><a class="toc-h3" href="#linear-independence-rank-and-orthogonal-matrices">Linear
+Independence, Rank, and Orthogonal Matrices</a></li>
+<li><a class="toc-h2" href="#probability-theory">Probability Theory</a></li>
+<li><a class="toc-h3" href="#probability-distribution-functions">Probability distribution
+functions</a></li>
+<li><a class="toc-h3" href="#bernoulli">Bernoulli</a></li>
+<li><a class="toc-h3" href="#binomial">Binomial</a></li>
+<li><a class="toc-h3" href="#categorical">Categorical</a></li>
+<li><a class="toc-h3" href="#multinomial">Multinomial</a></li>
+<li><a class="toc-h3" href="#gaussian-distribution">Gaussian Distribution</a></li>
+<li><a class="toc-h3" href="#maximum-likelihood-estimation">Maximum Likelihood
+Estimation</a></li>
+<li><a class="toc-h3" href="#conjugate-priors">Conjugate Priors</a></li>
+<li><a class="toc-h2" href="#numerical-optimization">Numerical optimization</a></li>
+<li><a class="toc-h3" href="#convex-functions">Convex Functions</a></li>
+<li><a class="toc-h3" href="#derivative-and-gradient">Derivative and Gradient</a></li>
+<li><a class="toc-h3" href="#gradient-based-methods">Gradient Based Methods</a></li>
+<li><a class="toc-h2" href="#python-exercises">Python Exercises</a></li>
+<li><a class="toc-h3" href="#numpy-and-matplotlib">Numpy and Matplotlib</a></li>
+<li><a class="toc-h3" href="#debugging">Debugging</a></li>
+</ul>
+</nav>
+					</div>
+				</aside>
+				<main class="col-lg-9 col-md-8 guide-main">
+					<article class="guide-content">
+<h1>Basic Tutorials <small class="text-muted">Day 0</small></h1>
+<h2 id="todays-assignment">Today’s assignment</h2>
+<p>In this class we will introduce several fundamental concepts needed
+further ahead. We start with an introduction to Python, the programming
+language we will use in the lab sessions, and to Matplotlib and Numpy,
+two modules for plotting and scientific computing in Python,
+respectively. Afterwards, we present several notions on probability
+theory and linear algebra. Finally, we focus on numerical optimization.
+The goal of this class is to give you the basic knowledge for you to
+understand the following lectures. We will not enter in too much detail
+in any of the topics.</p>
+<h2 id="manually-installing-the-tools-in-your-own-computer">Manually
+Installing the Tools in your own Computer</h2>
+<h3 id="desktops-vs.-laptops">Desktops vs. Laptops</h3>
+<p>If you have decided to use one of our provided desktops, all
+installation procedures have been carried out. You merely need to go to
+the <code>lxmls-toolkit-student</code> folder inside your home directory
+and start working! You may go directly to section <a
+href="#sec:SolvingExercises" data-reference-type="ref"
+data-reference="sec:SolvingExercises">3</a>. If you wish to use your own
+laptop, you will need to install Python, the required Python libraries
+and download the LXMLS code base. It is important that you do this as
+soon as possible (before the school starts) to avoid unnecessary delays.
+Please follow the install instructions.</p>
+<h3 id="basic-install-and-troubleshooting">Basic Install and
+Troubleshooting</h3>
+<p>To install, just follow the instructions in our Github repository for
+the <code>student</code> version of our toolkit</p>
+<ul>
+<li><p><a
+href="https://github.com/LxMLS/lxmls-toolkit/tree/student#readme"
+class="uri">https://github.com/LxMLS/lxmls-toolkit/tree/student#readme</a>.</p></li>
+</ul>
+<p>The <code>student</code> branch contains the same code as
+<code>master</code> branch, with some parts deleted, which you must
+complete in the following exercises.</p>
+<p>The basic install instructions use miniconda. If this is not your
+tool of choice, you can install it with <code>pip</code> as an
+alternative. In order to do this, you first need to run</p>
+<p><code>python3 -m venv lxmls_venv</code></p>
+<p>where <code>lxmls_venv</code> is the name (and path) to your virtual
+environment. Then, you activate the environment with</p>
+<p><code>source lxmls_venv/bin/activate</code></p>
+<p>and afterwards you install jupyter with pip:</p>
+<p><code>pip install jupyter</code></p>
+<p>Note that, after activating the environment with the command
+<code>source</code>, the name of the environment should be shown between
+parentheses in the command line. Make sure this is the case before
+installing jupyter. After this, you can double check the installation
+worked by running the following command:</p>
+<p><code>pip install ipykernel</code></p>
+<p>if this installation also worked, then you just need to run the
+following command so your new virtual environment is also shown in the
+jupyter notebooks as an interpreter of your choice.</p>
+<p><code>python -m ipykernel install --user --name lxmls_venv --display-name “LxMLS venv"</code></p>
+<h3 id="deciding-on-the-ide-and-interactive-shell-to-use">Deciding on
+the IDE and interactive shell to use</h3>
+<p>An Integrated Development Environment (IDE) includes a text editor
+and various tools to debug and interpret complex code.</p>
+<p><strong>Important:</strong> As the labs progress you will need an
+IDE, or at least a good editor and knowledge of pdb/ipdb. This will not
+be obvious the first days since we will be seeing simpler examples.</p>
+<p>Easy IDEs to work with Python are PyCharm and Visual Studio Code, but
+feel free to use the software you feel more comfortable with. PyCharm
+and other well known IDEs like Spyder are provided with the Anaconda
+installation.</p>
+<p>Aside of an IDE, you will need an interactive command line to run
+commands. This is very useful to explore variables and functions and
+quickly debug the exercises. For the most complex exercises you will
+still need an IDE to modify particular segments of the provided code. As
+interactive command line we recommend the Jupyter notebook. This also
+comes installed with Anaconda and is part of the pip-installed packages.
+The Jupyter notebook is described in the next section. In case you run
+into problems or you feel uncomfortable with the Jupyter notebook you
+can use the simpler iPython command line.</p>
+<h3 id="jupyter-notebook">Jupyter Notebook</h3>
+<p>Jupyter is a good choice for writing Python code. It is an
+interactive computational environment for data science and scientific
+computing, where you can combine code execution, rich text, mathematics,
+plots and rich media. The Jupyter Notebook is a web application that
+allows you to create and share documents, which contains live code,
+equations, visualizations and explanatory text. It is very popular in
+the areas of data cleaning and transformation, numerical simulation,
+statistical modeling, machine learning and so on. It supports more than
+40 programming languages, including all those popular ones used in Data
+Science such as Python, R, and Scala. It can also produce many different
+types of output such as images, videos, LaTex and JavaScript. More over
+with its interactive widgets, you can manipulate and visualize data in
+real time.</p>
+<p>The main features and advantages using the Jupyter Notebook are the
+following:</p>
+<ul>
+<li><p>In-browser editing for code, with automatic syntax highlighting,
+indentation, and tab completion/introspection.</p></li>
+<li><p>The ability to execute code from the browser, with the results of
+computations attached to the code which generated them.</p></li>
+<li><p>Displaying the result of computation using rich media
+representations, such as HTML, LaTeX, PNG, SVG, etc. For example,
+publication-quality figures rendered by the matplotlib library, can be
+included inline.</p></li>
+<li><p>In-browser editing for rich text using the Markdown markup
+language, which can provide commentary for the code, is not limited to
+plain text.</p></li>
+<li><p>The ability to easily include mathematical notation within
+markdown cells using LaTeX, and rendered natively by MathJax.</p></li>
+</ul>
+<p>The basic commands you should know are</p>
+<div class="center">
+<div id="tb::jupyterbasiccommands">
+<table>
+<caption>Basic Jupyter commands</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Esc</td>
+<td style="text-align: left;">Enter command mode</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Enter</td>
+<td style="text-align: left;">Enter edit mode</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">up/down</td>
+<td style="text-align: left;">Change between cells</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ctrl + Enter</td>
+<td style="text-align: left;">Runs code on selected cell</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shift + Enter</td>
+<td style="text-align: left;">Runs code on selected cell, jumps to next
+cell</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">restart button</td>
+<td style="text-align: left;">Deletes all variables (useful for
+troubleshooting)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>A more detailed user guide can be found here:</p>
+<pre><code class="nohighlight">http://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/index.html</code></pre>
+<h2 id="sec:SolvingExercises">Solving the Exercises</h2>
+<p>In the student branch we provide the <code>solve.py</code> script.
+This can be used to solve the exercises of each day, e.g.,</p>
+<pre><code class="nohighlight">python ./solve.py linear_classifiers</code></pre>
+<p>where the solvable days are: linear_classifiers, sequence_models,
+structure_predictors, non-linear_classifiers,
+non-linear_sequence_models, reinforcement_learning. You can also undo
+the solving of an exercise by using</p>
+<pre><code class="nohighlight">python ./solve.py --undo linear_classifiers</code></pre>
+<p>Note that this script just downloads the master or student versions
+of certain files from the GitHub repository. It needs an Internet
+connection. Since some exercises require you to have the exercises of
+the previous days completed, the monitors may ask you to use this
+function. <strong>Important:</strong> Remember to save your own version
+of the code, otherwise it will be overwritten!</p>
+<h2 id="sec:Python">Python</h2>
+<h3 id="python-basics">Python Basics</h3>
+<h4 id="pre-requisites">Pre-requisites</h4>
+<p>At this point you should have installed the needed packages. You need
+also to feel comfortable with an IDE to edit code and an interactive
+command line. See previous sections for the details. Your work folder
+will be</p>
+<pre><code class="nohighlight">lxmls-toolkit-student</code></pre>
+<p>from there, start your interactive command line of choosing,
+e.g.,</p>
+<pre><code class="nohighlight">jupyter-notebook</code></pre>
+<p>and proceed with the following sections.</p>
+<h4 id="running-python-code">Running Python code</h4>
+<p>We will start by creating and running a dummy program in Python which
+simply prints the “Hello World!” message to the standard output (this is
+usually the first program you code when learning a new programming
+language). There are two main ways in which you can run code in
+Python:</p>
+<dl>
+<dt>From a file</dt>
+<dd>
+<p>–  Create a file named <code>yourfile.py</code> and write your
+program in it, using the IDE of your choice, e.g., PyCharm:</p>
+<pre><code class="language-python">print(&#39;Hello World!&#39;)</code></pre>
+<p>After saving and closing the file, you can run your code by using the
+run functionality in your IDE. If you wish to run from a command line
+instead do</p>
+<pre><code class="nohighlight">python yourfile.py</code></pre>
+<p>This will run the program and display the message “Hello World!”.
+After that, the control will return to the command line or IDE.</p>
+</dd>
+<dt>In the interactive command line</dt>
+<dd>
+<p>–  Start your preferred interactive command line, e.g.,
+Jupyter-notebook. There, you can run Python code by simply writing it
+and pressing enter (ctr+enter in Jupyter).</p>
+<pre><code class="language-python">In[]: print(&quot;Hello, World!&quot;)
+Out[]: Hello, World!</code></pre>
+<p>However, you can also run Python code written into a file.</p>
+<pre><code class="language-python">In[]: run ./yourfile.py
+Out[]: Hello, World!</code></pre>
+</dd>
+</dl>
+<p>Keep in mind that you can easily switch between these two modes. You
+can quickly test commands directly in the command line and, e.g.,
+inspect variables. Larger sections of code can be stored and run from
+files.</p>
+<h4 id="help-and-documentation">Help and Documentation</h4>
+<p>There are several ways to get help on Jupyter:</p>
+<ul>
+<li><p>Adding a question mark to the end of a function or variable and
+pressing Enter brings up associated documentation. Unfortunately, not
+all packages are well documented. Numpy and matplotlib are pleasant
+exceptions;</p></li>
+<li><p><code>help(’if’)</code> gets the online documentation for the
+<code>if</code> keyword;</p></li>
+<li><p><code>help()</code>, enters the help system.</p></li>
+<li><p>When at the help system, type <code>q</code> to exit.</p></li>
+</ul>
+<h3 id="python-by-example">Python by Example</h3>
+<h4 id="basic-math-operations">Basic Math Operations</h4>
+<p>Python supports all basic arithmetic operations, including
+exponentiation. For example, the following code:</p>
+<pre><code class="language-python">print(3 + 5)
+print(3 - 5)
+print(3 * 5)
+print(3 / 5)
+print(3 ** 5)</code></pre>
+<p>will produce the following output in Python 2:</p>
+<pre><code class="language-python">8
+-2
+15
+0
+243</code></pre>
+<p>and the following output in Python 3:</p>
+<pre><code class="language-python">8
+-2
+15
+0.6
+243</code></pre>
+<p><strong>Important</strong>: Notice that in Python 2 division is
+always considered as integer division, hence the result being 0 on the
+example above. To force a floating point division in Python 2 you can
+force one of the operands to be a floating point number:</p>
+<pre><code class="language-python">print(3 / 5.0)
+0.6</code></pre>
+<p>For Python 3, the division is considered float point, so the
+operation (3 / 5) or (3 / 5.0) is always 0.6.</p>
+<p>Also, notice that the symbol <code>**</code> is used as exponentation
+operator, unlike other major languages which use the symbol
+<code>^</code>. In fact, the <code>^</code> symbol has a different
+meaning in Python (bitwise XOR) so, in the beginning, be sure to
+double-check your code if it uses exponentiation and it is giving
+unexpected results.</p>
+<h4 id="data-structures">Data Structures</h4>
+<p>In Python, you can create lists of items with the following
+syntax:</p>
+<pre><code class="language-python">countries = [&#39;Portugal&#39;,&#39;Spain&#39;,&#39;United Kingdom&#39;]</code></pre>
+<p>A string should be surrounded by either apostrophes (’) or quotes
+(“). You can access a list with the following:</p>
+<ul>
+<li><p><code>len(L)</code>, which returns the number of items in
+L;</p></li>
+<li><p><code>L[i]</code>, which returns the item at index <span
+class="math inline">\(i\)</span> (the first item has index 0);</p></li>
+<li><p><code>L[i:j]</code>, which returns a new list, containing all the
+items between indexes <span class="math inline">\(i\)</span> and <span
+class="math inline">\(j-1\)</span>, inclusively.</p></li>
+</ul>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.1</div>
+<p>Use L[i:j] to return the countries in the Iberian Peninsula.</p>
+</div>
+<h4 id="loops-and-indentation">Loops and Indentation</h4>
+<p>A loop allows a section of code to be repeated a certain number of
+times, until a stop condition is reached. For instance, when the list
+you are iterating over has reached its end or when a variable has
+reached a certain value (in this case, you should not forget to update
+the value of that variable inside the code of the loop). In Python you
+have <code>while</code> and <code>for</code> loop statements. The
+following two example programs output exactly the same using both
+statements: the even numbers from 2 to 8.</p>
+<pre><code class="language-python">i = 2
+while i &lt; 10:
+  print(i)
+  i += 2 </code></pre>
+<pre><code class="language-python">for i in range(2,10,2):
+    print(i)</code></pre>
+<p>You can copy and run this in Jupyter. Alternatively you can write
+this into your <code>yourfile.py</code> file and run it. Do you notice
+something? It is possible that the code did not act as expected or maybe
+an error message popped up. This brings us to an important aspect of
+Python: <strong>indentation</strong>. Indentation is the number of blank
+spaces at the leftmost of each command. This is how Python
+differentiates between blocks of commands inside and outside of a
+statement, e.g., <code>while</code> or <code>for</code>. All commands
+within a statement have the same number of blank spaces at their
+leftmost. For instance, consider the following code:</p>
+<pre><code class="language-python">a=1
+while a &lt;= 3:
+    print(a)
+    a += 1</code></pre>
+<p>and its output:</p>
+<pre><code class="language-python">1
+2
+3</code></pre>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.2</div>
+<p>Can you then predict the output of the following code?:</p>
+<pre><code class="language-python">a=1
+while a &lt;= 3:
+    print(a)
+a += 1</code></pre>
+</div>
+<p>Bear in mind that indentation is often the main source of errors when
+starting to work with Python. Try to get used to it as quickly as
+possible. It is also recommendable to use a text editor that can display
+all characters e.g. blank space, tabs, since these characters can be
+visually similar but are considered different by Python. One of the most
+common mistakes by newcomers to Python is to have their files indented
+with spaces on some lines and with tabs on other lines. Visually it
+might appear that all lines have proper indentation, but you will get an
+<code>IndentationError</code> message if you try it. The recommended<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a> way is to use 4 spaces for each
+indentation level.</p>
+<h4 id="control-flow">Control Flow</h4>
+<p>The <code>if</code> statement allows to control the flow of your
+program. The next program outputs a greeting that depends on the time of
+the day.</p>
+<pre><code class="language-python">hour = 16
+if hour &lt; 12:
+    print(&#39;Good morning!&#39;)
+elif hour &gt;= 12 and hour &lt; 20:
+    print(&#39;Good afternoon!&#39;)
+else:
+    print(&#39;Good evening!&#39;)</code></pre>
+<h4 id="functions">Functions</h4>
+<p>A function is a block of code that can be reused to perform a similar
+action. The following is a function in Python.</p>
+<pre><code class="language-python">def greet(hour):
+    if hour &lt; 12:
+        print(&#39;Good morning!&#39;)
+    elif hour &gt;= 12 and hour &lt; 20:
+        print(&#39;Good afternoon!&#39;)
+    else:
+        print(&#39;Good evening!&#39;)</code></pre>
+<p>You can write this command into Jupyter directly or write it into a
+file which you then run in Jupyter. Once you do this the function will
+be available for you to use. Call the function <code>greet</code> with
+different hours of the day (for example, type <code>greet(16)</code>)
+and see that the program will greet you accordingly.</p>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.3</div>
+<p>Note that the previous code allows the hour to be less than 0 or more
+than 24. Change the code in order to indicate that the hour given as
+input is invalid. Your output should be something like:</p>
+<pre><code class="language-python">greet(50)
+Invalid hour: it should be between 0 and 24.
+greet(-5)
+Invalid hour: it should be between 0 and 24.</code></pre>
+</div>
+<h4 id="profiling">Profiling</h4>
+<p>If you are interested in checking the performance of your program,
+you can use the command <code>%prun</code> in Jupyter. For example:</p>
+<pre><code class="language-python">def myfunction(x):
+    ...
+
+%prun myfunction(22)</code></pre>
+<p>The output of the <code>%prun</code> command will show the following
+information for each function that was called during the execution of
+your code:</p>
+<ul>
+<li><p><code>ncalls</code>: The number of times this function was
+called. If this function was used recursively, the output will be two
+numbers; the first one counts the total function calls with recursions
+included, the second one excludes recursive calls.</p></li>
+<li><p><code>tottime</code>: Total time spent in this function,
+excluding the time spent in other functions called from within this
+function.</p></li>
+<li><p><code>percall</code>: Same as <code>tottime</code>, but divided
+by the number of calls.</p></li>
+<li><p><code>cumtime</code>: Same as <code>tottime</code>, but including
+the time spent in other functions called from within this
+function.</p></li>
+<li><p><code>percall</code>: Same as <code>cumtime</code>, but divided
+by the number of calls.</p></li>
+<li><p><code>filename:lineno(function)</code>: Tells you where this
+function was defined.</p></li>
+</ul>
+<h4 id="debugging-in-python">Debugging in Python</h4>
+<p>During the lab sessions, there will be situations in which we will
+use and extend modules that involve elaborated code and statements, like
+classes and nested functions. Although desirable, it should not be
+necessary for you to fully understand the whole code to carry out the
+exercises. It will suffice to understand the algorithm as explained in
+the theoretical part of the class and the local context of the part of
+the code where we will be working. For this to be possible is very
+important that you learn to use an IDE.</p>
+<p>An alternative to IDEs, that can also be useful for quick debugging
+in Jupyter, is the pdb module. This will stop the execution at a given
+point (called break-point) to get a quick glimpse of the variable
+structures and to inspect the execution flow of your program. The ipdb
+is an improved version of pdb that has to be installed separately. It
+provides additional functionalities like larger context windows,
+variable auto complete and colors. Unfortunately ipdb has some
+compatibility problems with Jupyter. We therefore recommend to use ipdb
+only in spartan configurations such as vim+ipdb as IDE.</p>
+<p>In the following example, we use this module to inspect the
+<code>greet</code> function:</p>
+<pre><code class="language-python">def greet(hour):
+    if hour &lt; 12:
+        print(&#39;Good morning!&#39;)
+    elif hour &gt;= 12 and hour &lt; 20:
+        print(&#39;Good afternoon!&#39;)
+    else:
+        import pdb; pdb.set_trace()
+        print(&#39;Good evening!&#39;)</code></pre>
+<p>Load the new definition of the function by writing this code in a
+file or a Jupyter cell and running it. Now, if you try
+<code>greet(50)</code> the code execution should stop at the place where
+you located the break-point (that is, in the
+<code>print(’Good evening!’)</code> statement). You can now run new
+commands or inspect variables. For this purpose there are a number of
+commands you can use, but we provide here a short table with the most
+useful ones:</p>
+<div class="center">
+<div id="tb::pdbbasiccommands">
+<table>
+<caption>Basic pdb/ipdb commands, parentheses indicates
+abbreviation</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(h)elp</td>
+<td style="text-align: left;">Starts the help menu</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(p)rint</td>
+<td style="text-align: left;">Prints a variable</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(p)retty(p)rint</td>
+<td style="text-align: left;">Prints a variable, with line break (useful
+for lists)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(n)ext line</td>
+<td style="text-align: left;">Jumps to next line</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(s)tep</td>
+<td style="text-align: left;">Jumps inside of the function we stopped
+at</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c(ont(inue))</td>
+<td style="text-align: left;">Continues execution until finding
+breakpoint or finishing</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">(r)eturn</td>
+<td style="text-align: left;">Continues execution until current function
+returns</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">b(reak) n</td>
+<td style="text-align: left;">Sets a breakpoint in in line n</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">b(reak) n, condition</td>
+<td style="text-align: left;">Sets a conditional breakpoint in in line
+n</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">l(ist) [n], [m]</td>
+<td style="text-align: left;">Prints 11 lines around current line.
+Optionally starting in line n or between lines n, m</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">w(here)</td>
+<td style="text-align: left;">Shows which function called the function
+we are in, and upwards (stack)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">u(p)</td>
+<td style="text-align: left;">Goes one level up the stack (frame of the
+function that called the function we are on)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">d(down)</td>
+<td style="text-align: left;">Goes one level down the stack</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><em>blank</em></td>
+<td style="text-align: left;">Repeat the last command</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><em>expression</em></td>
+<td style="text-align: left;">Executes the python expression as if it
+was in current frame</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Getting back to our example, we can type n(ext) once to execute the
+line we stopped at</p>
+<pre><code class="language-python">pdb&gt; n
+&gt; ./lxmls-toolkit/yourfile.py(8)greet()
+      7                 import pdb; pdb.set_trace()
+----&gt; 8                 print(&#39;Good evening!&#39;) </code></pre>
+<p>Now we can inspect the variable <code>hour</code> using the
+p(retty)p(rint) option</p>
+<pre><code class="language-python">pdb&gt; pp hour
+50</code></pre>
+<p>From here we could keep advancing with the n(ext) option or set a
+b(reak) point and type c(ontinue) to jump to a new position. We could
+also execute any python expression which is valid in the current frame
+(the function we stopped at). This is particularly useful to find out
+why code crashes, as we can try different alternatives without the need
+to restart the code again.</p>
+<h3 id="exceptions">Exceptions</h3>
+<p>Occasionally, a syntactically correct code statement may produce an
+error when an attempt is made to execute it. These kind of errors are
+called <em>exceptions</em> in Python. For example, try executing the
+following:</p>
+<pre><code class="language-python">10/0</code></pre>
+<p>A <em>ZeroDivisionError</em> exception was raised, and no output was
+returned. Exceptions can also be forced to occur by the programmer, with
+customized error messages .</p>
+<pre><code class="language-python">raise ValueError(&quot;Invalid input value.&quot;)</code></pre>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.4</div>
+<p>Rewrite the code in Exercise 0.3 in order to raise a ValueError
+exception when the hour is less than 0 or more than 24.</p>
+</div>
+<p>Handling of exceptions is made with the <em>try</em> statement:</p>
+<pre><code class="language-python">while True:
+    try:
+        x = int(input(&quot;Please enter a number: &quot;))
+        break
+    except ValueError:
+        print(&quot;Oops! That was no valid number. Try again...&quot;)</code></pre>
+<p>It works by first executing the <em>try</em> clause. If no exception
+occurs, the <em>except</em> clause is skipped; if an exception does
+occur, and if its type matches the exception named in the
+<em>except</em> keyword, the except clause is executed; otherwise, the
+exception is raised and execution is aborted (if it is not caught by
+outer <em>try</em> statements).</p>
+<h4 id="extending-basic-functionalities-with-modules">Extending basic
+Functionalities with Modules</h4>
+<p>In Python you can load new functionalities into the language by using
+the <code>import</code>, <code>from</code> and <code>as</code> keywords.
+For example, we can load the numpy module as</p>
+<pre><code class="language-python">import numpy as np</code></pre>
+<p>Then we can run the following on the Jupyter command line:</p>
+<pre><code class="language-python">np.var?
+np.random.normal?</code></pre>
+<p>The import will make the numpy tools available through the alias
+<code>np</code>. This shorter alias prevents the code from getting too
+long if we load lots of modules. The first command will display the help
+for the method <code>numpy.var</code> using the previously commented
+symbol <code>?</code>. Note that in order to display the help you need
+the full name of the function including the module name or alias.
+Modules have also submodules that can be accessed the same way, as shown
+in the second example.</p>
+<h4 id="organizing-your-code-with-your-own-modules">Organizing your Code
+with your own modules</h4>
+<p>Creating you own modules is extremely simple. you can for example
+create the file in your work directory</p>
+<pre><code class="nohighlight">my_tools.py</code></pre>
+<p>and store there the following code</p>
+<pre><code class="language-python">def my_print(input):
+    print(input)</code></pre>
+<p>From Jupyter you can now import and use this tool as</p>
+<pre><code class="language-python">import my_tools
+my_tools.my_print(&quot;This works!&quot;) </code></pre>
+<p><strong>Important</strong>: When you modify a module, you need to
+reload the notebook page for the changes to take effect. Autoreload is
+set by default in the schools notebooks.</p>
+<p>for the latter. Other ways of importing one or all the tools from a
+module are</p>
+<pre><code class="language-python">from my_tools import my_print  # my_print directly accesible in code
+from my_tools import *         # will make all functions in my_tools accessible</code></pre>
+<p>However, this makes reloading the module more complicated. You can
+also store tools ind different folders. For example, if you store the
+previous example in the folder</p>
+<pre><code class="nohighlight">day0_tools</code></pre>
+<p>and store inside an empty file called</p>
+<pre><code class="nohighlight">__init__.py</code></pre>
+<p>then the following import will work</p>
+<pre><code class="language-python">import day0_tools.my_tools</code></pre>
+<h3 id="matplotlib-plotting-in-python">Matplotlib – Plotting in
+Python</h3>
+<p>Matplotlib<a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a> is a plotting library for Python. It
+supports <span class="smallcaps">2d</span> and <span
+class="smallcaps">3d</span> plots of various forms. It can show them
+interactively or save them to a file (several output formats are
+supported).</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+X = np.linspace(-4, 4, 1000)
+
+plt.plot(X, X**2*np.cos(X**2))
+plt.savefig(&quot;simple.pdf&quot;)</code></pre>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.5</div>
+<p>Try running the following on Jupyter, which will introduce you to
+some of the basic numeric and plotting operations.</p>
+<pre><code class="language-python"># This will import the numpy library
+# and give it the np abbreviation
+import numpy as np
+
+# This will import the plotting library
+import matplotlib.pyplot as plt
+
+# Linspace will return 1000 points,
+# evenly spaced between -4 and +4
+X = np.linspace(-4, 4, 1000)
+
+# Y[i] = X[i]**2
+Y = X**2
+
+# Plot using a red line (&#39;r&#39;)
+plt.plot(X, Y, &#39;r&#39;)
+
+# arange returns integers ranging from -4 to +4
+# (the upper argument is excluded!)
+Ints = np.arange(-4,5)
+
+# We plot these on top of the previous plot
+# using blue circles (o means a little circle)
+plt.plot(Ints, Ints**2, &#39;bo&#39;)
+
+# You may notice that the plot is tight around the line
+# Set the display limits to see better
+plt.xlim(-4.5,4.5)
+plt.ylim(-1,17)
+plt.show()</code></pre>
+</div>
+<h3 id="numpy-scientific-computing-with-python">Numpy – Scientific
+Computing with Python</h3>
+<p>Numpy<a href="#fn3" class="footnote-ref" id="fnref3"
+role="doc-noteref"><sup>3</sup></a> is a library for scientific
+computing with Python.</p>
+<h4 id="multidimensional-arrays">Multidimensional Arrays</h4>
+<p>The main object of numpy is the multidimensional array. A
+multidimensional array is a table with all elements of the same type and
+can have several dimensions. Numpy provides various functions to access
+and manipulate multidimensional arrays. In one dimensional arrays, you
+can index, slice, and iterate as you can with lists. In a two
+dimensional array M, you can perform these operations along several
+dimensions.</p>
+<ul>
+<li><p>M[i,j], to access the item in the <span
+class="math inline">\(i^{th}\)</span> row and <span
+class="math inline">\(j^{th}\)</span> column;</p></li>
+<li><p>M[i:j,:], to get the all the rows between the <span
+class="math inline">\(i^{th}\)</span> and <span
+class="math inline">\(j-1^{th}\)</span>;</p></li>
+<li><p>M[:,i], to get the <span class="math inline">\(i^{th}\)</span>
+column of M.</p></li>
+</ul>
+<p>Again, as it happened with the lists, the first item of every column
+and every row has index 0.</p>
+<pre><code class="language-python">import numpy as np
+A = np.array([
+    [1,2,3],
+    [2,3,4],
+    [4,5,6]])
+
+A[0,:] # This is [1,2,3]
+A[0] # This is [1,2,3] as well
+
+A[:,0] # this is [1,2,4]
+
+A[1:,0] # This is [ 2, 4 ]. Why?
+        # Because it is the same as A[1:n,0] where n is the size of the array.</code></pre>
+<h4 id="mathematical-operations">Mathematical Operations</h4>
+<p>There are many helpful functions in numpy. For basic mathematical
+operations, we have <code>np.log</code>, <code>np.exp</code>,
+<code>np.cos</code>,…with the expected meaning. These operate both on
+single arguments and on arrays (where they will behave element
+wise).</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+import numpy as np
+
+X = np.linspace(0, 4 * np.pi, 1000)
+C = np.cos(X)
+S = np.sin(X)
+
+plt.plot(X, C)
+plt.plot(X, S)</code></pre>
+<p>Other functions take a whole array and compute a single value from
+it. For example, <code>np.sum</code>, <code>np.mean</code>,…These are
+available as both free functions and as methods on arrays.</p>
+<pre><code class="language-python">import numpy as np
+
+A = np.arange(100)
+
+# These two lines do exactly the same thing
+print(np.mean(A))
+print(A.mean())
+
+C = np.cos(A)
+print(C.ptp())</code></pre>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.6</div>
+<p>Run the above example and lookup the <code>ptp</code> function/method
+(use the <code>?</code> functionality in Jupyter).</p>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.7</div>
+<p>Consider the following approximation to compute an integral</p>
+<p><span class="math display">\[\int_0^{1} f(x)dx \approx \sum_{i =
+0}^{999} \frac{f(i/1000)}{1000}.\]</span></p>
+<p>Use numpy to implement this for <span class="math inline">\(f(x) =
+x^2\)</span>. You should not need to use any loops. Note that integer
+division in Python 2.x returns the floor division (use floats – e.g.
+<span class="math inline">\(5.0/2.0\)</span> – to obtain rationals). The
+exact value is <span class="math inline">\(1/3\)</span>. How close is
+the approximation?</p>
+</div>
+<h2 id="essential-linear-algebra">Essential Linear Algebra</h2>
+<p>Linear Algebra provides a compact way of representing and operating
+on sets of linear equations.</p>
+<p><span
+class="math display">\[\sysdelim\{.\systeme{4x_{1}-5x_{2}=-13,-2x_{1}+3x_{2}=9}\]</span></p>
+<p>This is a system of linear equations in 2 variables. In matrix
+notation we can write the system more compactly as <span
+class="math display">\[\textbf{A}\textbf{x}=\textbf{b}\]</span> with
+<span class="math display">\[\textbf{A}= \left[ \begin{array}{cc}
+4 &amp; -5 \\
+-2 &amp; 3 \\
+\end{array} \right], \text{ } \textbf{b}= \left[ \begin{array}{c}
+-13 \\
+9 \\
+\end{array}\right]\]</span></p>
+<h3 id="notation">Notation</h3>
+<p>We use the following notation:</p>
+<ul>
+<li><p>By <span class="math inline">\(\textbf{A} \in \mathbb{R}^{m
+\times n}\)</span>, we denote a <span><strong>matrix</strong></span>
+with <span class="math inline">\(m\)</span> rows and <span
+class="math inline">\(n\)</span> columns, where the entries of A are
+real numbers.</p></li>
+<li><p>By <span class="math inline">\(\textbf{x} \in
+\mathbb{R}^{n}\)</span>, we denote a
+<span><strong>vector</strong></span> with <span
+class="math inline">\(n\)</span> entries. A vector can also be thought
+of as a matrix with <span class="math inline">\(n\)</span> rows and
+<span class="math inline">\(1\)</span> column, known as a
+<span><strong>column vector</strong></span>. A <span><strong>row
+vector</strong></span> — a matrix with 1 row and <span
+class="math inline">\(n\)</span> columns is denoted as <span
+class="math inline">\(\textbf{x}^{T}\)</span>, the transpose of <span
+class="math inline">\(\textbf{x}\)</span>.</p></li>
+<li><p>The <span class="math inline">\(i\)</span>th element of a vector
+<span class="math inline">\(\textbf{x}\)</span> is denoted <span
+class="math inline">\(x_{i}\)</span>:</p>
+<p><span class="math display">\[\textbf{x} = \left[\begin{array}{c}
+x_{1} \\
+x_{2} \\
+\vdots \\
+x_{n}
+\end{array}\right].\]</span></p></li>
+</ul>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.8</div>
+<p>In the rest of the school we will represent both matrices and vectors
+as numpy arrays. You can create arrays in different ways, one possible
+way is to create an array of zeros.</p>
+<pre><code class="language-python">import numpy as np
+m = 3
+n = 2
+a = np.zeros([m,n])
+print(a)
+[[ 0.  0.]
+ [ 0.  0.]
+ [ 0.  0.]]</code></pre>
+<p>You can check the shape and the data type of your array using the
+following commands:</p>
+<pre><code class="language-python">print(a.shape)
+(3, 2)
+print(a.dtype.name)
+float64</code></pre>
+<p>This shows you that “a” is an 3*2 array of type float64. By default,
+arrays contain 64 bit floating point numbers. You can specify the
+particular array type by using the keyword dtype.</p>
+<pre><code class="language-python">a = np.zeros([m,n],dtype=int)
+print(a.dtype)
+int64</code></pre>
+<p>You can also create arrays from lists of numbers:</p>
+<pre><code class="language-python">a = np.array([[2,3],[3,4]])
+print(a)
+[[2 3]
+ [3 4]]</code></pre>
+<p>There are many more ways to create arrays in numpy and we will get to
+see them as we progress in the classes.</p>
+</div>
+<h3 id="some-matrix-operations-and-properties">Some Matrix Operations
+and Properties</h3>
+<ul>
+<li><p>Product of two matrices <span class="math inline">\(\textbf{A}
+\in \mathbb{R}^{m\times n}\)</span> and <span
+class="math inline">\(\textbf{B} \in \mathbb{R}^{n\times p}\)</span> is
+the matrix <span class="math inline">\(\textbf{C}=\textbf{AB} \in
+\mathbb{R}^{m\times p}\)</span>, where <span
+class="math display">\[C_{ij}=\sum\limits_{k=1}^{n}A_{ik}B_{kj}.\]</span></p>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.9</div>
+<p>You can multiply two matrices by looping over both indexes and
+multiplying the individual entries.</p>
+<pre><code class="language-python">a = np.array([[2,3],[3,4]])
+b = np.array([[1,1],[1,1]])
+a_dim1, a_dim2 = a.shape
+b_dim1, b_dim2 = b.shape
+c = np.zeros([a_dim1,b_dim2])
+for i in range(a_dim1):
+   for j in range(b_dim2):
+       for k in range(a_dim2):
+          c[i,j] += a[i,k]*b[k,j]
+print(c)</code></pre>
+<p>This is, however, cumbersome and inefficient. Numpy supports matrix
+multiplication with the dot function:</p>
+<pre><code class="language-python">d = np.dot(a,b)
+print(d)</code></pre>
+<p><strong>Important note:</strong> with numpy, you must use
+<code>dot</code> to get matrix multiplication, the expression <span>a *
+b</span> denotes element-wise multiplication.</p>
+</div></li>
+<li><p>Matrix multiplication is associative: <span
+class="math inline">\((\textbf{AB})\textbf{C}=
+\textbf{A}(\textbf{BC})\)</span>.</p></li>
+<li><p>Matrix multiplication is distributive: <span
+class="math inline">\(\textbf{A}(\textbf{B}+\textbf{C})= \textbf{AB} +
+\textbf{AC}\)</span>.</p></li>
+<li><p>Matrix multiplication is (generally) not commutative : <span
+class="math inline">\(\textbf{AB} \neq \textbf{BA}\)</span>.</p></li>
+<li><p>Given two vectors <span
+class="math inline">\(\textbf{x},\textbf{y} \in \mathbb{R}^{n}\)</span>
+the product <span
+class="math inline">\(\textbf{x}^{T}\textbf{y}\)</span>, called
+<span><strong>inner product</strong></span> or <span><strong>dot
+product</strong></span>, is given by <span
+class="math display">\[\textbf{x}^{T}\textbf{y} \in \mathbb{R} =
+\left[\begin{array}{cccc}
+x_{1}&amp;x_{2}&amp;\ldots&amp;x_{n}\end{array}\right]
+\left[\begin{array}{c}
+y_{1} \\
+y_{2} \\
+\vdots \\
+y_{n}
+\end{array}\right] = \sum\limits_{i=1}^{n}x_{i}y_{i}.\]</span></p>
+<pre><code class="language-python">a = np.array([1,2])
+b = np.array([1,1])
+np.dot(a,b)</code></pre></li>
+<li><p>Given vectors <span class="math inline">\(\textbf{x} \in
+\mathbb{R}^{m}\)</span> and <span class="math inline">\(\textbf{y} \in
+\mathbb{R}^{n}\)</span>, the <span><strong>outer product</strong></span>
+<span class="math inline">\(\textbf{xy}^{T} \in \mathbb{R}^{m\times
+n}\)</span> is a matrix whose entries are given by <span
+class="math inline">\(({xy}^{T})_{ij}=x_{i}y_{j}\)</span>,</p>
+<p><span class="math display">\[\textbf{xy}^{T} \in \mathbb{R}^{m\times
+n} = \left[\begin{array}{c}
+x_{1} \\ x_{2} \\ \vdots \\ x_{m}\end{array}\right]
+\left[\begin{array}{cccc}
+y_{1} &amp;
+y_{2} &amp;
+\ldots &amp;
+y_{n}
+\end{array}\right] =   \left[\begin{array}{cccc}
+x_{1}y_{1} &amp; x_{1}y_{2} &amp; \ldots &amp; x_{1}y_{n} \\
+x_{2}y_{1} &amp; x_{2}y_{2} &amp; \ldots &amp; x_{2}y_{n} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+x_{m}y_{1} &amp; x_{m}y_{2} &amp; \ldots &amp; x_{m}y_{n} \\
+\end{array}\right].\]</span></p>
+<pre><code class="language-python">np.outer(a,b)
+array([[1, 1],
+       [2, 2]])</code></pre></li>
+<li><p>The <span><strong>identity matrix</strong></span>, denoted <span
+class="math inline">\(\textbf{I}\in \mathbb{R}^{n\times n}\)</span>, is
+a square matrix with ones on the diagonal and zeros everywhere else.
+That is, <span class="math display">\[I_{ij}=\left\{\begin{array}{cc}
+1 &amp; i=j \\
+0 &amp; i\neq j
+\end{array}\right.\]</span> It has the property that for all <span
+class="math inline">\(\textbf{A} \in \mathbb{R}^{n \times n}\)</span>,
+<span class="math inline">\(\textbf{AI} = \textbf{A} =
+\textbf{IA}.\)</span></p>
+<pre><code class="language-python">I = np.eye(2)
+x = np.array([2.3, 3.4])
+
+print(I)
+print(np.dot(I,x))
+
+[[ 1.,  0.],
+ [ 0.,  1.]]
+[2.3, 3.4]</code></pre></li>
+<li><p>A <span><strong>diagonal matrix</strong></span> is a matrix where
+all non-diagonal elements are <span
+class="math inline">\(0\)</span>.</p></li>
+<li><p>The <span><strong>transpose</strong></span> of a matrix results
+from “’flipping” the rows and columns. Given a matrix <span
+class="math inline">\(\textbf{A} \in \mathbb{R}^{m\times n}\)</span>,
+the transpose <span class="math inline">\(\textbf{A}^{T} \in
+\mathbb{R}^{n\times m}\)</span> is the <span class="math inline">\(n
+\times m\)</span> matrix whose entries are given by <span
+class="math inline">\((A^{T})_{ij}= A_{ji}\)</span>.</p>
+<p>Also, <span
+class="math inline">\(\begin{array}{ccccc}(\textbf{A}^{T})^{T}=
+\textbf{A}; &amp;  &amp; (\textbf{AB})^{T}=\textbf{B}^{T}\textbf{A}^{T};
+&amp; &amp; (\textbf{A}+\textbf{B})^{T}= \textbf{A}^{T}+\textbf{B}^{T}
+\end{array}\)</span></p>
+<p>In numpy, you can access the transpose of a matrix as the
+<code>T</code> attribute:</p>
+<pre><code class="language-python">A = np.array([ [1, 2], [3, 4] ])
+print(A.T)</code></pre></li>
+<li><p>A square matrix <span class="math inline">\(\textbf{A} \in
+\mathbb{R}^{n\times n}\)</span> is
+<span><strong>symmetric</strong></span> if <span
+class="math inline">\(\textbf{A}=\textbf{A}^{T}\)</span>.</p></li>
+<li><p>The <span><strong>trace</strong></span> of a square matrix <span
+class="math inline">\(\textbf{A} \in \mathbb{R}^{n\times n}\)</span> is
+the sum of the diagonal elements, tr<span
+class="math inline">\((\textbf{A})= \sum\limits_{i=1}^{n}
+A_{ii}\)</span></p></li>
+</ul>
+<h3 id="norms">Norms</h3>
+<p>The <span><strong>norm</strong></span> of a vector is informally the
+measure of the “length” of the vector. The commonly used Euclidean or
+<span class="math inline">\(\ell_{2}\)</span> norm is given by <span
+class="math display">\[\|\textbf{x}\|_{2}=\sqrt{\sum\limits_{i=1}^{n}
+x_{i}^{2}}.\]</span></p>
+<ul>
+<li><p>More generally, the <span class="math inline">\(\ell_{p}\)</span>
+norm of a vector <span class="math inline">\(\textbf{x} \in
+\mathbb{R}^{n}\)</span>, where <span class="math inline">\(p \geq
+1\)</span> is defined as</p></li>
+</ul>
+<p><span
+class="math display">\[\|\textbf{x}\|_{p}=\left(\sum\limits_{i=1}^{n}|x_{i}|^{p}\right)^{1/p}.\]</span>
+Note: <span class="math inline">\(\begin{array}{ccc} \ell_{1} \text{
+norm}: \|\textbf{x}\|_{1} = \sum\limits_{i=1}^{n} |x_{i}| &amp;&amp;
+\ell_{\infty} \text{ norm}: \|\textbf{x}\|_{\infty} = \max\limits_{i}
+|x_{i}| \end{array}\)</span>.</p>
+<h3 id="linear-independence-rank-and-orthogonal-matrices">Linear
+Independence, Rank, and Orthogonal Matrices</h3>
+<p>A set of vectors <span
+class="math inline">\(\{\textbf{x}_{1},\textbf{x}_{2},\ldots,\textbf{x}_{n}\}
+\subset \mathbb{R}^{m}\)</span> is said to be <span><strong>(linearly)
+independent</strong></span> if no vector can be represented as a linear
+combination of the remaining vectors. Conversely, if one vector
+belonging to the set can be represented as a linear combination of the
+remaining vectors, then the vectors are said to be
+<span><strong>linearly dependent</strong></span>. That is, if <span
+class="math display">\[\textbf{x}_{j}=\sum\limits_{i\neq
+j}\alpha_{i}\textbf{x}_{i}\]</span> for some <span
+class="math inline">\(j \in \{1,\ldots,n\}\)</span> and some scalar
+values <span class="math inline">\(\alpha_{1}, \ldots, \alpha_{i-1},
+\alpha_{i+1}, \ldots, \alpha_{n} \in \mathbb{R}\)</span>.</p>
+<ul>
+<li><p>The <span><strong>rank</strong></span> of a matrix is the number
+of linearly independent columns, which is always equal to the number of
+linearly independent rows.</p></li>
+<li><p>For <span class="math inline">\(\textbf{A} \in R^{m\times
+n}\)</span>, rank<span class="math inline">\((\textbf{A}) \leq\)</span>
+min<span class="math inline">\((m,n)\)</span>. If rank<span
+class="math inline">\((\textbf{A})=\)</span> min<span
+class="math inline">\((m,n)\)</span>, then <span
+class="math inline">\(\textbf{A}\)</span> is said to be
+<span><strong>full rank</strong></span>.</p></li>
+<li><p>For <span class="math inline">\(\textbf{A} \in R^{m\times
+n}\)</span>, rank<span class="math inline">\((\textbf{A})=\)</span>
+rank<span class="math inline">\((\textbf{A}^{T})\)</span>.</p></li>
+<li><p>For <span class="math inline">\(\textbf{A} \in R^{m\times
+n}\)</span>, <span class="math inline">\(\textbf{B} \in R^{n\times
+p}\)</span>, rank<span class="math inline">\((\textbf{AB}) \leq\)</span>
+min<span class="math inline">\((\)</span>rank<span
+class="math inline">\((\textbf{A})\)</span>,rank<span
+class="math inline">\((\textbf{B})\)</span>).</p></li>
+<li><p>For <span class="math inline">\(\textbf{A},\textbf{B} \in
+R^{m\times n}\)</span>, rank<span
+class="math inline">\((\textbf{A}+\textbf{B}) \leq\)</span> rank<span
+class="math inline">\((\textbf{A})\)</span> + rank<span
+class="math inline">\((\textbf{B})\)</span>.</p></li>
+<li><p>Two vectors <span class="math inline">\(\textbf{x},\textbf{y} \in
+\mathbb{R}^{n}\)</span> are <span><strong>orthogonal</strong></span> if
+<span class="math inline">\(\textbf{x}^{T}\textbf{y}=0\)</span>. A
+square matrix <span class="math inline">\(\textbf{U} \in
+\mathbb{R}^{n\times n}\)</span> is orthogonal if all its columns are
+orthogonal to each other and are normalized (<span
+class="math inline">\(\|\textbf{x}\|_{2} = 1\)</span>), It follows that
+<span
+class="math display">\[\textbf{U}^{T}\textbf{U}=\textbf{I}=\textbf{UU}^{T}.\]</span></p></li>
+</ul>
+<div class="guide-box guide-box"><div class="guide-box-title">Example 0.1</div>
+</div>
+<h2 id="probability-theory">Probability Theory</h2>
+<p>Probability is the most used mathematical language for quantifying
+uncertainty. The <span><strong>sample space</strong></span> <span
+class="math inline">\(\mathcal{X}\)</span> is the set of possible
+outcomes of an experiment. <span><strong>Events</strong></span> are
+subsets of <span class="math inline">\(\mathcal{X}\)</span>.</p>
+<div class="guide-box guide-box"><div class="guide-box-title">Example 0.2</div>
+<p>[<span><em>discrete space</em></span>] Let H denote “heads” and T
+denote “tails.” If we toss a coin twice, then <span
+class="math inline">\(\mathcal{X}=\{ HH, HT, TH, TT\}\)</span>. The
+event that the first toss is heads is <span class="math inline">\(A=
+\left\{HH, HT \right\}\)</span>.</p>
+</div>
+<p>A sample space can also be <span><em>continuous</em></span> (eg.,
+<span class="math inline">\(\mathcal{X}= \mathbb{R}\)</span>). The union
+of events <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> is defined as <span
+class="math inline">\(A \bigcup B = \{ \omega \in \mathcal{X}\,\,|\,\,
+\omega \in A \vee \omega \in B\}\)</span>. If <span
+class="math inline">\(A_1\)</span>, <span
+class="math inline">\(\ldots\)</span>, <span
+class="math inline">\(A_n\)</span> is a sequence of sets then <span
+class="math inline">\(\bigcup\limits_{i=1}^{n}A_{i} = \{ \omega \in
+\mathcal{X}\,\,|\,\, \omega \in A_{i} \text{ for at least one
+i}\}\)</span>. We say that <span class="math inline">\(A_1\)</span>,
+<span class="math inline">\(\ldots\)</span>, <span
+class="math inline">\(A_n\)</span> are
+<span><strong>disjoint</strong></span> or <span><strong>mutually
+exclusive</strong></span> if <span class="math inline">\(A_{i} \cap
+A_{j} = \varnothing\)</span> whenever <span class="math inline">\(i \neq
+j\)</span>.</p>
+<p>We want to assign a real number <span
+class="math inline">\(P(A)\)</span> to every event <span
+class="math inline">\(A\)</span>, called the
+<span><strong>probability</strong></span> of <span
+class="math inline">\(A\)</span>. We also call <span
+class="math inline">\(P\)</span> a <span><strong>probability
+distribution</strong></span> or <span><strong>probability
+measure</strong></span>.</p>
+<div class="guide-box guide-definition"><div class="guide-box-title">Definition 0.1</div>
+<p>A function <span class="math inline">\(P\)</span> that assigns a real
+number <span class="math inline">\(P(A)\)</span> to each event A is a
+<span><strong>probability distribution</strong></span> or a
+<span><strong>probability measure</strong></span> if it satisfies the
+three following axioms:<br />
+Axiom 1: <span class="math inline">\(P(A) \geq 0\)</span> <span><em>for
+every A</em></span><br />
+Axiom 2: <span class="math inline">\(P(\mathcal{X}) = 1\)</span><br />
+Axiom 3: If <span class="math inline">\(A_1\)</span>, <span
+class="math inline">\(\ldots\)</span>, <span
+class="math inline">\(A_n\)</span> are disjoint then <span
+class="math display">\[P\left(\bigcup\limits_{i=1}^{n} A_{i}\right) =
+\sum\limits_{i=1}^{n} P(A_{i}).\]</span></p>
+</div>
+<p>One can derive many properties of <span
+class="math inline">\(P\)</span> from these axioms: <span
+class="math display">\[\begin{aligned}
+P(\varnothing) &amp;= &amp;0 \\
+A \subseteq B &amp;\Rightarrow &amp;P(A) \leq P(B) \\
+0 \leq &amp;P(A) &amp;\leq 1 \\
+P(A&#39;) &amp;= &amp;1 - P(A) \hspace{0.2in}(\text{A&#39; is the
+complement of A}) \\
+P(A \cup B) &amp;=&amp; P(A) + P(B) - P(A \cap B) \\
+A \cap B = \phi &amp;\Rightarrow &amp;P\left( A \cup B\right) = P(A) +
+P(B).\end{aligned}\]</span></p>
+<p>An important case is when events are
+<span><strong>independent</strong></span>, this is also a usual
+approximation which lends several practical advantages for the
+computation of the joint probability.<br />
+</p>
+<div class="guide-box guide-definition"><div class="guide-box-title">Definition 0.2</div>
+<p>Two events <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are
+<span><strong>independent</strong></span> if <span
+class="math display">\[P(AB) = P(A)P(B)\]</span> often denoted as <span
+class="math inline">\(A \independent B\)</span>. A set of events <span
+class="math inline">\(\{A_{i}: i \in I\}\)</span> is independent if
+<span class="math display">\[P\left(\bigcap\limits_{i \in J}
+A_{i}\right) = \prod\limits_{i \in J}P(A_{i})\]</span> for every finite
+subset J of I.</p>
+</div>
+<p>For events <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span>, where <span class="math inline">\(P(B)
+&gt; 0\)</span>, the <span><strong>conditional
+probability</strong></span> of <span class="math inline">\(A\)</span>
+given that <span class="math inline">\(B\)</span> has occurred is
+defined as:</p>
+<p><span class="math display">\[P(A|B)=\frac{P(AB)}{P(B)}.
+\label{eq:condprob}\]</span></p>
+<p>Events <span class="math inline">\(A\)</span> and <span
+class="math inline">\(B\)</span> are independent if and only if <span
+class="math inline">\(P(A|B)=P(A)\)</span>. This follows from the
+definitions of independence and conditional probability.</p>
+<p>A preliminary result that forms the basis for the famous Bayes’
+theorem is the law of total probability which states that if <span
+class="math inline">\(A_{1},\ldots,A_{k}\)</span> is a partition of
+<span class="math inline">\(\mathcal{X}\)</span>, then for any event B,
+<span class="math display">\[P(B)=\sum_{i=1}^{k}P(B|A_{i})P(A_{i}).
+\label{eq:totprob}\]</span></p>
+<p>Using Equations <a href="#eq:condprob" data-reference-type="ref"
+data-reference="eq:condprob">[eq:condprob]</a> and <a href="#eq:totprob"
+data-reference-type="ref" data-reference="eq:totprob">[eq:totprob]</a>,
+one can derive the Bayes’ theorem.</p>
+<div class="guide-box guide-theorem"><div class="guide-box-title">Theorem 0.1</div>
+<p><span><strong>(Bayes’ Theorem)</strong></span> Let <span
+class="math inline">\(A_{1}, \ldots A_{k}\)</span> be a partition of
+<span class="math inline">\(\mathcal{X}\)</span> such that <span
+class="math inline">\(P(A_{i}) &gt; 0\)</span> for each i. If <span
+class="math inline">\(P(B) &gt; 0\)</span> then, for each <span
+class="math inline">\(i=1,\ldots, k,\)</span> <span
+class="math display">\[P(A_{i}|B)=\frac{P(B|A_{i})P(A_{i})}{\sum_{j}P(B|A_{j})P(A_{j})}.\]</span></p>
+</div>
+<div class="guide-box guide-box"><div class="guide-box-title">Remark 0.1</div>
+<p><span class="math inline">\(P(A_{i})\)</span> is called the
+<span><strong>prior probability</strong></span> of <span
+class="math inline">\(A_i\)</span> and <span
+class="math inline">\(P(A_{i}|B)\)</span> is the <span><strong>posterior
+probability</strong></span> of <span
+class="math inline">\(A_i\)</span>.</p>
+</div>
+<div class="guide-box guide-box"><div class="guide-box-title">Remark 0.2</div>
+<p>In Bayesian Statistical Inference, the Bayes’ theorem is used to
+compute the estimates of distribution parameters from data. Here, prior
+is the initial <span><em>belief</em></span> about the parameters,
+likelihood is the distribution function of the parameter (usually
+trained from data) and posterior is the <span><em>updated
+belief</em></span> about the parameters.</p>
+</div>
+<h3 id="probability-distribution-functions">Probability distribution
+functions</h3>
+<p>A <span><strong>random variable</strong></span> is a mapping <span
+class="math inline">\(X:\mathcal{X} \rightarrow \mathbb{R}\)</span> that
+assigns a real number <span class="math inline">\(X(\omega)\)</span> to
+each outcome <span class="math inline">\(\omega\)</span>. Given a random
+variable X, an important function called the <span><strong>cumulative
+distributive function</strong></span> (or <span><strong>distribution
+function</strong></span>) is defined as:</p>
+<div class="guide-box guide-definition"><div class="guide-box-title">Definition 0.3</div>
+<p>The <span><strong>cumulative distribution function</strong></span>
+CDF <span class="math inline">\(F_{X}: \mathbb{R} \rightarrow
+[0,1]\)</span> of a random variable <span
+class="math inline">\(X\)</span> is defined by <span
+class="math inline">\(F_X(x) = P(X \leq x)\)</span>.</p>
+</div>
+<p>The CDF is important because it captures the complete information
+about the random variable. The CDF is right-continuous, non-decreasing
+and is normalized (lim<span class="math inline">\(_{x\rightarrow
+-\infty} F(x) = 0\)</span> and lim<span
+class="math inline">\(_{x\rightarrow \infty} F(x)=1\)</span>).</p>
+<div class="guide-box guide-box"><div class="guide-box-title">Example 0.3</div>
+<p>[<span><em>discrete CDF</em></span>] Flip a fair coin twice and let X
+be the random variable indicating the number of heads. Then <span
+class="math inline">\(P(X=0)=P(X=2)= 1/4\)</span> and <span
+class="math inline">\(P(X=1)=1/2\)</span>. The distribution function is
+<span class="math display">\[F_{X}(x)=\left\{\begin{array}{cc}
+0 &amp; x&lt;0\\
+1/4 &amp; 0 \leq x &lt; 1 \\
+3/4 &amp; 1 \leq x &lt; 2 \\
+1 &amp; x \geq 2.
+\end{array}\right.\]</span></p>
+</div>
+<div class="guide-box guide-definition"><div class="guide-box-title">Definition 0.4</div>
+<p><span class="math inline">\(X\)</span> is discrete if it takes
+countable many values <span
+class="math inline">\(\{x_{1},x_{2},\ldots\}\)</span>. We define the
+<span><strong>probability function</strong></span> or
+<span><strong>probability mass function</strong></span> for <span
+class="math inline">\(X\)</span> by <span
+class="math display">\[f_{X}(x)= P (X=x).\]</span></p>
+</div>
+<div class="guide-box guide-definition"><div class="guide-box-title">Definition 0.5</div>
+<p>A random variable <span class="math inline">\(X\)</span> is
+<span><strong>continuous</strong></span> if there exists a function
+<span class="math inline">\(f_{X}\)</span> such that <span
+class="math inline">\(f_{X} \geq 0\)</span> for all <span
+class="math inline">\(x\)</span>, <span
+class="math inline">\(\int\limits_{-\infty}^{\infty} f_{X}(x)dx =
+1\)</span> and for every <span class="math inline">\(a\leq b\)</span>
+<span class="math display">\[P(a &lt; X &lt; b) =
+\int\limits_{a}^{b}f_{X}(x)dx.\]</span> The function <span
+class="math inline">\(f_{X}\)</span> is called the
+<span><strong>probability density function</strong></span> (PDF). We
+have that <span class="math display">\[F_{X}(x) =
+\int\limits_{-\infty}^{x}f_{X}(t)dt\]</span></p>
+<p>and <span class="math inline">\(f_{X}(x)=F_{X}^{&#39;}(x)\)</span> at
+all points <span class="math inline">\(x\)</span> at which <span
+class="math inline">\(F_{X}\)</span> is differentiable.</p>
+</div>
+<p>A discussion of a few important distributions and related
+properties:</p>
+<h3 id="bernoulli"><span id="bernoulli" label="bernoulli"></span>
+Bernoulli</h3>
+<p>The <span><strong>Bernoulli distribution</strong></span> is a
+discrete probability distribution that takes value 1 with the success
+probability <span class="math inline">\(p\)</span> and 0 with the
+failure probability <span class="math inline">\(q=1-p\)</span>. A single
+Bernoulli trial is parametrized with the success probability <span
+class="math inline">\(p\)</span>, and the input <span
+class="math inline">\(k\in \{0,1\}\)</span> (1=success, 0=failure), and
+can be expressed as <span class="math display">\[\label{bernoulli-eq}
+f(k;p) = p^kq^{1-k} = p^k(1-p)^{1-k}\]</span></p>
+<h3 id="binomial"><span id="binomial" label="binomial"></span>
+Binomial</h3>
+<p>The probability distribution for the number of successes in <span
+class="math inline">\(n\)</span> Bernoulli trials is called a
+<span><strong>Binomial distribution</strong></span>, which is also a
+discrete distribution. The Binomial distribution can be expressed as
+exactly <span class="math inline">\(j\)</span> successes is <span
+class="math display">\[f(j,n;p)= \left(\begin{array}{c}
+n \\
+j \end{array}\right) p^{j}q^{n-j} = \left(\begin{array}{c}
+n \\
+j \end{array}\right) p^{j}(1-p)^{n-j}\]</span> where <span
+class="math inline">\(n\)</span> is the number of Bernoulli trials with
+probability <span class="math inline">\(p\)</span> of success on each
+trial.</p>
+<h3 id="categorical"><span id="categorical" label="categorical"></span>
+Categorical</h3>
+<p>The <strong>Categorical distribution</strong> (often conflated with
+the Multinomial distribution, in fields like Natural Language
+Processing) is another generalization of the Bernoulli distribution,
+allowing the definition of a set of possible outcomes, rather than
+simply the events “success” and “failure” defined in the Bernoulli
+distribution. Considering a set of outcomes indexed from <span
+class="math inline">\(1\)</span> to <span
+class="math inline">\(n\)</span>, the distribution takes the form of
+<span class="math display">\[f(x_i;p_1,...,p_n) = p_i.\]</span> where
+parameters <span class="math inline">\(p_1,...,p_n\)</span> is the set
+with the occurrence probability of each outcome. Note that we must
+ensure that <span class="math inline">\(\sum_{i=1}^np_i=1\)</span>, so
+we can set <span class="math inline">\(p_n = 1 -
+\sum_{i=1}^{n-1}p_i\)</span>.</p>
+<h3 id="multinomial"><span id="multinomial" label="multinomial"></span>
+Multinomial</h3>
+<p>The <strong>Multinomial distribution</strong> is a generalization of
+the Binomial distribution and the Categorical distribution, since it
+considers multiple outcomes, as the Categorial distribution, and
+multiple trials, as in the Binomial distribution. Considering a set of
+outcomes indexed from <span class="math inline">\(1\)</span> to <span
+class="math inline">\(n\)</span>, the vector <span
+class="math inline">\([x_1, ..., x_n]\)</span>, where <span
+class="math inline">\(x_i\)</span> indicates the number of times the
+event with index <span class="math inline">\(i\)</span> occurs, follows
+the Multinomial distribution <span
+class="math display">\[f(x_1,...,x_n;p_1,...,p_n) =
+\frac{n!}{x_{1}!...x_{n}!} p_{1}^{x_{1}}...p_{n}^{x_{n}}.\]</span> Where
+parameters <span class="math inline">\(p_1,...,p_n\)</span> represent
+the occurrence probability of the respective outcome.</p>
+<div class="guide-box guide-theorem"><div class="guide-box-title">Theorem 0.2</div>
+<p><span><strong>(Multinomial theorem)</strong></span> Let <span
+class="math inline">\(m\)</span> and <span
+class="math inline">\(n\)</span> be positive integers. Let <span
+class="math inline">\(A\)</span> be the set of vectors <span
+class="math inline">\(x=(x_{1},\ldots,x_{n})\)</span></p>
+</div>
+<h3 id="gaussian-distribution"><span id="gaussian"
+label="gaussian"></span> Gaussian Distribution</h3>
+<p>A very important theorem in probability theory is the
+<span><strong>Central Limit Theorem</strong></span>. The Central Limit
+Theorem states that, under very general conditions, if we sum a very
+large number of mutually independent random variables, then the
+distribution of the sum can be closely approximated by a certain
+specific continuous density called the normal (or Gaussian) density. The
+normal density function with parameters <span
+class="math inline">\(\mu\)</span> and <span
+class="math inline">\(\sigma\)</span> is defined as follows:</p>
+<p><span
+class="math display">\[f_{X}(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/2\sigma^2},
+\text{   }-\infty &lt; x &lt; \infty.\]</span></p>
+<div class="center">
+<figure>
+<img src="assets/figs/intro/normal.png" id="fig:normaldist"
+alt="Normal density for two sets of parameter values." />
+<figcaption aria-hidden="true">Normal density for two sets of parameter
+values.</figcaption>
+</figure>
+</div>
+<p>Figure <a href="#fig:normaldist" data-reference-type="ref"
+data-reference="fig:normaldist">1</a> compares a plot of normal density
+for the cases <span class="math inline">\(\mu=0\)</span> and <span
+class="math inline">\(\sigma=1\)</span>, and <span
+class="math inline">\(\mu=0\)</span> and <span
+class="math inline">\(\sigma=2\)</span>.</p>
+<h3 id="maximum-likelihood-estimation">Maximum Likelihood
+Estimation</h3>
+<p>Until now we assumed that, for every distribution, the parameters
+<span class="math inline">\(\theta\)</span> are known and are used when
+we calculate <span class="math inline">\(p(x|\theta)\)</span>. There are
+some cases where the values of the parameters are easy to infer, such as
+the probability <span class="math inline">\(p\)</span> of getting a head
+using a fair coin, used on a Bernoulli or Binomial distribution.
+However, in many problems, these values are complex to define and it is
+more viable to estimate the parameters using the data <span
+class="math inline">\(x\)</span>. For instance, in the example above
+with the coin toss, if the coin is somehow tampered to have a biased
+behavior, rather than examining the dynamics or the structure of the
+coin to infer a parameter for <span class="math inline">\(p\)</span>, a
+person could simply throw the coin <span
+class="math inline">\(n\)</span> times, count the number of heads <span
+class="math inline">\(h\)</span> and set <span
+class="math inline">\(p=\frac{h}{n}\)</span>. By doing so, the person is
+using the data <span class="math inline">\(x\)</span> to estimate <span
+class="math inline">\(\theta\)</span>.</p>
+<p>With this in mind, we will now generalize this process by defining
+the probability <span class="math inline">\(p(\theta|x)\)</span> as the
+probability of the parameter <span
+class="math inline">\(\theta\)</span>, given the data <span
+class="math inline">\(x\)</span>. This probability is called
+<span><strong>likelihood</strong></span> <span
+class="math inline">\(\mathcal{L}(\theta|x)\)</span> and measures how
+well the parameter <span class="math inline">\(\theta\)</span> models
+the data <span class="math inline">\(x\)</span>. The likelihood can be
+defined in terms of the distribution <span
+class="math inline">\(f\)</span> as <span
+class="math display">\[\mathcal{L}(\theta|x_1,...,x_n)=\prod_{i=1}^n
+f(x_i|\theta)\]</span> where <span
+class="math inline">\(x_1,...,x_n\)</span> are independently and
+identically distributed (i.i.d.) samples.</p>
+<p>To understand this concept better, we go back to the tampered coin
+example again. Suppose that we throw the coin 5 times and get the
+sequence [1,1,1,1,1] (1=head, 0=tail). Using the Bernoulli distribution
+(see Section <a href="#bernoulli-eq" data-reference-type="ref"
+data-reference="bernoulli-eq">[bernoulli-eq]</a>) <span
+class="math inline">\(f\)</span> to model this problem, we get the
+following likelihood values:</p>
+<ul>
+<li><p><span class="math inline">\(\mathcal{L}(0,x) = f(1,0)^5 = 0^5 =
+0\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(0.2,x) = f(1,0.2)^5 =
+0.2^5 = 0.00032\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(0.4,x) = f(1,0.4)^5 =
+0.4^5 = 0.01024\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(0.6,x) = f(1,0.6)^5 =
+0.6^5 = 0.07776\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(0.8,x) = f(1,0.8)^5 =
+0.8^5 = 0.32768\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(1,x) = f(1,1)^5 = 1^5 =
+1\)</span></p></li>
+</ul>
+<p>If we get the sequence [1,0,1,1,0] instead, the likelihood values
+would be:</p>
+<ul>
+<li><p><span class="math inline">\(\mathcal{L}(0,x) = f(1,0)^3f(0,0)^2 =
+0^3\times 1^2 = 0\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(0.2,x) =
+f(1,0.2)^3f(0,0.2)^2 = 0.2^3\times 0.8^2 = 0.00512\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(0.4,x) =
+f(1,0.4)^3f(0,0.4)^2 = 0.4^3\times 0.6^2 = 0.02304\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(0.6,x) =
+f(1,0.6)^3f(0,0.6)^2 = 0.6^3\times 0.4^2 = 0.03456\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(0.8,x) =
+f(1,0.8)^3f(0,0.8)^2 = 0.8^3\times 0.2^2 = 0.02048\)</span></p></li>
+<li><p><span class="math inline">\(\mathcal{L}(1,x) = f(1,1)^5 =
+1^3\times 0^2 = 0\)</span></p></li>
+</ul>
+<p>We can see that the likelihood is the highest when the distribution
+<span class="math inline">\(f\)</span> with parameter <span
+class="math inline">\(p\)</span> is the best fit for the observed
+samples. Thus, the best estimate for <span
+class="math inline">\(p\)</span> according to <span
+class="math inline">\(x\)</span> would be the value for which <span
+class="math inline">\(\mathcal{L}(p|x)\)</span> is the highest.</p>
+<p>The value of the parameter <span
+class="math inline">\(\theta\)</span> with the highest likelihood is
+called <span><strong>maximum likelihood estimate (MLE)</strong></span>
+and is defined as <span
+class="math display">\[\hat{\theta}_{mle}=argmax_{\theta}\mathcal{L}(\theta|x)\]</span></p>
+<p>Finding this for our example is relatively easy, since we can simply
+derivate the likelihood function to find the absolute maximum. For the
+sequence [1,0,1,1,0], the likelihood would be given as <span
+class="math display">\[\mathcal{L}(p|x) = f(1,p)^3f(0,p)^2 =
+p^3(1-p)^2\]</span></p>
+<p>And the MLE estimate would be given by: <span
+class="math display">\[\frac{\delta \mathcal{L}(p|x)}{\delta
+p}=0,\]</span> which resolves to <span
+class="math display">\[p_{mle}=0.6\]</span></p>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.10</div>
+<p>Over the next couple of exercises we will make use of the Galton
+dataset, a dataset of heights of fathers and sons from the 1877 paper
+that first discussed the “regression to the mean” phenomenon. This
+dataset has 928 pairs of numbers.</p>
+<ul>
+<li><p>Use the <code>load()</code> function in the
+<code>galton.py</code> file to load the dataset. The file is located
+under the <code>lxmls/readers</code> folder<a href="#fn4"
+class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.
+Type the following in your Python interpreter:</p>
+<pre><code class="nohighlight">import galton as galton
+galton_data = galton.load()</code></pre></li>
+<li><p>What are the mean height and standard deviation of all the people
+in the sample? What is the mean height of the fathers and of the
+sons?</p></li>
+<li><p>Plot a histogram of all the heights (you might want to use the
+<code>plt.hist</code> function and the <code>ravel</code> method on
+arrays).</p></li>
+<li><p>Plot the height of the father versus the height of the
+son.</p></li>
+<li><p>You should notice that there are several points that are exactly
+the same (e.g., there are 21 pairs with the values 68.5 and 70.2). Use
+the <code>?</code> command in ipython to read the documentation for the
+<code>numpy.random.randn</code> function and add random jitter (i.e.,
+move the point a little bit) to the points before displaying them. Does
+your impression of the data change?</p></li>
+</ul>
+</div>
+<h3 id="conjugate-priors">Conjugate Priors</h3>
+<div class="guide-box guide-definition"><div class="guide-box-title">Definition 0.6</div>
+<p>let <span class="math inline">\(\mathcal{F}= \{f_{X}(x|s), s \in
+\mathcal{X}\}\)</span> be a class of likelihood functions; let <span
+class="math inline">\(\mathcal{P}\)</span> be a class of probability
+(density or mass) functions; if, for any <span
+class="math inline">\(x\)</span>, any <span
+class="math inline">\(p_{S}(s) \in \mathcal{P}\)</span>, and any <span
+class="math inline">\(f_{X}(x|s) \in \mathcal{F}\)</span>, the resulting
+a posteriori probability function <span class="math inline">\(p_{S}(s|x)
+= f_{X}(x|s)p_{S}(s)\)</span> is still in <span
+class="math inline">\(\mathcal{P}\)</span>, then <span
+class="math inline">\(\mathcal{P}\)</span> is called a conjugate family,
+or a family of <span><strong>conjugate priors</strong></span>, for <span
+class="math inline">\(\mathcal{F}\)</span>.</p>
+</div>
+<h2 id="numerical-optimization">Numerical optimization<span
+id="numerical_optimization" label="numerical_optimization"></span></h2>
+<p>Most problems in machine learning require minimization/maximization
+of functions (likelihoods, risk, energy, entropy, etc.,). Let <span
+class="math inline">\(x^*\)</span> be the value of <span
+class="math inline">\(x\)</span> which minimizes the value of some
+function <span class="math inline">\(f(x)\)</span>. Mathematically, this
+is written as</p>
+<p><span class="math display">\[x^* = \argmin_x f(x)\]</span></p>
+<p>In a few special cases, we can solve this minimization problem
+analytically in closed form (solving for optimal <span
+class="math inline">\(x^{*}\)</span> in <span
+class="math inline">\(\nabla_{x}f(x^{*})=0\)</span>), but in most cases
+it is too cumbersome (or impossible) to solve these equations
+analytically, and they must be tackled numerically. In this section we
+will cover some basic notions of numerical optimization. The goal is to
+provide the intuitions behind the methods that will be used in the rest
+of the school. There are plenty of good textbooks in the subject that
+you can consult for more information <span class="citation"
+data-cites="Nocedal1999 bertsekas1995np boyd2004convex">(<a
+href="#ref-Nocedal1999" role="doc-biblioref">Nocedal and Wright
+1999</a>; <a href="#ref-bertsekas1995np" role="doc-biblioref">Bertsekas
+et al. 1995</a>; <a href="#ref-boyd2004convex" role="doc-biblioref">Boyd
+and Vandenberghe 2004</a>)</span>.</p>
+<p>The most common way to solve the problems when no closed form
+solution is available is to resort to an iterative algorithm. In this
+Section, we will see some of these iterative optimization techniques.
+These iterative algorithms construct a sequence of points <span
+class="math inline">\(x^{(0)},x^{(1)},\ldots \in
+\text{domain}(f)\)</span> such that hopefully <span
+class="math inline">\(x^t = x^*\)</span> after a number of iterations.
+Such a sequence is called the <span><strong>minimizing
+sequence</strong></span> for the problem.</p>
+<h3 id="convex-functions">Convex Functions</h3>
+<p>One important property of a function <span
+class="math inline">\(f(x)\)</span> is whether it is a <strong>convex
+function</strong> (in the shape of a bowl) or a <strong>non-convex
+function</strong>. Figures <a href="#fig:convexfn"
+data-reference-type="ref"
+data-reference="fig:convexfn">[fig:convexfn]</a> and <a
+href="#fig:nonconvexfn" data-reference-type="ref"
+data-reference="fig:nonconvexfn">3</a> show an example of a convex and a
+non-convex function. Convex functions are particularly useful since you
+can guarantee that the minimizing sequence converges to the true global
+minimum of the function, while in non-convex functions you can only
+guarantee that it will reach a local minimum.</p>
+<div class="center">
+<figure>
+<img src="assets/figs/intro/convexfn.png" id="fig:nonconvexfn"
+alt="Illustration of a non-convex function. Note the line segment intersecting the curve. " />
+<figcaption aria-hidden="true">Illustration of a non-convex function.
+Note the line segment intersecting the curve. </figcaption>
+</figure>
+<figure>
+<img src="assets/figs/intro/nonconvexfn.png" id="fig:nonconvexfn"
+alt="Illustration of a non-convex function. Note the line segment intersecting the curve. " />
+<figcaption aria-hidden="true">Illustration of a non-convex function.
+Note the line segment intersecting the curve. </figcaption>
+</figure>
+</div>
+<p>Intuitively, imagine dropping a ball on either side of Figure <a
+href="#fig:convexfn" data-reference-type="ref"
+data-reference="fig:convexfn">[fig:convexfn]</a>, the ball will roll to
+the bottom of the bowl independently from where it is dropped. This is
+the main benefit of a convex function. On the other hand, if you drop a
+ball from the left side of Figure <a href="#fig:nonconvexfn"
+data-reference-type="ref" data-reference="fig:nonconvexfn">3</a> it will
+reach a different position than if you drop a ball from its right side.
+Moreover, dropping it from the left side will lead you to a much better
+(<em>i.e.</em>, lower) place than if you drop the ball from the right
+side. This is the main problem with non-convex functions: there are no
+guarantees about the quality of the local minimum you find.</p>
+<p>More formally, some concepts to understand about convex functions
+are:</p>
+<p>A <span><strong>line segment</strong></span> between points <span
+class="math inline">\(x_{1}\)</span> and <span
+class="math inline">\(x_{2}\)</span>: contains all points such that
+<span class="math display">\[x=\theta x_{1} + (1-\theta)x_{2}\]</span>
+where <span class="math inline">\(0\leq \theta \leq 1\)</span>.</p>
+<p>A <span><strong>convex set</strong></span> contains the line segment
+between any two points in the set <span class="math display">\[x_{1},
+x_{2} \in C,\hspace{0.12in} 0 \leq \theta \leq 1 \hspace{0.12in}
+\Rightarrow \hspace{0.12in} \theta x_{1} + (1-\theta)x_{2} \in
+C.\]</span></p>
+<p>A function <span class="math inline">\(f: \mathbb{R}^{n}\rightarrow
+R\)</span> is a <span><strong>convex function</strong></span> if the
+domain of <span class="math inline">\(f\)</span> is a convex set and
+<span class="math display">\[f(\theta \textbf{x} + (1-\theta)
+\textbf{y}) \leq \theta f(\textbf{x}) + (1-\theta)
+f(\textbf{y})\]</span></p>
+<p>for all <span class="math inline">\(\textbf{x},\textbf{y} \in
+\mathbb{R}^{n}\)</span>, <span class="math inline">\(0 \leq \theta \leq
+1\)</span></p>
+<h3 id="derivative-and-gradient">Derivative and Gradient</h3>
+<p>The <strong>derivative</strong> of a function is a measure of how the
+function varies with its input variables. Given an interval <span
+class="math inline">\([a,b]\)</span> one can compute how the function
+varies within that interval by calculating the average slope of the
+function in that interval: <span class="math display">\[\frac{f(b) -
+f(a)}{b-a}.\]</span> The derivative can be seen as the limit as the
+interval goes to zero, and it gives us the slope of the function at that
+point. <span class="math display">\[\frac {\partial f}{\partial x} =
+\lim_{h = 0} \frac{f(x+h) - f(x)}{h}\]</span></p>
+<p>Table <a href="#tb::derivatives" data-reference-type="ref"
+data-reference="tb::derivatives">3</a> shows derivatives of some
+functions that we will be using during the school.</p>
+<div class="center">
+<div id="tb::derivatives">
+<table>
+<caption>Some derivative examples</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Function <span
+class="math inline">\(f(x)\)</span></th>
+<th style="text-align: left;">Derivative <span
+class="math inline">\(\frac{\partial f}{\partial x}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span
+class="math inline">\(x^2\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(2x\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span
+class="math inline">\(x^n\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(nx^{n-1}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span
+class="math inline">\(\log(x)\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\frac{1}{x}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span
+class="math inline">\(\exp(x)\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(\exp(x)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span
+class="math inline">\(\frac{1}{x}\)</span></td>
+<td style="text-align: left;"><span
+class="math inline">\(-\frac{1}{x^{2}}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>An important rule of derivation is the chain rule. Consider <span
+class="math inline">\(h=f\circ g\)</span>, and <span
+class="math inline">\(u=g(x)\)</span>, then:</p>
+<p><span class="math display">\[\frac{\partial h}{\partial
+x}=\frac{\partial f}{\partial u}\cdot\frac{\partial g}{\partial
+x}\]</span></p>
+<div class="guide-box guide-box"><div class="guide-box-title">Example 0.4</div>
+<p>Consider the function <span
+class="math inline">\(h(x)=\exp(x^{2})\)</span>, this can be decomposed
+as <span class="math inline">\(h(x)=f(g(x))=f(u)=\exp(u)\)</span>, where
+<span class="math inline">\(u=g(x)=x^{2}\)</span> and has derivative
+<span class="math inline">\(\frac{\partial h}{\partial x}=\frac{\partial
+f}{\partial u}\cdot \frac{\partial u}{\partial x}=\exp(u) \cdot
+2x=\exp(x^{2}) \cdot 2x\)</span></p>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.11</div>
+<p>Consider the function <span class="math inline">\(f(x) = x^2\)</span>
+and its derivative <span class="math inline">\(\frac{\partial f}
+{\partial x}\)</span>. Look at the derivative of that function at points
+[-2,0,2], draw the tangent to the graph in that point <span
+class="math inline">\(\frac{\partial f}{\partial
+x}\left(-2\right)=-4\)</span>, <span
+class="math inline">\(\frac{\partial f}{\partial
+x}\left(0\right)=0\)</span>, and <span
+class="math inline">\(\frac{\partial f}{\partial
+x}\left(2\right)=4\)</span>. For example, the tangent equation for <span
+class="math inline">\(x=-2\)</span> is <span class="math inline">\(y=-4x
+- b\)</span>, where <span class="math inline">\(b=f(-2)\)</span>. The
+following code plots the function and the derivatives on those points
+using matplotlib (See Figure <a href="#fig:tangents"
+data-reference-type="ref" data-reference="fig:tangents">4</a>).</p>
+<pre><code class="language-python">a = np.arange(-5,5,0.01)
+f_x = np.power(a,2)
+plt.plot(a,f_x)
+
+plt.xlim(-5,5)
+plt.ylim(-5,15)
+
+k= np.array([-2,0,2])
+plt.plot(k,k**2,&quot;bo&quot;)
+for i in k:
+    plt.plot(a, (2*i)*a - (i**2))
+</code></pre>
+<div class="center">
+<figure>
+<img src="assets/figs/intro/tangents.png" id="fig:tangents"
+alt="Illustration of the gradient of the function f(x^2) at three different points x = [-2,0,2]. Note that at point x = 0 the gradient is zero which corresponds to the minimum of the function." />
+<figcaption aria-hidden="true">Illustration of the gradient of the
+function <span class="math inline">\(f(x^2)\)</span> at three different
+points <span class="math inline">\(x = [-2,0,2]\)</span>. Note that at
+point <span class="math inline">\(x = 0\)</span> the gradient is zero
+which corresponds to the minimum of the function.</figcaption>
+</figure>
+</div>
+</div>
+<p>The <strong>gradient</strong> of a function is a generalization of
+the derivative concept we just saw before for several dimensions. Let us
+assume we have a function <span
+class="math inline">\(f(\textbf{x})\)</span> where <span
+class="math inline">\(\textbf{x} \in \mathbb{R}^2\)</span>, so <span
+class="math inline">\(\textbf{x}\)</span> can be seen as a pair <span
+class="math inline">\(\textbf{x} = [{x_1,x_2}]\)</span>. Then, the
+gradient measures the slope of the function in both directions: <span
+class="math inline">\(\nabla_{\textbf{x}} f(\textbf{x}) = [\frac
+{\partial f}{\partial x_1},\frac {\partial f}{\partial
+x_2}]\)</span>.</p>
+<h3 id="gradient-based-methods"><span id="gradient_methods"
+label="gradient_methods"></span> Gradient Based Methods</h3>
+<p>Gradient based methods are probably the most common methods used for
+finding the minimizing sequence for a given function. The methods used
+in this class will make use of the function value <span
+class="math inline">\(f(\textbf{x}): \mathbb{R}^{n}\rightarrow
+R\)</span> as well as the gradient of the function <span
+class="math inline">\(\nabla_{\textbf{x}} f(\textbf{x})\)</span>. The
+simplest method is the <span><strong>Gradient descent</strong></span>
+method, an unconstrained first-order optimization algorithm.</p>
+<p>The intuition of this method is as follows: You start at a given
+point <span class="math inline">\(\textbf{x}_0\)</span> and compute the
+gradient at that point <span class="math inline">\(\nabla_{\textbf{x}_0}
+f(\textbf{x})\)</span>. You then take a step of length <span
+class="math inline">\(\eta\)</span> on the direction of the negative
+gradient to find a new point: <span
+class="math inline">\(\textbf{x}_1\)</span> = <span
+class="math inline">\(\textbf{x}_0 - \eta \nabla_{\textbf{x}_{0}}
+f(\textbf{x})\)</span>. Then, you compute the gradient at this new
+point, <span class="math inline">\(\nabla_{\textbf{x}_1}
+f(\textbf{x})\)</span>, and take a step of length <span
+class="math inline">\(\eta\)</span> on the direction of the negative
+gradient to find a new point: <span
+class="math inline">\(\textbf{x}_2\)</span> = <span
+class="math inline">\(\textbf{x}_1 - \eta \nabla_{\textbf{x}_{1}}
+f(\textbf{x})\)</span>. You proceed until you have reached a minimum
+(local or global). Recall from the previous subsection that you can
+identify the minimum by testing if the norm of the gradient is zero:
+<span class="math inline">\(||\nabla f(\textbf{x})|| = 0\)</span>.</p>
+<p>There are several practical concerns even with this basic algorithm
+to ensure both that the algorithm converges (reaches the minimum) and
+that it does so in a fast way (by fast we mean the number of function
+and gradient evaluations).</p>
+<ul>
+<li><p><strong>Step Size <span
+class="math inline">\(\eta\)</span></strong> A first question is how to
+find the step length <span class="math inline">\(\eta\)</span>. One
+condition is that <span class="math inline">\(\eta\)</span> should
+guarantee sufficient decrease in the function value. We will not cover
+these methods here but the most common ones are <strong>Backtracking
+line search</strong> or the <strong>Wolf Line Search</strong> <span
+class="citation" data-cites="Nocedal1999">(<a href="#ref-Nocedal1999"
+role="doc-biblioref">Nocedal and Wright 1999</a>)</span>.</p></li>
+<li><p><strong>Descent Direction</strong> A second problem is that using
+the negative gradient as direction can lead to a very slow convergence.
+Different methods that change the descent direction by multiplying the
+gradient by a matrix <span class="math inline">\(\textbf{B}\)</span>
+have been proposed that guarantee a faster convergence. Two notable
+methods are the Conjugate Gradient (CG) and the Limited Memory Quasi
+Newton methods (LBFGS) <span class="citation"
+data-cites="Nocedal1999">(<a href="#ref-Nocedal1999"
+role="doc-biblioref">Nocedal and Wright 1999</a>)</span>.</p></li>
+<li><p><strong>Stopping Criteria</strong> Finally, it will normally not
+be possible to reach full convergence either because it will be too
+slow, or because of numerical issues (computers cannot perform exact
+arithmetic). So normally we need to define a stopping criteria for the
+algorithm. Three common criteria (that are normally used together) are:
+a maximum number of iterations; the gradient norm be smaller than a
+given threshold <span class="math inline">\(||\nabla f(\textbf{x})||
+\leq \eta_1\)</span>, or the normalized difference in the function value
+be smaller than a given threshold <span
+class="math inline">\(\frac{|f(\textbf{x}_t) -
+f(\textbf{x}_{t-1})|}{\max(|f(\textbf{x}_t)|,|f(\textbf{x}_{t-1})|)}
+\leq \eta_2\)</span></p></li>
+</ul>
+<p>Algorithm <a href="#alg:graddescent" data-reference-type="ref"
+data-reference="alg:graddescent">[alg:graddescent]</a> shows the general
+gradient based algorithm. Note that for the simple gradient descent
+algorithm <span class="math inline">\(\textbf{B}\)</span> is the
+identity matrix and the descent direction is just the negative gradient
+of the function.</p>
+<figure class="guide-algorithm"><figcaption>Algorithm 0.1: Gradient Descent</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>given</b> a starting point \(<b>x</b>_{0}, i=0\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> <b>repeat</b></div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> \quad Compute step size \(\eta\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">4:</span> \quad Compute descent direction \(- <b>B</b>\nabla f(x_{i})\).</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">5:</span> \quad \(<b>x</b>_{i+1} \leftarrow <b>x</b>_{i} - \eta<b>B</b>\nabla f(<b>x</b>_{i})\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">6:</span> \quad \(i \leftarrow i + 1\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">7:</span> <b>until</b> stopping criterion is satisfied.</div></div></figure>
+<div class="center">
+<figure>
+<img src="assets/figs/intro/graddescent.png" id="fig:graddescent"
+alt="Illustration of gradient descent. The blue circles correspond to contours of the function (each blue circle is a set of points which have the same function value), while the red lines correspond to steps taken in the negative gradient direction." />
+<figcaption aria-hidden="true">Illustration of gradient descent. The
+blue circles correspond to contours of the function (each blue circle is
+a set of points which have the same function value), while the red lines
+correspond to steps taken in the negative gradient
+direction.</figcaption>
+</figure>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.12</div>
+<p>Consider the function <span class="math inline">\(f(x) = (x+2)^2 - 16
+\exp\left( -(x-2)^2 \right)\)</span>. Make a function that computes the
+function value given <span class="math inline">\(x\)</span>.</p>
+<pre><code class="language-python">def get_y(x):
+    return (x+2)**2 - 16*np.exp(-((x-2)**2))</code></pre>
+<p>Draw a plot around <span class="math inline">\(x \in
+[-8,8]\)</span>.</p>
+<pre><code class="language-python">x = np.arange(-8, 8, 0.001)
+y = get_y(x)
+plt.plot(x, y)
+plt.show()</code></pre>
+<p>Calculate the derivative of the function <span
+class="math inline">\(f(x)\)</span>, implement the function
+<em>get_grad(x)</em>.</p>
+<pre><code class="language-python">def get_grad(x):
+    return (2*x+4)-16*(-2*x + 4)*np.exp(-((x-2)**2))</code></pre>
+<p>Use the method <em>gradient_descent</em> to find the minimum of this
+function. Convince yourself that the code is doing the proper thing.
+Look at the constants we defined. Note, that we are using a simple
+approach to pick the step size (always have the value step_size) which
+is not necessarily correct.</p>
+<pre><code class="language-python">def gradient_descent_scalar(start_x, func, grad, step_size=0.1, prec=0.0001):
+    max_iter=100
+    x_new = start_x
+    res = []
+    for i in range(max_iter):
+        x_old = x_new
+        # Use negative step size for gradient descent
+        x_new = x_old - step_size * grad(x_new)
+        f_x_new = func(x_new)
+        f_x_old = func(x_old)
+        res.append([x_new,f_x_new])
+        
+        if(abs(f_x_new - f_x_old) &lt; prec):
+            print(&quot;change in function values too small, leaving&quot;)
+            return np.array(res)
+    print(&quot;exceeded maximum number of iterations, leaving&quot;)
+    return np.array(res)</code></pre>
+<p>Run the gradient descent algorithm starting from <span
+class="math inline">\(x_0 = -8\)</span> and plot the minimizing
+sequence.</p>
+<pre><code class="language-python">x = np.arange(-8, 8, 0.001)
+y = get_y(x)
+plt.plot(x, y)
+
+x_0 = -8
+res = gradient_descent_scalar(x_0, get_y, get_grad)
+plt.plot(res[:,0], res[:,1], &#39;r+&#39;)
+plt.show()</code></pre>
+<div class="center">
+<figure>
+<img src="assets/figs/intro/gradex1.png" id="fig:gradex1"
+alt="Example of running gradient descent starting on point x_0 = -8 for function f(x) = (x+2)^2 - 16
+   \exp\left( -(x-2)^2 \right). The function is represented in blue, while the points of the minimizing sequence are displayed as green plus signs." />
+<figcaption aria-hidden="true">Example of running gradient descent
+starting on point <span class="math inline">\(x_0 = -8\)</span> for
+function <span class="math inline">\(f(x) = (x+2)^2 - 16
+   \exp\left( -(x-2)^2 \right)\)</span>. The function is represented in
+blue, while the points of the minimizing sequence are displayed as green
+plus signs.</figcaption>
+</figure>
+</div>
+<p>Figure <a href="#fig:gradex1" data-reference-type="ref"
+data-reference="fig:gradex1">6</a> shows the resulting minimizing
+sequence. Note that the algorithm converged to a minimum, but since the
+function is not convex it converged only to a local minimum.</p>
+<p>Now try the same exercise starting from the initial point <span
+class="math inline">\(x_0 = 8\)</span>.</p>
+<pre><code class="language-python">x = np.arange(-8, 8, 0.001)
+y = get_y(x)
+plt.plot(x, y)
+
+x_0 = 8
+res = gradient_descent_scalar(x_0, get_y, get_grad)
+plt.plot(res[:,0], res[:,1], &#39;r+&#39;)
+plt.show()</code></pre>
+<div class="center">
+<figure>
+<img src="assets/figs/intro/gradex2.png" id="fig:gradex2"
+alt="Example of running gradient descent starting on point x_0 = 8 for function f(x) = (x+2)^2 - 16
+   \exp\left( -(x-2)^2 \right). The function is represented in blue, while the points of the minimizing sequence are displayed as green plus signs." />
+<figcaption aria-hidden="true">Example of running gradient descent
+starting on point <span class="math inline">\(x_0 = 8\)</span> for
+function <span class="math inline">\(f(x) = (x+2)^2 - 16
+   \exp\left( -(x-2)^2 \right)\)</span>. The function is represented in
+blue, while the points of the minimizing sequence are displayed as green
+plus signs.</figcaption>
+</figure>
+</div>
+<p>Figure <a href="#fig:gradex2" data-reference-type="ref"
+data-reference="fig:gradex2">7</a> shows the resulting minimizing
+sequence. Note that now the algorithm converged to the global minimum.
+However, note that to get to the global minimum the sequence of points
+jumped from one side of the minimum to the other. This is a consequence
+of using a wrong step size (in this case too large). Repeat the previous
+exercise changing both the values of the step-size and the precision.
+What do you observe?</p>
+</div>
+<p>During this school we will rely on the numerical optimization methods
+provided by Scipy (scientific computing library in python), which are
+very efficient implementations.</p>
+<h2 id="python-exercises">Python Exercises</h2>
+<h3 id="numpy-and-matplotlib">Numpy and Matplotlib</h3>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.13</div>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.14</div>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.15</div>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.16</div>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.17</div>
+<p>Consider the linear regression problem (ordinary least squares) on
+the Galton dataset, with a single response variable</p>
+<p><span class="math display">\[y = x^T w + \varepsilon\]</span>.</p>
+<p>The <em>linear regression problem</em> is, given a set <span
+class="math inline">\(\{ y^{(i)} \}_i\)</span> of samples of <span
+class="math inline">\(y\)</span> and the corresponding <span
+class="math inline">\(\ensuremath{\bm{x}}^{(i)}\)</span> vectors,
+estimate <span class="math inline">\(\ensuremath{\bm{w}}\)</span> to
+minimise the sum of the <span class="math inline">\(\varepsilon\)</span>
+variables. Traditionally this is solved analytically to obtain a closed
+form solution (although this is <strong>not the way in which it should
+be computed</strong> in this exercise, linear algebra packages have an
+optimised solver, with numpy, use <code>numpy.linalg.lstsq</code>).</p>
+<p>Alternatively, we can define the error function for each possible
+<span class="math inline">\(\ensuremath{\bm{w}}\)</span>:</p>
+<p><span class="math display">\[e(\ensuremath{\bm{w}}) = \sum_i \left(
+{\ensuremath{\bm{x}}^{(i)}}^T \ensuremath{\bm{w}} - y^{(i)}
+\right)^2.\]</span></p>
+<ol>
+<li><p>Derive the gradient of the error <span
+class="math inline">\(\frac{\partial e}{\partial w_j}\)</span>.</p></li>
+<li><p>Implement a solver based on this for two dimensional problems
+(i.e., <span class="math inline">\(\ensuremath{\bm{w}} \in
+R^2\)</span>).</p></li>
+<li><p>Use this method on the Galton dataset from the previous exercise
+to estimate the relationship between father and son’s height. Try two
+formulas <span class="math display">\[s = f w_1 + \varepsilon,
+\label{}\]</span> where <span class="math inline">\(s\)</span> is the
+son’s height, and <span class="math inline">\(f\)</span> is the father
+heights; and <span class="math display">\[s = f w_1 + 1w_0 + \varepsilon
+\label{--dup2}\]</span> where the input variable is now two dimensional:
+<span class="math inline">\((f,1)\)</span>. This allows the intercept to
+be non-zero.</p></li>
+<li><p>Plot the regression line you obtain with the points from the
+previous exercise.</p></li>
+<li><p>Use the <code>np.linalg.lstsq</code> function and compare to your
+solution.</p></li>
+</ol>
+<p>Please refer to the notebook for solutions.</p>
+</div>
+<h3 id="debugging">Debugging</h3>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.18</div>
+<p>Use the debugger to debug the <code>buggy.py</code> script which
+attempts to repeatedly perform the following computation:</p>
+<ol>
+<li><p>Start <span class="math inline">\(x_0 = 0\)</span></p></li>
+<li><p>Iterate</p>
+<ol>
+<li><p><span class="math inline">\(x&#39;_{t+1} = x_t + r\)</span>,
+where <span class="math inline">\(r\)</span> is a random
+variable.</p></li>
+<li><p>if <span class="math inline">\(x&#39;_{t+1} &gt;= 1.\)</span>,
+then stop.</p></li>
+<li><p>if <span class="math inline">\(x&#39;_{t+1} &lt;= 0.\)</span>,
+then <span class="math inline">\(x_{t+1} = 0\)</span></p></li>
+<li><p>else <span class="math inline">\(x_{t+1} =
+x&#39;_{t+1}\)</span>.</p></li>
+</ol></li>
+<li><p>Return the number of iterations.</p></li>
+</ol>
+<p>Having repeated this computation a number of times, the programme
+prints the average. Unfortunately, the program has a few bugs, which you
+need to fix.</p>
+</div>
+<h1 class="unnumbered" id="bibliography">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-bertsekas1995np" class="csl-entry" role="doc-biblioentry">
+Bertsekas, D. P., M. L. Homer, D. A. Logan, and S. D. Patek. 1995.
+<em>Nonlinear Programming</em>. Athena Scientific.
+</div>
+<div id="ref-boyd2004convex" class="csl-entry" role="doc-biblioentry">
+Boyd, S. P., and L. Vandenberghe. 2004. <em>Convex Optimization</em>.
+Cambridge Univ Pr.
+</div>
+<div id="ref-Nocedal1999" class="csl-entry" role="doc-biblioentry">
+Nocedal, J., and S. J. Wright. 1999. <em>Numerical Optimization</em>.
+Springer verlag.
+</div>
+</div>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>The PEP8 document
+(<code>www.python.org/dev/peps/pep-0008</code>) is the official coding
+style guide for the Python language.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><a href="http://matplotlib.org/"
+class="uri">http://matplotlib.org/</a><a href="#fnref2"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><a href="http://www.numpy.org/"
+class="uri">http://www.numpy.org/</a><a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>You might need to inform python about
+the location of the lxmls labs toolkit. To do so you need to
+<code>import sys</code> and use the <code>sys.path.append</code>
+function to add the path to the toolkit readers.<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+					</article>
+<nav class="guide-pagenav">
+<span></span>
+<a class="next" href="day1.html"><span class="label">Next</span><span class="title">Day 1 &middot; Linear Classifiers &rarr;</span></a>
+</nav>
+				</main>
+			</div>
+		</div>
+
+		<footer class="ftco-footer ftco-bg-dark ftco-section">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<img src="../images/lxmls-logo-2.png" width="63%" style="margin:0 5% 0 0">
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Contact us!</h2>
+							<div class="block-23 mb-3">
+								<ul>
+									<li><span class="text">IT &ndash; Lisboa, Instituto Superior T&eacute;cnico - Torre Norte - Piso 10,<br>
+									Av. Rovisco Pais, 1, 1049 - 001 LISBOA, Portugal</span></li>
+									<li><a href="mailto:lxmls-2026@googlegroups.com"><span class="text">lxmls-2026@googlegroups.com</span></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<p style="font-size:80%">
+							Copyright &copy;2021-<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://colorlib.com/" target="_blank">Colorlib</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="assets/highlight/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+		<script src="assets/copy-button.js"></script>
+	</body>
+</html>
