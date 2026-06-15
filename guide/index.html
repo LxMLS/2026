@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Lab Guide &middot; LxMLS Lab Guide</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="../files/css" rel="stylesheet">
+		<link rel="stylesheet" href="../files/open-iconic-bootstrap.min.css">
+		<link rel="stylesheet" href="../files/flaticon.css">
+		<link rel="stylesheet" href="../files/icomoon.css">
+		<link rel="stylesheet" href="../files/style.css">
+		<link rel="stylesheet" href="assets/highlight/github.min.css">
+		<link rel="stylesheet" href="assets/guide.css">
+		<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: [['\\(', '\\)']],
+				displayMath: [['\\[', '\\]']],
+				tags: 'ams',
+				macros: {
+					"D": ["\\frac{\\partial #1}{\\partial #2}", 2],
+					"F": "\\boldsymbol{f}",
+					"Ind": "\\textbf{1}",
+					"KL": "\\mathop{\\rm KL}",
+					"Max": "\\max",
+					"Min": "\\min",
+					"Q": "\\mathcal{Q}",
+					"V": "\\mathcal{V}",
+					"Vs": "\\mathcal{S}",
+					"W": "\\boldsymbol{w}",
+					"X": "\\mathcal{X}",
+					"Xp": "\\mathbf{E}",
+					"XpD": "\\mathbf{\\widehat{E}}",
+					"Y": "\\mathcal{Y}",
+					"argmax": "\\operatorname*{arg\\,max}",
+					"argmin": "\\operatorname*{arg\\,min}",
+					"auxq": "q(\\hseq \\mid \\sent)",
+					"bX": "\\mathbf{X}",
+					"bY": "\\mathbf{Y}",
+					"bZ": "\\mathbf{Z}",
+					"bm": ["\\boldsymbol{#1}", 1],
+					"bx": "\\mathbf{x}",
+					"by": "\\mathbf{y}",
+					"bz": "\\mathbf{z}",
+					"chaptername": "Day",
+					"code": ["\\texttt{#1}", 1],
+					"ensuremath": ["#1", 1],
+					"hs": "\\by",
+					"hseq": "\\bar{\\by}",
+					"hv": "{y}",
+					"hvocab": "\\mathbf{Y}",
+					"independent": "{\\perp\\!\\!\\!\\perp}",
+					"ip": ["#1\\cdot#2 ", 2],
+					"joint": "p_{\\theta}(\\sent ,\\hseq)",
+					"len": ["||#1||", 1],
+					"likelihood": "\\mathcal{L}",
+					"marginal": "p_{\\theta}(\\sent)",
+					"nll": "{\\rm \\emph{null}}",
+					"obj": "\\mathcal{O}",
+					"obs": "\\bx",
+					"pd": ["\\frac{\\partial#1}{\\partial#2}", 2],
+					"pdd": ["\\frac{\\partial^2 #1}{\\partial #2^2}", 2],
+					"pos": "Part-of-Speech",
+					"posi": "Part-of-Speech induction",
+					"posterior": "p_{\\theta}(\\hseq \\mid \\sent)",
+					"sent": "\\bar{\\bx}",
+					"setQ": "\\Q_{\\sent}",
+					"st": "\\operatorname*{s.t.}",
+					"state": "{s}",
+					"statevocab": "\\Lambda",
+					"trex": "\\bar{\\bx},\\bar{\\by} \\in \\mathcal{D}",
+					"vect": ["\\boldsymbol{#1}", 1],
+					"vectornorm": ["\\left|\\left|#1\\right|\\right|_{#2}", 2],
+					"vocab": "\\Sigma",
+					"vv": "{v}"
+				}
+			},
+			options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+		};
+		</script>
+		<script id="MathJax-script" async src="assets/mathjax/tex-chtml.js"></script>
+	</head>
+	<body class="guide-body">
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" href="../index.html"><img alt="LxMLS 2026" src="../images/lxmls-logo.png" width="33%" style="margin:0 5% 0 0"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"> Menu</button>
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="../index.html#about" class="nav-link">About</a></li>
+						<li class="nav-item"><a href="../index.html#dates" class="nav-link">Dates</a></li>
+						<li class="nav-item"><a href="../index.html#faq" class="nav-link">FAQ</a></li>
+						<li class="nav-item"><a href="../index.html#schedule" class="nav-link">Schedule</a></li>
+						<li class="nav-item"><a href="../index.html#speakers" class="nav-link">Speakers</a></li>
+						<li class="nav-item"><a href="../index.html#organizers" class="nav-link">Organizers</a></li>
+						<li class="nav-item active"><a href="index.html" class="nav-link">Guide</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="guide-wrap container-fluid">
+			<div class="row">
+				<aside class="col-lg-3 col-md-4 guide-sidebar">
+					<div class="guide-sidebar-inner">
+						<button class="guide-sidebar-toggle d-md-none" type="button" data-toggle="collapse" data-target="#guide-toc" aria-expanded="false" aria-controls="guide-toc">Contents</button>
+						<div class="collapse d-md-block" id="guide-toc">
+							<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
+<nav>
+<ul>
+<li><a class="toc-h2" href="day0.html">Day 0 &middot; Basic Tutorials</a></li>
+<li><a class="toc-h2" href="day1.html">Day 1 &middot; Linear Classifiers</a></li>
+<li><a class="toc-h2" href="day2.html">Day 2 &middot; Non-Linear Classifiers</a></li>
+<li><a class="toc-h2" href="day3.html">Day 3 &middot; Sequence Models</a></li>
+<li><a class="toc-h2" href="day4.html">Day 4 &middot; Transformers</a></li>
+</ul>
+</nav>
+						</div>
+					</div>
+				</aside>
+				<main class="col-lg-9 col-md-8 guide-main">
+					<article class="guide-content">
+<h1>LxMLS Lab Guide</h1><p>This is the web edition of the Lisbon Machine Learning Summer School lab guide. It walks through the hands-on exercises for each day of the school, with copy-able code, rendered equations, and figures. Use the cards below or the sidebar to navigate.</p><div class="row mt-4"><div class="col-md-6 mb-4"><a class="guide-day-card" href="day0.html"><div class="day-num">Day 0</div><div class="day-title">Basic Tutorials</div></a></div><div class="col-md-6 mb-4"><a class="guide-day-card" href="day1.html"><div class="day-num">Day 1</div><div class="day-title">Linear Classifiers</div></a></div><div class="col-md-6 mb-4"><a class="guide-day-card" href="day2.html"><div class="day-num">Day 2</div><div class="day-title">Non-Linear Classifiers</div></a></div><div class="col-md-6 mb-4"><a class="guide-day-card" href="day3.html"><div class="day-num">Day 3</div><div class="day-title">Sequence Models</div></a></div><div class="col-md-6 mb-4"><a class="guide-day-card" href="day4.html"><div class="day-num">Day 4</div><div class="day-title">Transformers</div></a></div></div>
+					</article>
+
+				</main>
+			</div>
+		</div>
+
+		<footer class="ftco-footer ftco-bg-dark ftco-section">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<img src="../images/lxmls-logo-2.png" width="63%" style="margin:0 5% 0 0">
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Contact us!</h2>
+							<div class="block-23 mb-3">
+								<ul>
+									<li><span class="text">IT &ndash; Lisboa, Instituto Superior T&eacute;cnico - Torre Norte - Piso 10,<br>
+									Av. Rovisco Pais, 1, 1049 - 001 LISBOA, Portugal</span></li>
+									<li><a href="mailto:lxmls-2026@googlegroups.com"><span class="text">lxmls-2026@googlegroups.com</span></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<p style="font-size:80%">
+							Copyright &copy;2021-<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://colorlib.com/" target="_blank">Colorlib</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="../files/jquery.min.js"></script>
+		<script src="../files/popper.min.js"></script>
+		<script src="../files/bootstrap.min.js"></script>
+		<script src="assets/highlight/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+		<script src="assets/copy-button.js"></script>
+	</body>
+</html>

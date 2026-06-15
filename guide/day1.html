@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Day 1 Linear Classifiers &middot; LxMLS Lab Guide</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="../files/css" rel="stylesheet">
+		<link rel="stylesheet" href="../files/open-iconic-bootstrap.min.css">
+		<link rel="stylesheet" href="../files/flaticon.css">
+		<link rel="stylesheet" href="../files/icomoon.css">
+		<link rel="stylesheet" href="../files/style.css">
+		<link rel="stylesheet" href="assets/highlight/github.min.css">
+		<link rel="stylesheet" href="assets/guide.css">
+		<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: [['\\(', '\\)']],
+				displayMath: [['\\[', '\\]']],
+				tags: 'ams',
+				macros: {
+					"D": ["\\frac{\\partial #1}{\\partial #2}", 2],
+					"F": "\\boldsymbol{f}",
+					"Ind": "\\textbf{1}",
+					"KL": "\\mathop{\\rm KL}",
+					"Max": "\\max",
+					"Min": "\\min",
+					"Q": "\\mathcal{Q}",
+					"V": "\\mathcal{V}",
+					"Vs": "\\mathcal{S}",
+					"W": "\\boldsymbol{w}",
+					"X": "\\mathcal{X}",
+					"Xp": "\\mathbf{E}",
+					"XpD": "\\mathbf{\\widehat{E}}",
+					"Y": "\\mathcal{Y}",
+					"argmax": "\\operatorname*{arg\\,max}",
+					"argmin": "\\operatorname*{arg\\,min}",
+					"auxq": "q(\\hseq \\mid \\sent)",
+					"bX": "\\mathbf{X}",
+					"bY": "\\mathbf{Y}",
+					"bZ": "\\mathbf{Z}",
+					"bm": ["\\boldsymbol{#1}", 1],
+					"bx": "\\mathbf{x}",
+					"by": "\\mathbf{y}",
+					"bz": "\\mathbf{z}",
+					"chaptername": "Day",
+					"code": ["\\texttt{#1}", 1],
+					"ensuremath": ["#1", 1],
+					"hs": "\\by",
+					"hseq": "\\bar{\\by}",
+					"hv": "{y}",
+					"hvocab": "\\mathbf{Y}",
+					"independent": "{\\perp\\!\\!\\!\\perp}",
+					"ip": ["#1\\cdot#2 ", 2],
+					"joint": "p_{\\theta}(\\sent ,\\hseq)",
+					"len": ["||#1||", 1],
+					"likelihood": "\\mathcal{L}",
+					"marginal": "p_{\\theta}(\\sent)",
+					"nll": "{\\rm \\emph{null}}",
+					"obj": "\\mathcal{O}",
+					"obs": "\\bx",
+					"pd": ["\\frac{\\partial#1}{\\partial#2}", 2],
+					"pdd": ["\\frac{\\partial^2 #1}{\\partial #2^2}", 2],
+					"pos": "Part-of-Speech",
+					"posi": "Part-of-Speech induction",
+					"posterior": "p_{\\theta}(\\hseq \\mid \\sent)",
+					"sent": "\\bar{\\bx}",
+					"setQ": "\\Q_{\\sent}",
+					"st": "\\operatorname*{s.t.}",
+					"state": "{s}",
+					"statevocab": "\\Lambda",
+					"trex": "\\bar{\\bx},\\bar{\\by} \\in \\mathcal{D}",
+					"vect": ["\\boldsymbol{#1}", 1],
+					"vectornorm": ["\\left|\\left|#1\\right|\\right|_{#2}", 2],
+					"vocab": "\\Sigma",
+					"vv": "{v}"
+				}
+			},
+			options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+		};
+		</script>
+		<script id="MathJax-script" async src="assets/mathjax/tex-chtml.js"></script>
+	</head>
+	<body class="guide-body">
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" href="../index.html"><img alt="LxMLS 2026" src="../images/lxmls-logo.png" width="33%" style="margin:0 5% 0 0"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"> Menu</button>
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="../index.html#about" class="nav-link">About</a></li>
+						<li class="nav-item"><a href="../index.html#dates" class="nav-link">Dates</a></li>
+						<li class="nav-item"><a href="../index.html#faq" class="nav-link">FAQ</a></li>
+						<li class="nav-item"><a href="../index.html#schedule" class="nav-link">Schedule</a></li>
+						<li class="nav-item"><a href="../index.html#speakers" class="nav-link">Speakers</a></li>
+						<li class="nav-item"><a href="../index.html#organizers" class="nav-link">Organizers</a></li>
+						<li class="nav-item active"><a href="index.html" class="nav-link">Guide</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="guide-wrap container-fluid">
+			<div class="row">
+				<aside class="col-lg-3 col-md-4 guide-sidebar">
+					<div class="guide-sidebar-inner">
+						<button class="guide-sidebar-toggle d-md-none" type="button" data-toggle="collapse" data-target="#guide-toc" aria-expanded="false" aria-controls="guide-toc">Contents</button>
+						<div class="collapse d-md-block" id="guide-toc">
+							<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
+<nav>
+<ul>
+<li><a class="toc-h2" href="#notation">Notation</a></li>
+<li><a class="toc-h2" href="#generative-classifiers-naïve-bayes">Generative Classifiers: Naïve Bayes</a></li>
+<li><a class="toc-h3" href="#training-and-inference">Training and Inference</a></li>
+<li><a class="toc-h2" href="#assignment">Assignment</a></li>
+<li><a class="toc-h2" href="#sec:linearclass">Discriminative Classifiers</a></li>
+<li><a class="toc-h3" href="#features">Features</a></li>
+<li><a class="toc-h3" href="#inference">Inference</a></li>
+<li><a class="toc-h3" href="#online-discriminative-algorithms">Online Discriminative
+Algorithms</a></li>
+<li><a class="toc-h3" href="#batch-discriminative-classifiers">Batch Discriminative
+Classifiers</a></li>
+<li><a class="toc-h2" href="#comparison">Comparison</a></li>
+<li><a class="toc-h2" href="#final-remarks">Final remarks</a></li>
+</ul>
+</nav>
+						</div>
+					</div>
+				</aside>
+				<main class="col-lg-9 col-md-8 guide-main">
+					<article class="guide-content">
+<h1>Linear Classifiers <small class="text-muted">Day 1</small></h1>
+<p>This day will serve as an introduction to machine learning. We will
+recall some fundamental concepts about decision theory and
+classification, present some widely used models and algorithms and try
+to provide the main motivation behind them. There are several textbooks
+that provide a thorough description of some of the concepts introduced
+here: for example, <span class="citation"
+data-cites="Mitchell1997">Mitchell (<a href="#ref-Mitchell1997"
+role="doc-biblioref">1997</a>)</span>, <span class="citation"
+data-cites="Duda2001">Duda, Hart, and Stork (<a href="#ref-Duda2001"
+role="doc-biblioref">2001</a>)</span>, <span class="citation"
+data-cites="Schoelkopf2002">Schölkopf and Smola (<a
+href="#ref-Schoelkopf2002" role="doc-biblioref">2002</a>)</span>, <span
+class="citation" data-cites="Joachims2002">Joachims (<a
+href="#ref-Joachims2002" role="doc-biblioref">2002</a>)</span>, <span
+class="citation" data-cites="Bishop2006">Bishop (<a
+href="#ref-Bishop2006" role="doc-biblioref">2006</a>)</span>, <span
+class="citation" data-cites="Manning2008">Manning, Raghavan, and Schütze
+(<a href="#ref-Manning2008" role="doc-biblioref">2008</a>)</span>, to
+name just a few. The concepts that we introduce in this chapter will be
+revisited in later chapters and expanded to account for non-linear
+models and structured inputs and outputs. For now, we will concern
+ourselves only with multi-class classification (with just a few classes)
+and linear classifiers.</p>
+<h2 class="unnumbered" id="todays-assignment">Today’s assignment</h2>
+<p>The assignment of today’s class is to implement a classifier called
+Naïve Bayes, and use it to perform sentiment analysis on a corpus of
+book reviews from Amazon.</p>
+<h2 id="notation">Notation</h2>
+<p>In what follows, we denote by <span
+class="math inline">\(\mathcal{X}\)</span> our <em>input set</em> (also
+called <em>observation set</em>) and by <span
+class="math inline">\(\mathcal{Y}\)</span> our <em>output set</em>. We
+will make no assumptions about the set <span
+class="math inline">\(\mathcal{X}\)</span>, which can be continuous or
+discrete. In this lecture, we consider <em>classification</em> problems,
+where <span class="math inline">\(\mathcal{Y} =
+\{c_1,\ldots,c_K\}\)</span> is a finite set, consisting of <span
+class="math inline">\(K\)</span> <em>classes</em> (also called
+<em>labels</em>). For example, <span
+class="math inline">\(\mathcal{X}\)</span> can be a set of documents in
+natural language, and <span class="math inline">\(\mathcal{Y}\)</span> a
+set of topics, the goal being to assign a topic to each document.</p>
+<p>We use upper-case letters for denoting random variables, and
+lower-case letters for value assignments to those variables: for
+example,</p>
+<ul>
+<li><p><span class="math inline">\(X\)</span> is a random variable
+taking values on <span
+class="math inline">\(\mathcal{X}\)</span>,</p></li>
+<li><p><span class="math inline">\(Y\)</span> is a random variable
+taking values on <span
+class="math inline">\(\mathcal{Y}\)</span>,</p></li>
+<li><p><span class="math inline">\(x \in \mathcal{X}\)</span> and <span
+class="math inline">\(y \in \mathcal{Y}\)</span> are particular values
+for <span class="math inline">\(X\)</span> and <span
+class="math inline">\(Y\)</span>.</p></li>
+</ul>
+<p>We consider <em>events</em> such as <span
+class="math inline">\(X=x\)</span>, <span
+class="math inline">\(Y=y\)</span>, etc.</p>
+<p>For simplicity reasons, throughout this lecture we will use modified
+notation and let <span class="math inline">\(P(y)\)</span> denote the
+<em>probability</em> associated with the event <span
+class="math inline">\(Y=y\)</span> (instead of <span
+class="math inline">\(P_Y(Y=y)\)</span>). Also, <em>joint</em> and
+<em>conditional</em> probabilities are denoted as <span
+class="math inline">\(P(x,y) \triangleq P_{X,Y}(X=x \wedge Y=y)\)</span>
+and <span class="math inline">\(P(x|y) \triangleq P_{X|Y}(X=x
+\,\,|\,\,Y=y)\)</span>, respectively. From the laws of probabilities:
+<span class="math display">\[P(x,y)=P(y|x) P(x) = P(x|y) P(y),\]</span>
+for all <span class="math inline">\(x \in \mathcal{X}\)</span> and <span
+class="math inline">\(y \in \mathcal{Y}\)</span>.</p>
+<p>Quantities that are predicted or estimated from the data will be
+appended a hat-symbol: for example, estimations of the probabilities
+above are denoted as <span class="math inline">\({\hat P}(y)\)</span>,
+<span class="math inline">\({\hat P}(x,y)\)</span> and <span
+class="math inline">\({\hat P}(y|x)\)</span>; and a prediction of an
+output will be denoted <span class="math inline">\({\hat
+y}\)</span>.</p>
+<p>We assume that a <em>training dataset</em> <span
+class="math inline">\(\mathcal{D}\)</span> is provided which consists of
+<span class="math inline">\(M\)</span> input-output pairs (called
+<em>examples</em> or <em>instances</em>): <span
+class="math display">\[\mathcal{D} =
+\{(x^{1},y^{1}),\ldots,(x^{M},y^{M})\} \subseteq \mathcal{X} \times
+\mathcal{Y}.\]</span></p>
+<p>The <strong>goal of (supervised) machine learning</strong> is to use
+the training dataset <span class="math inline">\(\mathcal{D}\)</span> to
+learn a function <span class="math inline">\(h\)</span> (called a
+<em>classifier</em>) that maps from <span
+class="math inline">\(\mathcal{X}\)</span> to <span
+class="math inline">\(\mathcal{Y}\)</span>: this way, given a new
+instance <span class="math inline">\(x \in \mathcal{X}\)</span> (test
+example), the machine makes a prediction <span
+class="math inline">\({\hat y}\)</span> by evaluating <span
+class="math inline">\(h\)</span> on <span
+class="math inline">\(x\)</span>, i.e., <span
+class="math inline">\({\hat y} = h(x)\)</span>.</p>
+<h2 id="generative-classifiers-naïve-bayes"><span id="s::naiveBayes"
+label="s::naiveBayes"></span>Generative Classifiers: Naïve Bayes</h2>
+<p>If we knew the <em>true</em> distribution <span
+class="math inline">\(P(X,Y)\)</span>, the best possible classifier
+(called Bayes optimal) would be one which predicts according to</p>
+<p><span class="math display">\[\begin{aligned}
+{\hat y} &amp;=&amp; \arg\max_{y \in \mathcal{Y}} P(y|x)  \nonumber\\
+&amp;=&amp; \arg\max_{y \in \mathcal{Y}} \frac{P(x,y)}{P(x)} \nonumber
+\\
+&amp;=^{\dagger}&amp; \arg\max_{y \in \mathcal{Y}} P(x,y) \nonumber \\
+&amp;=&amp; \arg\max_{y \in \mathcal{Y}} P(y)
+P(x|y),\end{aligned}\]</span> where in <span
+class="math inline">\({\dagger}\)</span> we used the fact that <span
+class="math inline">\(P(x)\)</span> is constant with respect to <span
+class="math inline">\(y\)</span>.</p>
+<p>Generative classifiers try to estimate the probability distributions
+<span class="math inline">\(P(Y)\)</span> and <span
+class="math inline">\(P(X|Y)\)</span>, which are respectively called the
+<em>class prior</em> and the <em>class conditionals</em>. They assume
+that the data are generated according to the following generative story
+(independently for each <span
+class="math inline">\(m=1,\ldots,M\)</span>):</p>
+<ol>
+<li><p>A class <span class="math inline">\(y_m \sim P(Y)\)</span> is
+drawn from the class prior distribution;</p></li>
+<li><p>An input <span class="math inline">\(x_m \sim P(X|Y=y_m)\)</span>
+is drawn from the corresponding class conditional.</p></li>
+</ol>
+<p>Figure <a href="#simpleDataSet_bo" data-reference-type="ref"
+data-reference="simpleDataSet_bo">1</a> shows an example of the Bayes
+optimal decision boundary for a toy example with <span
+class="math inline">\(K=2\)</span> classes, <span
+class="math inline">\(M=100\)</span> points, class priors <span
+class="math inline">\(P(y_1) = P(y_2) = 0.5\)</span>, and class
+conditionals <span class="math inline">\(P(x|y_i)\)</span> given by 2-D
+Gaussian distributions with the same variance but different means.</p>
+<div class="center">
+<figure>
+<img src="assets/figs/classification/gaussian_separabale_bo.png"
+id="simpleDataSet_bo"
+alt="Example of a dataset together with the corresponding Bayes optimal decision boundary. The input set consists in points in the real plane, \mathcal{X} =
+    \mathcal{R^2}, and the output set consists of two classes (Red and Blue). Training points are represented as squares, while test points are represented as circles." />
+<figcaption aria-hidden="true">Example of a dataset together with the
+corresponding Bayes optimal decision boundary. The input set consists in
+points in the real plane, <span class="math inline">\(\mathcal{X} =
+    \mathcal{R^2}\)</span>, and the output set consists of two classes
+(Red and Blue). Training points are represented as squares, while test
+points are represented as circles.</figcaption>
+</figure>
+</div>
+<h3 id="training-and-inference">Training and Inference</h3>
+<p>Training a generative model amounts to <em>estimating</em> the
+probabilities <span class="math inline">\(P(Y)\)</span> and <span
+class="math inline">\(P(X|Y)\)</span> using the dataset <span
+class="math inline">\(\mathcal{D}\)</span>, yielding estimates <span
+class="math inline">\(\hat{P}(y)\)</span> and <span
+class="math inline">\(\hat{P}(x|y)\)</span>. This estimation is usually
+called <em>training</em> or <em>learning</em>.</p>
+<p>After we are done training, we are given a new input <span
+class="math inline">\(x \in \mathcal{X}\)</span>, and we want to make a
+prediction according to <span class="math display">\[\begin{aligned}
+{\hat y} &amp;=&amp; \arg\max_{y \in \mathcal{Y}} \hat{P}(y)
+\hat{P}(x|y),
+\label{eq:argmax}\end{aligned}\]</span> using the estimated
+probabilities. This is usually called <em>inference</em> or
+<em>decoding</em>.</p>
+<p>We are left with two important problems:</p>
+<ol>
+<li><p>How should the distributions <span class="math inline">\({\hat
+P}(Y)\)</span> and <span class="math inline">\({\hat P}(X|Y)\)</span> be
+“defined”? (i.e., what kind of independence assumptions should they
+state, or how should they factor?)</p></li>
+<li><p>How should parameters be estimated from the training data <span
+class="math inline">\(\mathcal{D}\)</span>?</p></li>
+</ol>
+<p>The first problem strongly depends on the application at hand. Quite
+often, there is a natural decomposition of the input variable <span
+class="math inline">\(X\)</span> into <span
+class="math inline">\(J\)</span> components, <span
+class="math display">\[X = (X_1,\ldots,X_J).\]</span></p>
+<p>The naïve Bayes method makes the following assumption: <em><span
+class="math inline">\(X_1,\ldots,X_J\)</span> are conditionally
+independent given the class</em>. Mathematically, this means that <span
+class="math display">\[\begin{aligned}
+P(X|Y) &amp;=&amp; \prod_{j=1}^J P(X_j|Y).\end{aligned}\]</span> Note
+that this independence assumption greatly reduces the number of
+parameters to be estimated (degrees of freedom) from <span
+class="math inline">\(O(\exp(J))\)</span> to <span
+class="math inline">\(O(J)\)</span>, hence estimation of <span
+class="math inline">\({\hat P}(X|Y)\)</span> becomes much simpler, as we
+shall see. It also makes the overall computation much more efficient for
+large <span class="math inline">\(J\)</span> and it decreases the risk
+of overfitting the data. On the other hand, if the assumption is
+over-simplistic it may increase the risk of under-fitting.</p>
+<p>For the second problem, one of the simplest ways to solve it is using
+<em>maximum likelihood estimation</em>, which aims to maximize the
+probability of the training sample, assuming that each point was
+generated independently. This probability (call it <span
+class="math inline">\(P(\mathcal{D})\)</span>) factorizes as <span
+class="math display">\[\begin{aligned}
+P(\mathcal{D}) &amp;=&amp; \prod_{m=1}^M P(x^m,y^m) \nonumber\\
+&amp;=&amp; \prod_{m=1}^M P(y^m)\prod_{j=1}^J P(x^m_j|y^m).
+\end{aligned}\]</span></p>
+<div class="guide-box guide-box"><div class="guide-box-title">Example 1.1 (2-D Gaussians)</div>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.1</div>
+<p><span id="exer:simplenb" label="exer:simplenb"></span></p>
+</div>
+<h3
+id="example-multinomial-naïve-bayes-for-document-classification">Example:
+Multinomial Naïve Bayes for Document Classification</h3>
+<p>We now consider a more realistic scenario where the naïve Bayes
+classifier may be applied. Suppose that the task is <em>document
+classification</em>: <span class="math inline">\(\mathcal{X}\)</span> is
+the set of all possible documents, and <span
+class="math inline">\(\mathcal{Y}=\{y_1,\ldots,y_K\}\)</span> is a set
+of classes for those documents. Let <span
+class="math inline">\(\mathcal{V} = \{w_1,\ldots,w_J\}\)</span> be the
+vocabulary, i.e., the set of words that occur in some document.</p>
+<p>A very popular document representation is through a “bag-of-words”:
+each document is seen as a collection of words along with their
+frequencies; word ordering is ignored. We are going to see that this is
+equivalent to a naïve Bayes assumption with the <em>multinomial
+model</em>. We associate to each class a multinomial distribution, which
+ignores word ordering, but takes into consideration the frequency with
+which each word appears in a document. For simplicity, we assume that
+all documents have the same length <span
+class="math inline">\(L\)</span>. <a href="#fn1" class="footnote-ref"
+id="fnref1" role="doc-noteref"><sup>1</sup></a> Each document <span
+class="math inline">\(x\)</span> is assumed to have been generated as
+follows. First, a class <span class="math inline">\(y\)</span> is
+generated according to <span class="math inline">\(P(y)\)</span>. Then,
+<span class="math inline">\(x\)</span> is generated by sequentially
+picking words from <span class="math inline">\(\mathcal{V}\)</span> with
+replacement. Each word <span class="math inline">\(w_j\)</span> is
+picked with probability <span class="math inline">\(P(w_j|y)\)</span>.
+For example, the probability of generating a document <span
+class="math inline">\(x = w_{j_1}\ldots w_{j_L}\)</span> (<em>i.e.</em>,
+a sequence of <span class="math inline">\(L\)</span> words <span
+class="math inline">\(w_{j_1},\ldots,w_{j_L}\)</span>) is <span
+class="math display">\[\begin{aligned}
+P(x|y) = \prod_{l=1}^L P(w_{j_l}|y) = \prod_{j=1}^J
+P(w_j|y)^{n_j(x)},\end{aligned}\]</span> where <span
+class="math inline">\(n_j(x)\)</span> is the number of occurrences of
+word <span class="math inline">\(w_j\)</span> in document <span
+class="math inline">\(x\)</span>.</p>
+<p>Hence, the assumption is that word occurrences (<em>tokens</em>) are
+independent given the class. The parameters that need to be estimated
+are <span class="math inline">\({\hat P}(y_1),\ldots,{\hat
+P}(y_K)\)</span>, and <span class="math inline">\({\hat
+P}(w_j|y_k)\)</span> for <span
+class="math inline">\(j=1,\ldots,J\)</span> and <span
+class="math inline">\(k=1,\ldots,K\)</span>. Given a training sample
+<span class="math inline">\(\mathcal{D} =
+\{(x^{1},y^{1}),\ldots,(x^{M},y^{M})\}\)</span>, denote by <span
+class="math inline">\(\mathcal{I}_k\)</span> the indices of those
+instances belonging to the <span class="math inline">\(k\)</span>th
+class. The maximum likelihood estimates of the quantities above are:
+<span class="math display">\[\begin{aligned}
+\label{eq:mlemultinomial}
+{\hat P}(y_k) = \frac{|\mathcal{I}_k|}{M}, \qquad
+{\hat P}(w_j|y_k) = \frac{\sum_ {m \in \mathcal{I}_k}
+n_j(x^m)}{\sum_{i=1}^J \sum_ {m\in \mathcal{I}_k}
+n_i(x^m)}.\end{aligned}\]</span> In words: the class priors’ estimates
+are their relative frequencies (as before), and the class-conditional
+word probabilities are the relative frequencies of those words across
+documents with that class.</p>
+<h2 id="assignment">Assignment</h2>
+<p>With the previous theoretical background, you will be able to solve
+today’s assignment.</p>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.2</div>
+<p>In this exercise we will use the Amazon sentiment analysis data <span
+class="citation" data-cites="blitzer2007biographies">(<a
+href="#ref-blitzer2007biographies" role="doc-biblioref">Blitzer, Dredze,
+and Pereira 2007</a>)</span>, where the goal is to classify text
+documents as expressing a <em>positive</em> or <em>negative</em>
+sentiment (i.e., a classification problem with two classes). We are
+going to focus on book reviews. To load the data, type:</p>
+<pre><code class="language-python">import lxmls.readers.sentiment_reader as srs
+
+scr = srs.SentimentCorpus(&quot;books&quot;)</code></pre>
+<p>This will load the data in a bag-of-words representation where rare
+words (occurring less than <span class="math inline">\(5\)</span> times
+in the training data) are removed.</p>
+<ol>
+<li><p>Implement the Naïve Bayes algorithm. Open the file
+<span><code>multinomial_naive_bayes.py</code></span>, which is inside
+the <span><code>classifiers </code></span> folder. In the
+<span><code>MultinomialNaiveBayes</code></span> class you will find the
+<span><code>train</code></span> method. We have already placed some code
+in that file to help you get started.</p></li>
+<li><p>After implementing, run Naïve Bayes with the multinomial model on
+the Amazon dataset (sentiment classification) and report results both
+for training and testing:</p>
+<pre><code class="language-python">import lxmls.classifiers.multinomial_naive_bayes as mnbb
+
+mnb = mnbb.MultinomialNaiveBayes()
+params_nb_sc = mnb.train(scr.train_X,scr.train_y)
+y_pred_train = mnb.test(scr.train_X,params_nb_sc)
+acc_train = mnb.evaluate(scr.train_y, y_pred_train)
+y_pred_test = mnb.test(scr.test_X,params_nb_sc)
+acc_test = mnb.evaluate(scr.test_y, y_pred_test)
+print(&quot;Multinomial Naive Bayes Amazon Sentiment Accuracy train: %f test: %f&quot;%(acc_train,acc_test))</code></pre></li>
+<li><p>Observe that words that were not observed at training time cause
+problems at test time. Why? To solve this problem, apply a simple
+<em>add-one</em> smoothing technique: replace the expression in Eq. <a
+href="#eq:mlemultinomial" data-reference-type="ref"
+data-reference="eq:mlemultinomial">[eq:mlemultinomial]</a> for the
+estimation of the conditional probabilities by <span
+class="math display">\[{\hat P}(w_j|c_k) = \frac{1+\sum_ {m \in
+\mathcal{I}_k} n_j(x^m)}{J + \sum_{i=1}^J \sum_ {m\in \mathcal{I}_k}
+n_i(x^m)}.\]</span></p>
+<p>where <span class="math inline">\(J\)</span> is the number of
+distinct words.</p>
+<p>This is a widely used smoothing strategy which has a Bayesian
+interpretation: it corresponds to choosing a uniform prior for the word
+distribution on both classes, and to replace the maximum likelihood
+criterion by a <em>maximum a posteriori</em> approach. This is a form of
+<em>regularization</em>, preventing the model from <em>overfitting</em>
+on the training data. See <em>e.g.</em> <span class="citation"
+data-cites="Manning1999 Manning2008">Manning and Schütze (<a
+href="#ref-Manning1999" role="doc-biblioref">1999</a>; <a
+href="#ref-Manning2008" role="doc-biblioref">Manning, Raghavan, and
+Schütze 2008</a>)</span> for more information. Report the new
+accuracies.</p></li>
+</ol>
+</div>
+<h2 id="sec:linearclass">Discriminative Classifiers</h2>
+<p>In the previous sections we discussed generative classifiers, which
+require us to model the class prior and class conditional distributions
+(<span class="math inline">\(P(Y)\)</span> and <span
+class="math inline">\(P(X|Y)\)</span>, respectively). Recall, however,
+that a classifier is <em>any</em> function which maps objects <span
+class="math inline">\(x \in \mathcal{X}\)</span> onto classes <span
+class="math inline">\(y \in \mathcal{Y}\)</span>. While it’s often
+useful to model how the data was generated, it’s not required.
+Classifiers that do not model these distributions are called
+<em>discriminative</em> classifiers.</p>
+<h3 id="features">Features</h3>
+<p>For the purpose of understanding discriminative classifiers, it is
+useful to think about each <span class="math inline">\(x \in
+\mathcal{X}\)</span> as an abstract object which is subject to a set of
+descriptions or measurements, which are called <em>features</em>. A
+feature is simply a real number that describes the value of some
+property of <span class="math inline">\(x\)</span>. For example, in the
+previous section, the features of a document were the number of times
+each word <span class="math inline">\(w_j\)</span> appeared in it.</p>
+<p>Let <span class="math inline">\(g_1(x),\ldots,g_J(x)\)</span> be
+<span class="math inline">\(J\)</span> features of <span
+class="math inline">\(x\)</span>. We call the vector <span
+class="math display">\[\boldsymbol{g}(x) =
+(g_1(x),\ldots,g_J(x))\]</span> a <em>feature vector representation</em>
+of <span class="math inline">\(x\)</span>. The map <span
+class="math inline">\(\boldsymbol{g}:\mathcal{X}\rightarrow
+\mathbb{R}^J\)</span> is called a <em>feature mapping</em>.</p>
+<p>In NLP applications, features are often binary-valued and result from
+evaluating propositions such as: <span
+class="math display">\[\begin{aligned}
+g_1(x) &amp;\triangleq&amp;
+\left\{
+\begin{array}{ll}
+1, &amp; \text{if sentence $x$ contains the word \emph{Ronaldo}}\\
+0, &amp; \text{otherwise.}
+\end{array}
+\right.\\
+g_2(x) &amp;\triangleq&amp;
+\left\{
+\begin{array}{ll}
+1, &amp; \text{if all words in sentence $x$ are capitalized}\\
+0, &amp; \text{otherwise.}
+\end{array}
+\right.\\
+g_3(x) &amp;\triangleq&amp;
+\left\{
+\begin{array}{ll}
+1, &amp; \text{if $x$ contains any of the words \emph{amazing},
+\emph{excellent} or \emph{:-)}}\\
+0, &amp; \text{otherwise.}
+\end{array}
+\right.\end{aligned}\]</span> In this example, the feature vector
+representation of the sentence "Ronaldo shoots and scores an amazing
+goal!" would be <span class="math inline">\(\boldsymbol{g}(x) =
+(1,0,1)\)</span>.</p>
+<p>In multi-class learning problems, rather than associating features
+only with the input objects, it is useful to consider <em>joint feature
+mappings</em> <span
+class="math inline">\(\boldsymbol{f}:\mathcal{X}\times
+\mathcal{Y}\rightarrow \mathbb{R}^D\)</span>. In that case, the
+<em>joint feature vector</em> <span
+class="math inline">\(\boldsymbol{f}(x,y)\)</span> can be seen as a
+collection of joint input-output measurements. For example: <span
+class="math display">\[\begin{aligned}
+f_1(x,y) &amp;\triangleq&amp;
+\left\{
+\begin{array}{ll}
+1, &amp; \text{if $x$ contains \emph{Ronaldo}, and topic $y$ is {\tt
+sport}}\\
+0, &amp; \text{otherwise.}
+\end{array}
+\right.\\
+f_2(x,y) &amp;\triangleq&amp;
+\left\{
+\begin{array}{ll}
+1, &amp; \text{if $x$ contains \emph{Ronaldo}, and topic $y$ is {\tt
+politics}}\\
+0, &amp; \text{otherwise.}
+\end{array}
+\right.\end{aligned}\]</span> A very simple form of defining a joint
+feature mapping which is often employed is via: <span
+class="math display">\[\begin{aligned}
+\label{eq:jointfeatsimple}
+\boldsymbol{f}(x,y) &amp;\triangleq&amp; \boldsymbol{g}(x) \otimes
+\boldsymbol{e}_y\nonumber\\
+&amp;=&amp; (0,\ldots,0,\underbrace{\boldsymbol{g}(x)}_{\text{$y$th
+slot}},0,\ldots,0)\end{aligned}\]</span> where <span
+class="math inline">\(\boldsymbol{g}(x) \in \mathbb{R}^J\)</span> is a
+input feature vector, <span class="math inline">\(\otimes\)</span> is
+the Kronecker product (<span class="math inline">\([\boldsymbol{a}
+\otimes \boldsymbol{b}]_{ij} = a_i b_j\)</span>) and <span
+class="math inline">\(\boldsymbol{e}_y \in \mathbb{R}^{K}\)</span>, with
+<span class="math inline">\([\boldsymbol{e}_y]_c = 1\)</span> iff <span
+class="math inline">\(y=c\)</span>, and <span
+class="math inline">\(0\)</span> otherwise. Hence <span
+class="math inline">\(\boldsymbol{f}(x,y) \in \mathbb{R}^{J \times
+K}\)</span>.</p>
+<h3 id="inference">Inference</h3>
+<p>Linear classifiers are very popular in natural language processing
+applications. They make their decision based on the rule: <span
+class="math display">\[{\hat y} = \arg\max_{y \in \mathcal{Y}}
+\boldsymbol{w} \cdot \boldsymbol{f}(x,y).\]</span> where</p>
+<ul>
+<li><p><span class="math inline">\(\boldsymbol{w} \in
+\mathbb{R}^D\)</span> is a <em>weight vector</em>;</p></li>
+<li><p><span class="math inline">\(\boldsymbol{f}(x,y) \in
+\mathbb{R}^D\)</span> is a <em>feature vector</em>;</p></li>
+<li><p><span class="math inline">\(\boldsymbol{w} \cdot
+\boldsymbol{f}(x,y) = \sum_{d=1}^D w_d f_d(x,y)\)</span> is the inner
+product between <span class="math inline">\(\boldsymbol{w}\)</span> and
+<span class="math inline">\(\boldsymbol{f}(x,y)\)</span>.</p></li>
+</ul>
+<p>Hence, each feature <span class="math inline">\(f_d(x,y)\)</span> has
+a weight <span class="math inline">\(w_d\)</span> and, for each class
+<span class="math inline">\(y \in \mathcal{Y}\)</span>, a score is
+computed by linearly combining all the weighted features. All these
+scores are compared, and a prediction is made by choosing the class with
+the largest score.</p>
+<div class="guide-box guide-box"><div class="guide-box-title">Remark 1.1</div>
+<p>With the design above (Eq. <a href="#eq:jointfeatsimple"
+data-reference-type="ref"
+data-reference="eq:jointfeatsimple">[eq:jointfeatsimple]</a>), and
+decomposing the weight vector as <span
+class="math inline">\(\boldsymbol{w} =
+(\boldsymbol{w}_{c_1},\ldots,\boldsymbol{w}_{c_K})\)</span>, we have
+that <span class="math display">\[\boldsymbol{w} \cdot
+\boldsymbol{f}(x,y) = \boldsymbol{w}_y \cdot \boldsymbol{g}(x).\]</span>
+In words: each class <span class="math inline">\(y \in
+\mathcal{Y}\)</span> gets its own weight vector <span
+class="math inline">\(\boldsymbol{w}_y\)</span>, and one defines a input
+feature vector <span class="math inline">\(\boldsymbol{g}(x)\)</span>
+that only looks at the input <span class="math inline">\(x \in
+\mathcal{X}\)</span>. This representation is very useful when features
+only depend on input <span class="math inline">\(x\)</span> since it
+allows a more compact representation. Note that the number of features
+is normally very large.</p>
+</div>
+<div class="guide-box guide-box"><div class="guide-box-title">Remark 1.2</div>
+<p>The multinomial naïve Bayes classifier described in the previous
+section is an instance of a linear classifier. Recall that the naïve
+Bayes classifier predicts according to <span class="math inline">\({\hat
+y} = \arg\max_{y \in \mathcal{Y}} \hat{P}(y) \hat{P}(x|y)\)</span>.
+Taking logs, in the multinomial model for document classification this
+is equivalent to: <span class="math display">\[\begin{aligned}
+{\hat y} &amp;=&amp; \arg\max_{y \in \mathcal{Y}} \log \hat{P}(y) + \log
+\hat{P}(x|y) \nonumber\\
+&amp;=&amp; \arg\max_{y \in \mathcal{Y}} \log \hat{P}(y) + \sum_{j=1}^J
+n_j(x) \log \hat{P}(w_{j}|y)\nonumber\\
+&amp;=&amp; \arg\max_{y \in \mathcal{Y}} \boldsymbol{w}_y \cdot
+\boldsymbol{g}(x), \end{aligned}\]</span> where <span
+class="math display">\[\begin{aligned}
+\boldsymbol{w}_y &amp;=&amp; \left(b_y, \log \hat{P}(w_1 | y),\ldots,
+\log \hat{P}(w_J | y)\right) \nonumber\\
+b_y &amp;=&amp; \log \hat{P}(y)\nonumber\\
+\boldsymbol{g}(x) &amp;=&amp; (1, n_1(x), \ldots,
+n_J(x)).\end{aligned}\]</span> Hence, the multinomial model yields a
+prediction rule of the form <span class="math display">\[\begin{aligned}
+{\hat y} &amp;=&amp; \arg\max_{y \in \mathcal{Y}} \boldsymbol{w}_y \cdot
+\boldsymbol{g}(x). \end{aligned}\]</span></p>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.3</div>
+</div>
+<h3 id="online-discriminative-algorithms">Online Discriminative
+Algorithms</h3>
+<p>We now discuss two discriminative classification algorithms. These
+two algorithms are called <em>online</em> (or <em>stochastic</em>)
+algorithms because they only process one data point (in our example, one
+document) at a time. Algorithms which look at the whole dataset at once
+are called <em>offline</em>, or <em>batch</em> algorithms, and will be
+discussed later.</p>
+<h4 id="perceptron"><span id="s:perceptron" label="s:perceptron"></span>
+Perceptron</h4>
+<p>The <em>perceptron</em> <span class="citation"
+data-cites="Rosenblatt1958">(<a href="#ref-Rosenblatt1958"
+role="doc-biblioref">Rosenblatt 1958</a>)</span> is perhaps the oldest
+algorithm used to train a linear classifier. The perceptron works as
+follows: at each round, it takes an element <span
+class="math inline">\(x\)</span> from the dataset, and uses the current
+model to make a prediction. If the prediction is correct, nothing
+happens. Otherwise, the model is corrected by adding the feature vector
+w.r.t. the correct output and subtracting the feature vector w.r.t. the
+predicted (wrong) output. Then, it proceeds to the next round.</p>
+<p>Alg. <a href="#alg:perceptron" data-reference-type="ref"
+data-reference="alg:perceptron">[alg:perceptron]</a> shows the
+pseudo-code of the perceptron algorithm. As it can be seen, it is
+remarkably simple; yet it often reaches a very good performance, often
+better than the Naïve Bayes, and usually not much worse than maximum
+entropy models or SVMs (which will be described in the following
+section). <a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a></p>
+<figure class="guide-algorithm"><figcaption>Algorithm 1.1: Averaged perceptron</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b> dataset \(\mathcal{D}\), number of rounds \(R\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> initialize \(t = 0, \boldsymbol{w}^t = \mathbf{0}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(r=1\) <b>to</b> \(R\) <b>do</b></div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">4:</span> \(\mathcal{D}_s =\) shuffle\((\mathcal{D})\)</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">5:</span> <b>for</b> \(i=1\) <b>to</b> \(M\) <b>do</b></div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">6:</span> \(m = \mathcal{D}_s(i)\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">7:</span> take training pair \((x^m, y^m)\) and predict using the current model:  	\(\hat{y}  \leftarrow \argmax_{y'\in\mathcal{Y}} \boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y')\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">8:</span> update the model:  	\(\boldsymbol{w}^{t+1} \leftarrow \boldsymbol{w}^{t} +         \boldsymbol{f}(x^m,y^m) - \boldsymbol{f}(x^m,\hat{y})\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">9:</span> \(t = t+1\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">10:</span> <b>output:</b> the averaged model \(\hat{\boldsymbol{w}} \leftarrow \frac{1}{t}\sum_{i=1}^{t} \boldsymbol{w}^i\)</div></div></figure>
+<p>A weight vector <span class="math inline">\(\boldsymbol{w}\)</span>
+defines a <em>separating hyperplane</em> if it classifies all the
+training data correctly, <em>i.e.</em>, if <span
+class="math inline">\(y^m = \argmax_{y \in \mathcal{Y}} \boldsymbol{w}
+\cdot \boldsymbol{f}(x^m,y)\)</span> hold for <span
+class="math inline">\(m = 1,\ldots,M\)</span>. A dataset <span
+class="math inline">\(\mathcal{D}\)</span> is <em>separable</em> if such
+a weight vector exists (in general, <span
+class="math inline">\(\boldsymbol{w}\)</span> is not unique). A very
+important property of the perceptron algorithm is the following: if
+<span class="math inline">\(\mathcal{D}\)</span> is separable, then the
+number of mistakes made by the perceptron algorithm until it finds a
+separating hyperplane is <em>finite</em>. This means that if the data
+are separable, the perceptron will eventually find a separating
+hyperplane <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
+<p>There are other variants of the perceptron (e.g., with
+regularization) which we omit for brevity.</p>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.4</div>
+<p>We provide an implementation of the perceptron algorithm in the class
+<span><code>Perceptron</code></span> (file
+<span><code>perceptron.py</code></span>).</p>
+<ol>
+<li><p>Run the following commands to generate a simple dataset similar
+to the one plotted on Figure <a href="#simpleDataSet_bo"
+data-reference-type="ref" data-reference="simpleDataSet_bo">1</a>:</p>
+<pre><code class="language-python">import lxmls.readers.simple_data_set as sds
+sd = sds.SimpleDataSet(nr_examples=100, g1 = [[-1,-1],1], g2 = [[1,1],1], balance=0.5, split=[0.5,0,0.5])</code></pre></li>
+<li><p>Run the perceptron algorithm on the simple dataset previously
+generated and report its train and test set accuracy:</p>
+<pre><code class="language-python">import lxmls.classifiers.perceptron as percc
+
+perc = percc.Perceptron()
+params_perc_sd = perc.train(sd.train_X,sd.train_y)
+y_pred_train = perc.test(sd.train_X,params_perc_sd)
+acc_train = perc.evaluate(sd.train_y, y_pred_train)
+y_pred_test = perc.test(sd.test_X,params_perc_sd)
+acc_test = perc.evaluate(sd.test_y, y_pred_test)
+print(&quot;Perceptron Simple Dataset Accuracy train: %f test: %f&quot;%(acc_train,acc_test))</code></pre></li>
+<li><p>Plot the decision boundary found:</p>
+<pre><code class="language-python">fig,axis = sd.plot_data()
+fig,axis = sd.add_line(fig,axis,params_perc_sd,&quot;Perceptron&quot;,&quot;blue&quot;)</code></pre>
+<p>Change the code to save the intermediate weight vectors, and plot the
+decision boundaries every five iterations. What do you observe?</p></li>
+<li><p>Run the perceptron algorithm on the Amazon dataset.</p></li>
+</ol>
+</div>
+<h4 id="margin-infused-relaxed-algorithm-mira">Margin Infused Relaxed
+Algorithm (MIRA)</h4>
+<p>The MIRA algorithm <span class="citation"
+data-cites="Crammer2002 Crammer2006">(<a href="#ref-Crammer2002"
+role="doc-biblioref">Crammer and Singer 2002</a>; <a
+href="#ref-Crammer2006" role="doc-biblioref">Crammer et al.
+2006</a>)</span> has achieved very good performance in NLP problems.
+Recall that the Perceptron takes an input pattern and, if its prediction
+is wrong, adds the quantity <span
+class="math inline">\([\boldsymbol{f}(x^m,y^m) -
+\boldsymbol{f}(x^m,\hat{y})]\)</span> to the weight vector. MIRA changes
+this by adding <span
+class="math inline">\(\eta^t[\boldsymbol{f}(x^m,y^m) -
+\boldsymbol{f}(x^m,\hat{y})]\)</span> to the weight vector. The
+difference is the step size <span class="math inline">\(\eta^t\)</span>,
+which depends on the iteration <span
+class="math inline">\(t\)</span>.</p>
+<p>There is a theoretical basis for this algorithm, which we now briefly
+explain. At each round <span class="math inline">\(t\)</span>, MIRA
+updates the weight vector by solving the following optimization
+problem:</p>
+<p><span class="math display">\[\begin{aligned}
+\label{eq:miraupdates}
+\boldsymbol{w}^{t+1} \leftarrow \argmin_{\boldsymbol{w}, \xi} &amp;
+\xi  + \frac{\lambda}{2} \|\boldsymbol{w} - \boldsymbol{w}^t\|^2 \\
+\text{s.t.} &amp; \boldsymbol{w} \cdot \boldsymbol{f}(x^m,y^m) \ge
+\boldsymbol{w} \cdot\boldsymbol{f}(x^m,\hat{y}) + 1 - \xi\\
+&amp; \xi \ge 0,\end{aligned}\]</span> where <span
+class="math inline">\(\hat{y}=\argmax_{y&#39;\in\mathcal{Y}}
+\boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y&#39;)\)</span> is the
+prediction using the model with weight vector <span
+class="math inline">\(\boldsymbol{w}^t\)</span>. By inspecting Eq. <a
+href="#eq:miraupdates" data-reference-type="ref"
+data-reference="eq:miraupdates">[eq:miraupdates]</a> we see that MIRA
+attempts to achieve a tradeoff between <em>conservativeness</em>
+(penalizing large changes from the previous weight vector via the term
+<span class="math inline">\(\frac{\lambda}{2} \|\boldsymbol{w} -
+\boldsymbol{w}^t\|^2\)</span>) and <em>correctness</em> (by requiring,
+through the constraints, that the new model <span
+class="math inline">\(\boldsymbol{w}^{t+1}\)</span> “separates” the true
+output from the prediction with a margin (although slack <span
+class="math inline">\(\xi \ge 0\)</span> is allowed). <a href="#fn3"
+class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>
+Note that, if the prediction is correct (<span
+class="math inline">\(\hat{y}=y^m\)</span>) the solution of the problem
+Eq. <a href="#eq:miraupdates" data-reference-type="ref"
+data-reference="eq:miraupdates">[eq:miraupdates]</a> leaves the weight
+vector unchanged (<span
+class="math inline">\(\boldsymbol{w}^{t+1}=\boldsymbol{w}^t\)</span>).
+This quadratic programming problem has a closed form solution: <a
+href="#fn4" class="footnote-ref" id="fnref4"
+role="doc-noteref"><sup>4</sup></a> <span
+class="math display">\[\boldsymbol{w}^{t+1}
+\leftarrow  \boldsymbol{w}^{t} + \eta^t  (\boldsymbol{f}(x^m,y^m) -
+\boldsymbol{f}(x^m,\hat{y})),\]</span> with <span
+class="math display">\[\eta^t = \min\left\{\lambda^{-1},
+\frac{\boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,\hat{y}) -
+\boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y^m) +
+\rho(\hat{y},y^m)}{\|\boldsymbol{f}(x^m,y^m) -
+\boldsymbol{f}(x^m,\hat{y})\|^2}\right\},\]</span> where <span
+class="math inline">\(\rho: \mathcal{Y} \times \mathcal{Y} \rightarrow
+\mathbb{R}_+\)</span> is a non-negative cost function, such that <span
+class="math inline">\(\rho(\hat{y},y)\)</span> is the cost incurred by
+predicting <span class="math inline">\(\hat{y}\)</span> when the true
+output is <span class="math inline">\(y\)</span>; we assume <span
+class="math inline">\(\rho(y,y) = 0\)</span> for all <span
+class="math inline">\(y \in \mathcal{Y}\)</span>. For simplicity, we
+focus here on the <span class="math inline">\(0/1\)</span>-cost (but
+keep in mind that other cost functions are possible): <span
+class="math display">\[\label{eq:costfunc}
+\rho(\hat{y},y) = \left\{
+\begin{array}{ll}
+1 &amp; \text{if $\hat{y} \ne y$}\\
+0 &amp; \text{otherwise.}
+\end{array}
+\right.\]</span></p>
+<p>MIRA is depicted in Alg. <a href="#alg:mira"
+data-reference-type="ref" data-reference="alg:mira">[alg:mira]</a>. For
+other variants of MIRA, see <span class="citation"
+data-cites="Crammer2006">Crammer et al. (<a href="#ref-Crammer2006"
+role="doc-biblioref">2006</a>)</span>.</p>
+<figure class="guide-algorithm"><figcaption>Algorithm 1.2: MIRA</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b> dataset \(\mathcal{D}\), parameter \(\lambda\), number of rounds \(R\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> initialize \(t = 0, \boldsymbol{w}^t = \mathbf{0}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(r=1\) <b>to</b> \(R\) <b>do</b></div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">4:</span> \(\mathcal{D}_s =\) shuffle\((\mathcal{D})\)</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">5:</span> <b>for</b> \(i=1\) <b>to</b> \(M\) <b>do</b></div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">6:</span> \(m = \mathcal{D}_s(i)\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">7:</span> \(t = t+1\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">8:</span> take training pair \((x^m, y^m)\) and predict using the current model:  	\(\hat{y}  \leftarrow \argmax_{y'\in\mathcal{Y}} \boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y')\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">9:</span> compute loss: \(\ell^t = \boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,\hat{y}) - \boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y^m) + \rho(\hat{y},y^m)\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">10:</span> compute stepsize: \(\eta^t = \min\left\{\lambda^{-1}, \frac{\ell^t}{\|\boldsymbol{f}(x^m,y^m) - \boldsymbol{f}(x^m,\hat{y})\|^2}\right\}\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">11:</span> update the model:  	\(\boldsymbol{w}^{t+1} \leftarrow  \boldsymbol{w}^{t} + \eta^t  (\boldsymbol{f}(x^m,y^m) - \boldsymbol{f}(x^m,\hat{y}))\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">12:</span> <b>output:</b> the averaged model \(\hat{\boldsymbol{w}} \leftarrow \frac{1}{t}\sum_{i=1}^{t} \boldsymbol{w}^i\)</div></div></figure>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.5</div>
+<p>We provide an implementation of the MIRA algorithm. Compare it with
+the perceptron for various values of <span
+class="math inline">\(\lambda\)</span></p>
+<pre><code class="language-python">import lxmls.classifiers.mira as mirac
+
+mira = mirac.Mira()
+mira.regularizer = 1.0 # This is lambda
+params_mira_sd = mira.train(sd.train_X,sd.train_y)
+y_pred_train = mira.test(sd.train_X,params_mira_sd)
+acc_train = mira.evaluate(sd.train_y, y_pred_train)
+y_pred_test = mira.test(sd.test_X,params_mira_sd)
+acc_test = mira.evaluate(sd.test_y, y_pred_test)
+print(&quot;Mira Simple Dataset Accuracy train: %f test: %f&quot;%(acc_train,acc_test))
+fig,axis = sd.add_line(fig,axis,params_mira_sd,&quot;Mira&quot;,&quot;green&quot;)
+
+params_mira_sc = mira.train(scr.train_X,scr.train_y)
+y_pred_train = mira.test(scr.train_X,params_mira_sc)
+acc_train = mira.evaluate(scr.train_y, y_pred_train)
+y_pred_test = mira.test(scr.test_X,params_mira_sc)
+acc_test = mira.evaluate(scr.test_y, y_pred_test)
+print(&quot;Mira Amazon Sentiment Accuracy train: %f test: %f&quot;%(acc_train,acc_test))</code></pre>
+<p>Compare the results achieved and separating hyperplanes found.</p>
+</div>
+<h3 id="batch-discriminative-classifiers">Batch Discriminative
+Classifiers</h3>
+<p>As we have mentioned, the perceptron and MIRA algorithms are called
+<em>online</em> or <em>stochastic</em> because they look at one data
+point at a time. We now describe two discriminative classifiers which
+look at all points at once; these are called <em>offline</em> or
+<em>batch</em> algorithms.</p>
+<h4 id="maximum-entropy-classifiers"><span id="s:me"
+label="s:me"></span>Maximum Entropy Classifiers</h4>
+<p>The notion of <em>entropy</em> in the context of Information Theory
+<span class="citation" data-cites="Shannon1948">(<a
+href="#ref-Shannon1948" role="doc-biblioref">Shannon 1948</a>)</span> is
+one of the most significant advances in mathematics in the twentieth
+century. The principle of <em>maximum entropy</em> (which appears under
+different names, such as “maximum mutual information” or “minimum
+Kullback-Leibler divergence”) plays a fundamental role in many methods
+in statistics and machine learning <span class="citation"
+data-cites="Jaynes1982">(<a href="#ref-Jaynes1982"
+role="doc-biblioref">Jaynes 1982</a>)</span>. <a href="#fn5"
+class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> The
+basic rationale is that choosing the model with the highest entropy
+(subject to constraints that depend on the observed data) corresponds to
+making the fewest possible assumptions regarding what was unobserved,
+making uncertainty about the model as large as possible.</p>
+<p>For example, if we throw a die and want to estimate the probability
+of its outcomes, the distribution with the highest entropy would be the
+uniform distribution (each outcome having of probability a <span
+class="math inline">\(1/6\)</span>). Now suppose that we are only told
+that outcomes <span class="math inline">\(\{1,2,3\}\)</span> occurred
+<span class="math inline">\(10\)</span> times in total, and <span
+class="math inline">\(\{4,5,6\}\)</span> occurred <span
+class="math inline">\(30\)</span> times in total, then the principle of
+maximum entropy would lead us to estimate <span
+class="math inline">\(P(1)=P(2)=P(3)=1/12\)</span> and <span
+class="math inline">\(P(4)=P(5)=P(6)=1/4\)</span> (i.e., outcomes would
+be uniform within each of the two groups).<a href="#fn6"
+class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>This example could be presented in a more formal way. Suppose that we
+want to use binary features to represent the outcome of the die throw.
+We use two features: <span class="math inline">\(f_{123}(x,y) =
+1\)</span> if and only if <span class="math inline">\(y \in
+\{1,2,3\}\)</span>, and <span class="math inline">\(f_{456}(x,y) =
+1\)</span> if and only if <span class="math inline">\(y \in
+\{4,5,6\}\)</span>. Our observations state that in 40 throws, we
+observed <span class="math inline">\(f_{123}\)</span> 10 times (25%) and
+<span class="math inline">\(f_{456}\)</span> 30 times (75%). The maximum
+entropy principle states that we want to find the parameters <span
+class="math inline">\(\boldsymbol{w}\)</span> of our model, and
+consequently the probability distribution <span
+class="math inline">\(P_{\boldsymbol{w}}(Y|X)\)</span>, which makes
+<span class="math inline">\(f_{123}\)</span> have an expected value of
+0.25 and <span class="math inline">\(f_{456}\)</span> have an expected
+value of 0.75. These constraints, <span class="math inline">\(E[f_{123}]
+= 0.25\)</span> and <span class="math inline">\(E[f_{456}] =
+0.75\)</span>, are known as <em>first moment matching
+constraints</em>.<a href="#fn7" class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a></p>
+<p>An important fundamental result, which we will not prove here, is
+that the maximum entropy distribution <span
+class="math inline">\(P_{\boldsymbol{w}}(Y|X)\)</span> under first
+moment matching constraints is a <em>log-linear model</em>. <a
+href="#fn8" class="footnote-ref" id="fnref8"
+role="doc-noteref"><sup>8</sup></a> It has the following parametric
+form: <span class="math display">\[\label{eq:loglinear}
+P_{\boldsymbol{w}}(y|x) = \frac{\exp(\boldsymbol{w} \cdot
+\boldsymbol{f}(x,y))}{Z(\boldsymbol{w},x)}\]</span> The denominator in
+Eq. <a href="#eq:loglinear" data-reference-type="ref"
+data-reference="eq:loglinear">[eq:loglinear]</a> is called the
+<em>partition function</em>: <span
+class="math display">\[Z(\boldsymbol{w},x) = \sum_{y&#39; \in
+\mathcal{Y}} \exp(\boldsymbol{w} \cdot
+\boldsymbol{f}(x,y&#39;)).\]</span> An important property of the
+partition function is that the gradient of its logarithm equals the
+feature expectations: <span class="math display">\[\begin{aligned}
+\nabla_{\boldsymbol{w}} \log Z(\boldsymbol{w},x) &amp;=&amp;
+E_{\boldsymbol{w}} [\boldsymbol{f}(x,Y)]\nonumber\\
+&amp;=&amp; \sum_{y&#39; \in \mathcal{Y}} P_{\boldsymbol{w}}(y&#39;|x)
+\boldsymbol{f}(x,y&#39;).\end{aligned}\]</span></p>
+<p>The average conditional log-likelihood is: <span
+class="math display">\[\begin{aligned}
+\mathcal{L}(\boldsymbol{w}; \mathcal{D}) &amp;=&amp;
+\frac{1}{M}\log P_{\boldsymbol{w}}(y^1,\ldots,y^M | x^1,\ldots,x^M)
+\nonumber\\
+&amp;=&amp; \frac{1}{M}\log \prod_{m=1}^M P_{\boldsymbol{w}}(y^m |
+x^m)\nonumber\\
+&amp;=&amp;  \frac{1}{M}\sum_{m=1}^M \log P_{\boldsymbol{w}}(y^m |
+x^m)\nonumber\\
+&amp;=&amp;  \frac{1}{M}\sum_{m=1}^M \left( \boldsymbol{w} \cdot
+\boldsymbol{f}(x^m,y^m)
+- \log Z(\boldsymbol{w},x^m)\right). \end{aligned}\]</span> We try to
+find the parameters <span class="math inline">\(\boldsymbol{w}\)</span>
+that maximize the log-likelihood <span
+class="math inline">\(\mathcal{L}(\boldsymbol{w}; \mathcal{D})\)</span>;
+to avoid overfitting, we add a regularization term that penalizes values
+of <span class="math inline">\(\boldsymbol{w}\)</span> that have a high
+magnitude. The optimization problem becomes: <span
+class="math display">\[\begin{aligned}
+\label{eq:maxent}
+\hat{\boldsymbol{w}} &amp;=&amp;
+\argmax_{\boldsymbol{w}} \mathcal{L}(\boldsymbol{w}; \mathcal{D})  -
+\frac{\lambda}{2} \|\boldsymbol{w}\|^2 \nonumber\\
+&amp;=&amp;
+\argmin_{\boldsymbol{w}} -\mathcal{L}(\boldsymbol{w}; \mathcal{D}) +
+\frac{\lambda}{2} \|\boldsymbol{w}\|^2.\end{aligned}\]</span> Here we
+use the squared <span class="math inline">\(L_2\)</span>-norm as the
+regularizer, <a href="#fn9" class="footnote-ref" id="fnref9"
+role="doc-noteref"><sup>9</sup></a> but other norms are possible. The
+scalar <span class="math inline">\(\lambda \ge 0\)</span> controls the
+amount of regularization. Unlike the naïve Bayes examples, this
+optimization problem does not have a closed form solution in general;
+hence we need to resort to numerical optimization (see section <a
+href="#numerical_optimization" data-reference-type="ref"
+data-reference="numerical_optimization">[numerical_optimization]</a>).
+Let <span class="math inline">\(F_{\lambda}(\boldsymbol{w}; \mathcal{D})
+= -\mathcal{L}(\boldsymbol{w}; \mathcal{D}) + \frac{\lambda}{2}
+\|\boldsymbol{w}\|^2\)</span> be the objective function in Eq. <a
+href="#eq:maxent" data-reference-type="ref"
+data-reference="eq:maxent">[eq:maxent]</a>. This function is convex,
+which implies that a local optimum of Eq. <a href="#eq:maxent"
+data-reference-type="ref" data-reference="eq:maxent">[eq:maxent]</a> is
+also a global optimum. <span
+class="math inline">\(F_{\lambda}(\boldsymbol{w}; \mathcal{D})\)</span>
+is also differentiable: its gradient is <span
+class="math display">\[\begin{aligned}
+\nabla_{\boldsymbol{w}}F_{\lambda}(\boldsymbol{w}; \mathcal{D})
+&amp;=&amp; \frac{1}{M}\sum_{m=1}^M (-\boldsymbol{f}(x^m,y^m) +
+\nabla_{\boldsymbol{w}} \log Z(\boldsymbol{w},x^m))
++ \lambda \boldsymbol{w} \nonumber\\
+&amp;=&amp; \frac{1}{M}\sum_{m=1}^M (-\boldsymbol{f}(x^m,y^m) +
+E_{\boldsymbol{w}} [\boldsymbol{f}(x^m,Y)])
++ \lambda \boldsymbol{w}. \end{aligned}\]</span> A batch gradient method
+to optimize Eq. <a href="#eq:maxent" data-reference-type="ref"
+data-reference="eq:maxent">[eq:maxent]</a> is shown in Alg. <a
+href="#alg:maxent_gd" data-reference-type="ref"
+data-reference="alg:maxent_gd">[alg:maxent_gd]</a>. Essentially, Alg. <a
+href="#alg:maxent_gd" data-reference-type="ref"
+data-reference="alg:maxent_gd">[alg:maxent_gd]</a> iterates through the
+following updates until convergence: <span
+class="math display">\[\begin{aligned}
+\boldsymbol{w}^{t+1} &amp;\leftarrow&amp;  \boldsymbol{w}^{t} - \eta_t
+\nabla_{\boldsymbol{w}}F_{\lambda}(\boldsymbol{w}^{t};
+\mathcal{D})\nonumber\\
+&amp;=&amp;  (1-\lambda \eta_t) \boldsymbol{w}^{t} + \eta_t \frac{1}{M}
+\sum_{m=1}^M \left( \boldsymbol{f}(x^m,y^m) -
+E_{\boldsymbol{w}}[\boldsymbol{f}(x^m,Y)]\right).\end{aligned}\]</span>
+Convergence is ensured for suitable stepsizes <span
+class="math inline">\(\eta_t\)</span>. Monotonic decrease of the
+objective value can also be ensured if <span
+class="math inline">\(\eta_t\)</span> is chosen with a suitable line
+search method, such as Armijo’s rule <span class="citation"
+data-cites="Nocedal1999">(<a href="#ref-Nocedal1999"
+role="doc-biblioref">Nocedal and Wright 1999</a>)</span>. In practice,
+more sophisticated methods exist for optimizing Eq. <a href="#eq:maxent"
+data-reference-type="ref" data-reference="eq:maxent">[eq:maxent]</a>,
+such as conjugate gradient or L-BFGS. The latter is an example of a
+quasi-Newton method, which only requires gradient information, but uses
+past gradients to try to construct second order (Hessian)
+approximations.</p>
+<figure class="guide-algorithm"><figcaption>Algorithm 1.3: Batch Gradient Descent for Maximum Entropy</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b> \(\mathcal{D}\), \(\lambda\), number of rounds \(T\),     learning rate sequence \((\eta_t)_{t = 1,\ldots,T}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> initialize \(\boldsymbol{w}^1 = \mathbf{0}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(t=1\) <b>to</b> \(T\) <b>do</b></div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">4:</span> <b>for</b> \(m=1\) <b>to</b> \(M\) <b>do</b></div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">5:</span> take training pair \((x^m, y^m)\) and compute conditional probabilities using the current model, for each \(y' \in \mathcal{Y}\): 	\(P_{\boldsymbol{w}^t}(y'|x^m) = \frac{\exp(\boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y'))}{Z(\boldsymbol{w},x^m)}\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">6:</span> compute the feature vector expectation:   	\(E_{\boldsymbol{w}}[\boldsymbol{f}(x^m,Y)] = \sum_{y' \in \mathcal{Y}} P_{\boldsymbol{w}^t}(y'|x^m) \boldsymbol{f}(x^m,y')\)</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">7:</span> choose the stepsize \(\eta_t\) using, <i>e.g.</i>, Armijo's rule</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">8:</span> update the model:  	\(\boldsymbol{w}^{t+1} \leftarrow (1-\lambda \eta_t) \boldsymbol{w}^{t} + \eta_t M^{-1} \sum_{m=1}^M \left( \boldsymbol{f}(x^{m},y^{m})  	- E_{\boldsymbol{w}}[\boldsymbol{f}(x^{m},Y)]\right)\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">9:</span> <b>output:</b> \(\hat{\boldsymbol{w}} \leftarrow \boldsymbol{w}^{T+1}\)</div></div></figure>
+<p>In large-scale problems (very large <span
+class="math inline">\(M\)</span>) batch methods are slow.
+<em>Online</em> or <em>stochastic</em> optimization are attractive
+alternative methods. Stochastic gradient methods make “noisy” gradient
+updates by considering only a single instance at the time. The resulting
+algorithm, called Stochastic Gradient Descent (SGD) is shown as Alg. <a
+href="#alg:maxent_sgd" data-reference-type="ref"
+data-reference="alg:maxent_sgd">[alg:maxent_sgd]</a>. At each round
+<span class="math inline">\(t\)</span>, an instance <span
+class="math inline">\(m(t)\)</span> is chosen, either randomly
+(stochastic variant) or by cycling through the dataset (online variant).
+The stepsize sequence must decrease with <span
+class="math inline">\(t\)</span>: typically, <span
+class="math inline">\(\eta_t = \eta_0 t^{-\alpha}\)</span> for some
+<span class="math inline">\(\eta_0 &gt; 0\)</span> and <span
+class="math inline">\(\alpha \in [1, 2]\)</span>, tuned in a development
+partition or with cross-validation.</p>
+<figure class="guide-algorithm"><figcaption>Algorithm 1.4: SGD for Maximum Entropy</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b> \(\mathcal{D}\), \(\lambda\), number of rounds \(T\),     learning rate sequence \((\eta_t)_{t = 1,\ldots,T}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> initialize \(\boldsymbol{w}^1 = \mathbf{0}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(t=1\) <b>to</b> \(T\) <b>do</b></div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">4:</span> choose \(m = m(t)\) randomly</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">5:</span> take training pair \((x^m, y^m)\) and compute conditional probabilities using the current model, for each \(y' \in \mathcal{Y}\): 	\(P_{\boldsymbol{w}^t}(y'|x^m) = \frac{\exp(\boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y'))}{Z(\boldsymbol{w},x^m)}\)</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">6:</span> compute the feature vector expectation:   	\(E_{\boldsymbol{w}}[\boldsymbol{f}(x^m,Y)] = \sum_{y' \in \mathcal{Y}} P_{\boldsymbol{w}^t}(y'|x^m) \boldsymbol{f}(x^m,y')\)</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">7:</span> update the model:  	\(\boldsymbol{w}^{t+1} \leftarrow (1-\lambda \eta_t) \boldsymbol{w}^{t} + \eta_t \left( \boldsymbol{f}(x^{m},y^{m})  	- E_{\boldsymbol{w}}[\boldsymbol{f}(x^{m},Y)]\right)\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">8:</span> <b>output:</b> \(\hat{\boldsymbol{w}} \leftarrow \boldsymbol{w}^{T+1}\)</div></div></figure>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.6</div>
+<p>We provide an implementation of the L-BFGS algorithm for training
+maximum entropy models in the class
+<span><code>MaxEnt_batch</code></span>, as well as an implementation of
+the SGD algorithm in the class
+<span><code>MaxEnt_online</code></span>.</p>
+<ol>
+<li><p>Train a maximum entropy model using L-BFGS on the Simple data set
+(try different values of <span class="math inline">\(\lambda\)</span>).
+Compare the results with the previous methods. Plot the decision
+boundary.</p>
+<pre><code class="language-python">import lxmls.classifiers.max_ent_batch as mebc
+
+me_lbfgs = mebc.MaxEntBatch()
+me_lbfgs.regularizer = 1.0
+params_meb_sd = me_lbfgs.train(sd.train_X,sd.train_y)
+y_pred_train = me_lbfgs.test(sd.train_X,params_meb_sd)
+acc_train = me_lbfgs.evaluate(sd.train_y, y_pred_train)
+y_pred_test = me_lbfgs.test(sd.test_X,params_meb_sd)
+acc_test = me_lbfgs.evaluate(sd.test_y, y_pred_test)
+print(&quot;Max-Ent batch Simple Dataset Accuracy train: %f test: %f&quot;%(acc_train,acc_test))
+
+fig,axis = sd.add_line(fig,axis,params_meb_sd,&quot;Max-Ent-Batch&quot;,&quot;orange&quot;)</code></pre></li>
+<li><p>Train a maximum entropy model using L-BFGS, on the Amazon dataset
+(try different values of <span class="math inline">\(\lambda\)</span>)
+and report training and test set accuracy. What do you observe?</p>
+<pre><code class="language-python">params_meb_sc = me_lbfgs.train(scr.train_X,scr.train_y)
+y_pred_train = me_lbfgs.test(scr.train_X,params_meb_sc)
+acc_train = me_lbfgs.evaluate(scr.train_y, y_pred_train)
+y_pred_test = me_lbfgs.test(scr.test_X,params_meb_sc)
+acc_test = me_lbfgs.evaluate(scr.test_y, y_pred_test)
+print(&quot;Max-Ent Batch Amazon Sentiment Accuracy train: %f test: %f&quot;%(acc_train,acc_test))</code></pre></li>
+<li><p>Now, fix <span class="math inline">\(\lambda = 1.0\)</span> and
+train with SGD (you might try to adjust the initial step). Compare the
+objective values obtained during training with those obtained with
+L-BFGS. What do you observe?</p>
+<pre><code class="language-python">import lxmls.classifiers.max_ent_online as meoc
+
+me_sgd = meoc.MaxEntOnline()
+me_sgd.regularizer = 1.0
+params_meo_sc = me_sgd.train(scr.train_X,scr.train_y)
+y_pred_train = me_sgd.test(scr.train_X,params_meo_sc)
+acc_train = me_sgd.evaluate(scr.train_y, y_pred_train)
+y_pred_test = me_sgd.test(scr.test_X,params_meo_sc)
+acc_test = me_sgd.evaluate(scr.test_y, y_pred_test)
+print(&quot;Max-Ent Online Amazon Sentiment Accuracy train: %f test: %f&quot;%(acc_train,acc_test))</code></pre></li>
+</ol>
+</div>
+<h4 id="sec:svms">Support Vector Machines</h4>
+<p><em>Support vector machines</em> are also a discriminative approach,
+but they are not a probabilistic model at all. The basic idea is that,
+if the goal is to accurately predict outputs (according to some cost
+function), we should focus on that goal in the first place, rather than
+trying to estimate a probability distribution (<span
+class="math inline">\(P(Y|X)\)</span> or <span
+class="math inline">\(P(X,Y)\)</span>), which is a more difficult
+problem. As <span class="citation" data-cites="Vapnik1995">Vapnik (<a
+href="#ref-Vapnik1995" role="doc-biblioref">1995</a>)</span> puts it,
+“do not solve an estimation problem of interest by solving a more
+general (harder) problem as an intermediate step.”</p>
+<p>We next describe the <em>primal</em> problem associated with
+multi-class support vector machines <span class="citation"
+data-cites="Crammer2002">(<a href="#ref-Crammer2002"
+role="doc-biblioref">Crammer and Singer 2002</a>)</span>, which is of
+primary interest in natural language processing. There is a significant
+amount of literature about Kernel Methods <span class="citation"
+data-cites="Schoelkopf2002 ShaweTaylor2004">(<a
+href="#ref-Schoelkopf2002" role="doc-biblioref">Schölkopf and Smola
+2002</a>; <a href="#ref-ShaweTaylor2004"
+role="doc-biblioref">Shawe-Taylor and Cristianini 2004</a>)</span>
+mostly focused on the <em>dual</em> formulation. We will not discuss
+non-linear kernels or this dual formulation here. <a href="#fn10"
+class="footnote-ref" id="fnref10"
+role="doc-noteref"><sup>10</sup></a></p>
+<p>Consider <span class="math inline">\(\rho(y&#39;,y)\)</span> as a
+non-negative cost function, representing the cost of assigning a label
+<span class="math inline">\(y&#39;\)</span> when the correct label was
+<span class="math inline">\(y\)</span>. For simplicity, we focus here on
+the <span class="math inline">\(0/1\)</span>-cost defined by Equation <a
+href="#eq:costfunc" data-reference-type="ref"
+data-reference="eq:costfunc">[eq:costfunc]</a> (but keep in mind that
+other cost functions are possible). The <em>hinge loss</em> <a
+href="#fn11" class="footnote-ref" id="fnref11"
+role="doc-noteref"><sup>11</sup></a> is the function <span
+class="math display">\[\label{eq:hingeloss}
+\ell(\boldsymbol{w}; x,y) = \max_{y&#39; \in \mathcal{Y}}
+\left[\boldsymbol{w} \cdot \boldsymbol{f}(x,y&#39;) - \boldsymbol{w}
+\cdot\boldsymbol{f}(x,y) + \rho(y&#39;,y)\right].\]</span> Note that the
+objective of Eq. <a href="#eq:hingeloss" data-reference-type="ref"
+data-reference="eq:hingeloss">[eq:hingeloss]</a> becomes zero when <span
+class="math inline">\(y&#39;=y\)</span>. Hence, we always have <span
+class="math inline">\(\ell(\boldsymbol{w}; x,y)\ge 0\)</span>. Moreover,
+if <span class="math inline">\(\rho\)</span> is the <span
+class="math inline">\(0/1\)</span> cost, we have <span
+class="math inline">\(\ell(\boldsymbol{w}; x,y)= 0\)</span> if and only
+if the weight vector is such that the model makes a correct prediction
+with a <em>margin</em> greater than <span
+class="math inline">\(1\)</span>: <em>i.e.</em>, <span
+class="math inline">\(\boldsymbol{w} \cdot \boldsymbol{f}(x,y) \ge
+\boldsymbol{w} \cdot\boldsymbol{f}(x,y&#39;) + 1\)</span> for all <span
+class="math inline">\(y&#39; \ne y\)</span>. Otherwise, a positive loss
+is incurred. The idea behind this formulation is that not only do we
+want to make a correct prediction, but we want to make a
+<em>confident</em> prediction; this is why we have a loss unless the
+prediction is correct with some margin.</p>
+<p>Support vector machines (SVM) tackle the following optimization
+problem: <span class="math display">\[\begin{aligned}
+\label{eq:svm}
+\hat{\boldsymbol{w}} &amp;=&amp;
+\argmin_{\boldsymbol{w}} \sum_{m=1}^M \ell(\boldsymbol{w}; x^m, y^m)  +
+\frac{\lambda}{2} \|\boldsymbol{w}\|^2,\end{aligned}\]</span> where we
+also use the squared <span class="math inline">\(L_2\)</span>-norm as
+the regularizer. For the <span class="math inline">\(0/1\)</span>-cost,
+the problem in Eq. <a href="#eq:svm" data-reference-type="ref"
+data-reference="eq:svm">[eq:svm]</a> is equivalent to: <span
+class="math display">\[\begin{aligned}
+\label{eq:svm2}
+\argmin_{\boldsymbol{w}, \boldsymbol{\xi}} &amp; \sum_{m=1}^M \xi_m  +
+\frac{\lambda}{2} \|\boldsymbol{w}\|^2 \\
+\text{s.t.} &amp; \boldsymbol{w} \cdot \boldsymbol{f}(x^m,y^m) \ge
+\boldsymbol{w} \cdot \boldsymbol{f}(x^m,\tilde{y}^m) + 1 - \xi_m, \quad
+\forall m, \tilde{y}^m \in \mathcal{Y}\setminus
+\{y^m\}.\end{aligned}\]</span> Geometrically, we are trying to choose
+the linear classifier that yields the largest possible separation
+margin, while we allow some violations, penalizing the amount of slack
+via extra variables <span
+class="math inline">\(\xi_1,\ldots,\xi_m\)</span>. There is now a
+trade-off: increasing the slack variables <span
+class="math inline">\(\xi_m\)</span> makes it easier to satisfy the
+constraints, but it will also increase the value of the cost
+function.</p>
+<p>Problem <a href="#eq:svm" data-reference-type="ref"
+data-reference="eq:svm">[eq:svm]</a> does not have a closed form
+solution. Moreover, unlike maximum entropy models, the objective
+function in <a href="#eq:svm" data-reference-type="ref"
+data-reference="eq:svm">[eq:svm]</a> is non-differentiable, hence smooth
+optimization is not possible. However, it is still convex, which ensures
+that any local optimum is the global optimum. Despite not being
+differentiable, we can still define a <em>subgradient</em> of the
+objective function (which generalizes the concept of gradient), which
+enables us to apply subgradient-based methods. A stochastic subgradient
+algorithm for solving Eq. <a href="#eq:svm" data-reference-type="ref"
+data-reference="eq:svm">[eq:svm]</a> is illustrated as Alg. <a
+href="#alg:svm_ssd" data-reference-type="ref"
+data-reference="alg:svm_ssd">[alg:svm_ssd]</a>. The similarity with
+maximum entropy models (Alg. <a href="#alg:maxent_sgd"
+data-reference-type="ref"
+data-reference="alg:maxent_sgd">[alg:maxent_sgd]</a>) is striking: the
+only difference is that, instead of computing the feature vector
+expectation using the current model, we compute the feature vector
+associated with the cost-augmented prediction using the current
+model.</p>
+<figure class="guide-algorithm"><figcaption>Algorithm 1.5: Stochastic Subgradient Descent for SVMs</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b> \(\mathcal{D}\), \(\lambda\), number of rounds \(T\),     learning rate sequence \((\eta_t)_{t = 1,\ldots,T}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> initialize \(\boldsymbol{w}^1 = \mathbf{0}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(t=1\) <b>to</b> \(T\) <b>do</b></div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">4:</span> choose \(m = m(t)\) randomly</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">5:</span> take training pair \((x^m, y^m)\) and compute the ``cost-augmented prediction'' under the current model: 	\(\tilde{y} = \argmax_{y' \in \mathcal{Y}} \boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y') - \boldsymbol{w}^t \cdot \boldsymbol{f}(x^m,y^m) + \rho(y',y)\)</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">6:</span> update the model:  	\(\boldsymbol{w}^{t+1} \leftarrow (1-\lambda \eta_t) \boldsymbol{w}^{t} + \eta_t \left( \boldsymbol{f}(x^{m},y^{m})  	- \boldsymbol{f}(x^{m},\tilde{y})\right)\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">7:</span> <b>output:</b> \(\hat{\boldsymbol{w}} \leftarrow \boldsymbol{w}^{T+1}\)</div></div></figure>
+<p>A variant of this algorithm was proposed by <span class="citation"
+data-cites="ShalevShwartz2007ICML">Shalev-Shwartz, Singer, and Srebro
+(<a href="#ref-ShalevShwartz2007ICML"
+role="doc-biblioref">2007</a>)</span> under the name <em>Pegasos</em>,
+with excellent properties in large-scale settings. Other algorithms and
+software packages for training SVMs that have become popular are
+SVMLight (<a href="http://svmlight.joachims.org"
+class="uri">http://svmlight.joachims.org</a>) and LIBSVM (<a
+href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/"
+class="uri">http://www.csie.ntu.edu.tw/~cjlin/libsvm/</a>), which allow
+non-linear kernels. These will generally be more suitable for smaller
+datasets, where high accuracy optimization can be obtained without much
+computational effort.</p>
+<div class="guide-box guide-box"><div class="guide-box-title">Remark 1.3</div>
+<p>Note the similarity between the stochastic (sub-)gradient algorithms
+(Algs. <a href="#alg:maxent_sgd" data-reference-type="ref"
+data-reference="alg:maxent_sgd">[alg:maxent_sgd]</a>–<a
+href="#alg:svm_ssd" data-reference-type="ref"
+data-reference="alg:svm_ssd">[alg:svm_ssd]</a>) and the online
+algorithms seen above (perceptron and MIRA).</p>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.7</div>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.8</div>
+<p>Run the SVM primal algorithm. Then, repeat the MaxEnt exercise now
+using SVMs, for several values of <span
+class="math inline">\(\lambda\)</span>:</p>
+<pre><code class="language-python">import lxmls.classifiers.svm as svmc
+
+svm = svmc.SVM()
+svm.regularizer = 1.0 # This is lambda
+params_svm_sd = svm.train(sd.train_X,sd.train_y)
+y_pred_train = svm.test(sd.train_X,params_svm_sd)
+acc_train = svm.evaluate(sd.train_y, y_pred_train)
+y_pred_test = svm.test(sd.test_X,params_svm_sd)
+acc_test = svm.evaluate(sd.test_y, y_pred_test)
+print(&quot;SVM Online Simple Dataset Accuracy train: %f test: %f&quot;%(acc_train,acc_test))
+
+fig,axis = sd.add_line(fig,axis,params_svm_sd,&quot;SVM&quot;,&quot;orange&quot;)
+
+params_svm_sc = svm.train(scr.train_X,scr.train_y)
+y_pred_train = svm.test(scr.train_X,params_svm_sc)
+acc_train = svm.evaluate(scr.train_y, y_pred_train)
+y_pred_test = svm.test(scr.test_X,params_svm_sc)
+acc_test = svm.evaluate(scr.test_y, y_pred_test)
+print(&quot;SVM Online Amazon Sentiment Accuracy train: %f test: %f&quot;%(acc_train,acc_test))</code></pre>
+<p>Compare the results achieved and separating hyperplanes found.</p>
+</div>
+<h2 id="comparison">Comparison</h2>
+<p>Table <a href="#tab:comparison_lab1" data-reference-type="ref"
+data-reference="tab:comparison_lab1">1</a> provides a high-level
+comparison among the different algorithms discussed in this chapter.</p>
+<div id="tab:comparison_lab1">
+<table>
+<caption>Comparison among different algorithms.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Naive Bayes</th>
+<th style="text-align: center;">Perceptron</th>
+<th style="text-align: center;">MIRA</th>
+<th style="text-align: center;">MaxEnt</th>
+<th style="text-align: center;">SVMs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Generative/Discriminative</td>
+<td style="text-align: center;">G</td>
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">D</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Performance if true model</td>
+<td style="text-align: center;">Bad</td>
+<td style="text-align: center;">Fair (may</td>
+<td style="text-align: center;">Good</td>
+<td style="text-align: center;">Good</td>
+<td style="text-align: center;">Good</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">not in the hipothesis class</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">not converge)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Performance if features overlap</td>
+<td style="text-align: center;">Fair</td>
+<td style="text-align: center;">Good</td>
+<td style="text-align: center;">Good</td>
+<td style="text-align: center;">Good</td>
+<td style="text-align: center;">Good</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Training</td>
+<td style="text-align: center;">Closed Form</td>
+<td style="text-align: center;">Easy</td>
+<td style="text-align: center;">Easy</td>
+<td style="text-align: center;">Fair</td>
+<td style="text-align: center;">Fair</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hyperparameters to tune</td>
+<td style="text-align: center;">1 (smoothing)</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.9</div>
+<ul>
+<li><p>Using the simple dataset run the different algorithms varying
+some characteristics of the data: like the number of points, variance
+(hence separability), class balance. Use function
+<em>run_all_classifiers</em> in file
+<em>labs/run_all_classifiers.py</em> which receives a dataset and plots
+all decisions boundaries and accuracies. What can you say about the
+methods when the amount of data increases? What about when the classes
+become too unbalanced?</p></li>
+</ul>
+</div>
+<h2 id="final-remarks">Final remarks</h2>
+<p>Some implementations of the discussed algorithms are available on the
+Web:</p>
+<ul>
+<li><p>SVMLight: <a href="http://svmlight.joachims.org"
+class="uri">http://svmlight.joachims.org</a></p></li>
+<li><p>LIBSVM: <a href="http://www.csie.ntu.edu.tw/~cjlin/libsvm/"
+class="uri">http://www.csie.ntu.edu.tw/~cjlin/libsvm/</a></p></li>
+<li><p>Maximum Entropy: <a
+href="http://homepages.inf.ed.ac.uk/lzhang10/maxent_toolkit.html"
+class="uri">http://homepages.inf.ed.ac.uk/lzhang10/maxent_toolkit.html</a></p></li>
+<li><p>MALLET: <a href="http://mallet.cs.umass.edu/"
+class="uri">http://mallet.cs.umass.edu/</a>.</p></li>
+</ul>
+<h1 class="unnumbered" id="bibliography">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-Bishop2006" class="csl-entry" role="doc-biblioentry">
+Bishop, C. M. 2006. <em>Pattern Recognition and Machine Learning</em>.
+Vol. 4. Springer New York.
+</div>
+<div id="ref-blitzer2007biographies" class="csl-entry"
+role="doc-biblioentry">
+Blitzer, J., M. Dredze, and F. Pereira. 2007. <span>“Biographies,
+Bollywood, Boom-Boxes and Blenders: Domain Adaptation for Sentiment
+Classification.”</span> In <em>Annual Meeting-Association for
+Computational Linguistics</em>, 45:440. 1.
+</div>
+<div id="ref-Cover1991" class="csl-entry" role="doc-biblioentry">
+Cover, T. M., J. A. Thomas, J. Wiley, et al. 1991. <em>Elements of
+Information Theory</em>. Vol. 6. Wiley Online Library.
+</div>
+<div id="ref-Crammer2006" class="csl-entry" role="doc-biblioentry">
+Crammer, K., O. Dekel, J. Keshet, S. Shalev-Shwartz, and Y. Singer.
+2006. <span>“<span>Online Passive-Aggressive Algorithms</span>.”</span>
+<em>JMLR</em> 7: 551–85.
+</div>
+<div id="ref-Crammer2002" class="csl-entry" role="doc-biblioentry">
+Crammer, K., and Y. Singer. 2002. <span>“<span class="nocase">On the
+algorithmic implementation of multiclass kernel-based vector
+machines</span>.”</span> <em>The Journal of Machine Learning
+Research</em> 2: 265–92.
+</div>
+<div id="ref-Duda2001" class="csl-entry" role="doc-biblioentry">
+Duda, R. O., P. E. Hart, and D. G. Stork. 2001. <em>Pattern
+Classification</em>. Vol. 2. Wiley New York.
+</div>
+<div id="ref-Jaynes1982" class="csl-entry" role="doc-biblioentry">
+Jaynes, E. T. 1982. <span>“On the Rationale of Maximum-Entropy
+Methods.”</span> <em>Proceedings of the IEEE</em> 70 (9): 939–52.
+</div>
+<div id="ref-Joachims2002" class="csl-entry" role="doc-biblioentry">
+Joachims, T. 2002. <em>Learning to Classify Text Using Support Vector
+Machines: Methods, Theory and Algorithms</em>. Kluwer Academic
+Publishers.
+</div>
+<div id="ref-Manning2008" class="csl-entry" role="doc-biblioentry">
+Manning, C. D., P. Raghavan, and H. Schütze. 2008. <em>Introduction to
+Information Retrieval</em>. Vol. 1. Cambridge University Press
+Cambridge, UK.
+</div>
+<div id="ref-Manning1999" class="csl-entry" role="doc-biblioentry">
+Manning, C. D., and H. Schütze. 1999. <em>Foundations of Statistical
+Natural Language Processing</em>. Vol. 59. MIT Press.
+</div>
+<div id="ref-Mitchell1997" class="csl-entry" role="doc-biblioentry">
+Mitchell, T. M. 1997. <em>Machine Learning</em>. <em>Mac Graw Hill</em>.
+</div>
+<div id="ref-Nocedal1999" class="csl-entry" role="doc-biblioentry">
+Nocedal, J., and S. J. Wright. 1999. <em>Numerical Optimization</em>.
+Springer verlag.
+</div>
+<div id="ref-Rosenblatt1958" class="csl-entry" role="doc-biblioentry">
+Rosenblatt, F. 1958. <span>“The Perceptron: A Probabilistic Model for
+Information Storage and Organization in the Brain.”</span>
+<em>Psychological Review</em> 65 (6): 386.
+</div>
+<div id="ref-Schoelkopf2002" class="csl-entry" role="doc-biblioentry">
+Schölkopf, B., and A. J. Smola. 2002. <em>Learning with Kernels</em>.
+Cambridge, MA: The MIT Press. <a
+href="http://www.learning-with-kernels.org">http://www.learning-with-kernels.org</a>.
+</div>
+<div id="ref-ShalevShwartz2007ICML" class="csl-entry"
+role="doc-biblioentry">
+Shalev-Shwartz, S., Y. Singer, and N. Srebro. 2007. <span>“<span
+class="nocase">Pegasos: Primal estimated sub-gradient solver for
+svm</span>.”</span>
+</div>
+<div id="ref-Shannon1948" class="csl-entry" role="doc-biblioentry">
+Shannon, C. E. 1948. <span>“A Mathematical Theory of
+Communication.”</span> <em>Bell Syst. Tech. Journ.</em> 27 (379): 623.
+</div>
+<div id="ref-ShaweTaylor2004" class="csl-entry" role="doc-biblioentry">
+Shawe-Taylor, John, and Nello Cristianini. 2004. <em>Kernel Methods for
+Pattern Analysis</em>. CUP.
+</div>
+<div id="ref-Vapnik1995" class="csl-entry" role="doc-biblioentry">
+Vapnik, N. Vladimir. 1995. <em>The Nature of Statistical Learning
+Theory</em>. Springer-Verlag, New York.
+</div>
+</div>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>We can get rid of this assumption by
+defining a distribution on the document length. Everything stays the
+same if that distribution is uniform up to a maximum document length.<a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Actually, we are showing a more
+robust variant of the perceptron, which averages the weight vector as a
+post-processing step.<a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>The intuition for this large margin
+separation is the same for support vector machines, which will be
+discussed in §<a href="#sec:svms" data-reference-type="ref"
+data-reference="sec:svms">4.4.2</a>.<a href="#fnref3"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>Note that the perceptron updates are
+identical, except that we always have <span
+class="math inline">\(\eta_t=1\)</span>.<a href="#fnref4"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>For an excellent textbook on
+Information Theory, we recommend <span class="citation"
+data-cites="Cover1991">Cover et al. (<a href="#ref-Cover1991"
+role="doc-biblioref">1991</a>)</span>.<a href="#fnref5"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6" role="doc-endnote"><p>For an introduction of maximum
+entropy models, along with pointers to the literature, see <a
+href="http://www.cs.cmu.edu/~aberger/maxent.html"
+class="uri">http://www.cs.cmu.edu/~aberger/maxent.html</a>.<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>In general, these constraints mean
+that feature expectations under that distribution <span
+class="math inline">\(\frac{1}{M}\sum_m E_{Y \sim
+P_{\boldsymbol{w}}}[\boldsymbol{f}(x_m,Y)]\)</span> must match the
+observed relative frequencies <span
+class="math inline">\(\frac{1}{M}\sum_m
+\boldsymbol{f}(x_m,y_m)\)</span>.<a href="#fnref7" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn8" role="doc-endnote"><p>Also called a a Boltzmann
+distribution, or an exponential family of distributions.<a
+href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>In a Bayesian perspective, this
+corresponds to choosing independent Gaussian priors <span
+class="math inline">\(p(w_d) \sim \mathcal{N}(0; 1/\lambda^2)\)</span>
+for each dimension of the weight vector.<a href="#fnref9"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10" role="doc-endnote"><p>The main reason why we prefer to
+discuss the primal formulation with linear kernels is that the resulting
+algorithms run in linear time (or less), while known kernel-based
+methods are quadratic with respect to <span
+class="math inline">\(M\)</span>. In large-scale problems (large <span
+class="math inline">\(M\)</span>) the former are thus more appealing.<a
+href="#fnref10" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>The hinge loss for the <span
+class="math inline">\(0/1\)</span> cost is sometimes defined as <span
+class="math inline">\(\ell(\boldsymbol{w}; x,y) = \max\{0, \max_{y&#39;
+\ne y} \boldsymbol{w} \cdot \boldsymbol{f}(x,y&#39;) - \boldsymbol{w}
+\cdot\boldsymbol{f}(x,y) + 1\}\)</span>. Given our definition of <span
+class="math inline">\(\rho(\hat{y},y)\)</span>, note that the two
+definitons are equivalent.<a href="#fnref11" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+					</article>
+<nav class="guide-pagenav">
+<a class="prev" href="day0.html"><span class="label">Previous</span><span class="title">&larr; Day 0 &middot; Basic Tutorials</span></a>
+<a class="next" href="day2.html"><span class="label">Next</span><span class="title">Day 2 &middot; Non-Linear Classifiers &rarr;</span></a>
+</nav>
+				</main>
+			</div>
+		</div>
+
+		<footer class="ftco-footer ftco-bg-dark ftco-section">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<img src="../images/lxmls-logo-2.png" width="63%" style="margin:0 5% 0 0">
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Contact us!</h2>
+							<div class="block-23 mb-3">
+								<ul>
+									<li><span class="text">IT &ndash; Lisboa, Instituto Superior T&eacute;cnico - Torre Norte - Piso 10,<br>
+									Av. Rovisco Pais, 1, 1049 - 001 LISBOA, Portugal</span></li>
+									<li><a href="mailto:lxmls-2026@googlegroups.com"><span class="text">lxmls-2026@googlegroups.com</span></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<p style="font-size:80%">
+							Copyright &copy;2021-<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://colorlib.com/" target="_blank">Colorlib</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="../files/jquery.min.js"></script>
+		<script src="../files/popper.min.js"></script>
+		<script src="../files/bootstrap.min.js"></script>
+		<script src="assets/highlight/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+		<script src="assets/copy-button.js"></script>
+	</body>
+</html>

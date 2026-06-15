@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Day 4 Transformers &middot; LxMLS Lab Guide</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="../files/css" rel="stylesheet">
+		<link rel="stylesheet" href="../files/open-iconic-bootstrap.min.css">
+		<link rel="stylesheet" href="../files/flaticon.css">
+		<link rel="stylesheet" href="../files/icomoon.css">
+		<link rel="stylesheet" href="../files/style.css">
+		<link rel="stylesheet" href="assets/highlight/github.min.css">
+		<link rel="stylesheet" href="assets/guide.css">
+		<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: [['\\(', '\\)']],
+				displayMath: [['\\[', '\\]']],
+				tags: 'ams',
+				macros: {
+					"D": ["\\frac{\\partial #1}{\\partial #2}", 2],
+					"F": "\\boldsymbol{f}",
+					"Ind": "\\textbf{1}",
+					"KL": "\\mathop{\\rm KL}",
+					"Max": "\\max",
+					"Min": "\\min",
+					"Q": "\\mathcal{Q}",
+					"V": "\\mathcal{V}",
+					"Vs": "\\mathcal{S}",
+					"W": "\\boldsymbol{w}",
+					"X": "\\mathcal{X}",
+					"Xp": "\\mathbf{E}",
+					"XpD": "\\mathbf{\\widehat{E}}",
+					"Y": "\\mathcal{Y}",
+					"argmax": "\\operatorname*{arg\\,max}",
+					"argmin": "\\operatorname*{arg\\,min}",
+					"auxq": "q(\\hseq \\mid \\sent)",
+					"bX": "\\mathbf{X}",
+					"bY": "\\mathbf{Y}",
+					"bZ": "\\mathbf{Z}",
+					"bm": ["\\boldsymbol{#1}", 1],
+					"bx": "\\mathbf{x}",
+					"by": "\\mathbf{y}",
+					"bz": "\\mathbf{z}",
+					"chaptername": "Day",
+					"code": ["\\texttt{#1}", 1],
+					"ensuremath": ["#1", 1],
+					"hs": "\\by",
+					"hseq": "\\bar{\\by}",
+					"hv": "{y}",
+					"hvocab": "\\mathbf{Y}",
+					"independent": "{\\perp\\!\\!\\!\\perp}",
+					"ip": ["#1\\cdot#2 ", 2],
+					"joint": "p_{\\theta}(\\sent ,\\hseq)",
+					"len": ["||#1||", 1],
+					"likelihood": "\\mathcal{L}",
+					"marginal": "p_{\\theta}(\\sent)",
+					"nll": "{\\rm \\emph{null}}",
+					"obj": "\\mathcal{O}",
+					"obs": "\\bx",
+					"pd": ["\\frac{\\partial#1}{\\partial#2}", 2],
+					"pdd": ["\\frac{\\partial^2 #1}{\\partial #2^2}", 2],
+					"pos": "Part-of-Speech",
+					"posi": "Part-of-Speech induction",
+					"posterior": "p_{\\theta}(\\hseq \\mid \\sent)",
+					"sent": "\\bar{\\bx}",
+					"setQ": "\\Q_{\\sent}",
+					"st": "\\operatorname*{s.t.}",
+					"state": "{s}",
+					"statevocab": "\\Lambda",
+					"trex": "\\bar{\\bx},\\bar{\\by} \\in \\mathcal{D}",
+					"vect": ["\\boldsymbol{#1}", 1],
+					"vectornorm": ["\\left|\\left|#1\\right|\\right|_{#2}", 2],
+					"vocab": "\\Sigma",
+					"vv": "{v}"
+				}
+			},
+			options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+		};
+		</script>
+		<script id="MathJax-script" async src="assets/mathjax/tex-chtml.js"></script>
+	</head>
+	<body class="guide-body">
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" href="../index.html"><img alt="LxMLS 2026" src="../images/lxmls-logo.png" width="33%" style="margin:0 5% 0 0"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"> Menu</button>
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="../index.html#about" class="nav-link">About</a></li>
+						<li class="nav-item"><a href="../index.html#dates" class="nav-link">Dates</a></li>
+						<li class="nav-item"><a href="../index.html#faq" class="nav-link">FAQ</a></li>
+						<li class="nav-item"><a href="../index.html#schedule" class="nav-link">Schedule</a></li>
+						<li class="nav-item"><a href="../index.html#speakers" class="nav-link">Speakers</a></li>
+						<li class="nav-item"><a href="../index.html#organizers" class="nav-link">Organizers</a></li>
+						<li class="nav-item active"><a href="index.html" class="nav-link">Guide</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="guide-wrap container-fluid">
+			<div class="row">
+				<aside class="col-lg-3 col-md-4 guide-sidebar">
+					<div class="guide-sidebar-inner">
+						<button class="guide-sidebar-toggle d-md-none" type="button" data-toggle="collapse" data-target="#guide-toc" aria-expanded="false" aria-controls="guide-toc">Contents</button>
+						<div class="collapse d-md-block" id="guide-toc">
+							<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
+<nav>
+<ul>
+<li><a class="toc-h2" href="#todays-assignment">Today’s assignment</a></li>
+<li><a class="toc-h2" href="#before-diving-into-transformers">Before Diving into
+Transformers</a></li>
+<li><a class="toc-h3" href="#positional-encoding">Positional Encoding</a></li>
+<li><a class="toc-h3" href="#tokenization">Tokenization</a></li>
+<li><a class="toc-h2" href="#transformer-architectures">Transformer Architectures</a></li>
+<li><a class="toc-h2" href="#attention">Attention</a></li>
+<li><a class="toc-h2" href="#sec:enc">Encoder Architecture</a></li>
+<li><a class="toc-h3" href="#simplified-encoder-architecture">Simplified Encoder
+Architecture</a></li>
+<li><a class="toc-h3" href="#adding-dropout-residuals-and-layer-normalization">Adding
+Dropout, Residuals, and Layer Normalization</a></li>
+<li><a class="toc-h2" href="#sec:dec">Decoder Architecture</a></li>
+<li><a class="toc-h2" href="#encoder-decoder-architecture">Encoder-Decoder Architecture</a></li>
+<li><a class="toc-h2" href="#training-different-transformers">Training different
+Transformers</a></li>
+<li><a class="toc-h3" href="#training-with-encoders">Training with Encoders</a></li>
+<li><a class="toc-h3" href="#training-with-decoders">Training with Decoders</a></li>
+<li><a class="toc-h3" href="#training-with-encoder-decoder">Training with
+Encoder-Decoder</a></li>
+</ul>
+</nav>
+						</div>
+					</div>
+				</aside>
+				<main class="col-lg-9 col-md-8 guide-main">
+					<article class="guide-content">
+<h1>Transformers <small class="text-muted">Day 4</small></h1>
+<h2 id="todays-assignment">Today’s assignment</h2>
+<p>Today’s class will demystify the Transformer architecture <span
+class="citation" data-cites="vaswani2017attention">(<a
+href="#ref-vaswani2017attention" role="doc-biblioref">Vaswani et al.
+2017</a>)</span>. Transformers have become the dominant model in Natural
+Language Processing, pushing the performance of many tasks through
+models like BERT <span class="citation" data-cites="devlin2018bert">(<a
+href="#ref-devlin2018bert" role="doc-biblioref">Devlin et al.
+2018</a>)</span> and GPT <span class="citation"
+data-cites="brown2020language">(<a href="#ref-brown2020language"
+role="doc-biblioref">T. Brown et al. 2020</a>)</span>. In this class, we
+will review the transformer architecture. The focus of the class is to
+understand and implement the self-attention mechanism in Pytorch. For
+this, we will use an annotated version of Karpathy’s minGPT code (<a
+href="https://github.com/karpathy/minGPT"
+class="uri">https://github.com/karpathy/minGPT</a>).</p>
+<h2 id="before-diving-into-transformers">Before Diving into
+Transformers</h2>
+<p>Before diving into transformers, we would like to introduce two
+important details of defining and training transformers.</p>
+<h3 id="positional-encoding">Positional Encoding</h3>
+<p>Different from models with recurrence/convolution, positional
+information is not encoded in Transformers. Therefore, <span
+class="citation" data-cites="vaswani2017attention">Vaswani et al. (<a
+href="#ref-vaswani2017attention" role="doc-biblioref">2017</a>)</span>
+include the positional embedding as part of the input to Transformers.
+The most popular way to compute the positional embedding (<span
+class="math inline">\(PE\)</span>) is to use the sinusoidal expressed as
+<span class="math display">\[PE_{(pos,2i)} = sin(\frac{pos}{
+10000^{2i/d_{model}}}),\]</span> <span
+class="math display">\[PE_{(pos,2i+1)} = cos(\frac{pos}{
+10000^{2i/d_{model}}}),\]</span></p>
+<p>where <span class="math inline">\(pos\)</span> is the position and
+<span class="math inline">\(i\)</span> is the dimension.</p>
+<h3 id="tokenization">Tokenization</h3>
+<p>Transformers operate on sequences of input. In the case of natural
+language, these sequences could be whole words, single characters, or
+something in-between. The process of breaking a text string into these
+smaller pieces is called tokenization. Most transformers use subword
+tokenization, which operates on the idea that frequently occurring words
+should occur as single units, while rare words should be split into
+smaller pieces that occur more frequently. The most widespread subword
+tokenization algorithm is byte pair encoding (BPE) <span
+class="citation" data-cites="bpe">(<a href="#ref-bpe"
+role="doc-biblioref">Sennrich, Haddow, and Birch 2016</a>)</span>, which
+allows <em>any</em> string to be represented as a sequence of pieces
+from a <em>finite</em> vocabulary.</p>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 4.1</div>
+<p>Tokenization</p>
+<p>Let’s see how three commonly-used tokenization techniques can be
+applied in practice.</p>
+<ol>
+<li><p>Run the word-based tokenizer and try out different
+<span><code>text</code></span>:</p>
+<pre><code class="language-python">text = &quot;I travelled to Lisbon in July to attend an NLP summer school&quot;
+text.split()</code></pre></li>
+<li><p>Run the character-based tokenizer and try out different different
+<span><code>text</code></span>. Can you imagine what problems
+character-level tokenizers pose to NLP models?</p>
+<pre><code class="language-python">text = &quot;I will travel to Lisbon in July...&quot;
+tokenized = [c for c in text if c not in [&quot;,&quot;, &quot;;&quot;, &quot;:&quot;, &quot;&#39;&quot;, &quot;!&quot;, &quot;?&quot;]]
+print(tokenized)</code></pre></li>
+<li><p>Run the BPE (byte-pair encoding) tokenizer. Can you guess which
+words will be split subwords and which ones won’t?</p>
+<pre><code class="language-python">from lxmls.transformers.bpe import BPETokenizer
+
+tokenizer = BPETokenizer()
+
+sentence = &quot;Your drawing is charmingly anachronistic.&quot;
+tokenizer.encoder.encode_and_show_work(sentence)</code></pre></li>
+</ol>
+</div>
+<h2 id="transformer-architectures">Transformer Architectures</h2>
+<p>The basic building block of the Transformer combines a large
+feed-forward network with a multi-head self-attention layer. We have
+seen feed-forward models in previous days and we will focus here on
+multi-head self-attention. Refer to previous days for details on the
+basics of feed-forward models. There are three main varieties of
+transformer model:</p>
+<ol>
+<li><p>Encoders: map a sequence of <span
+class="math inline">\(T\)</span> observations, e.g. some word or
+sub-word units <span class="math inline">\(x_1 \cdots x_T\)</span> to a
+hidden representation of size <span class="math inline">\(H\)</span>,
+yielding a matrix of embeddings of size <span class="math inline">\((H,
+T)\)</span>. These contextual embeddings can be combined with a
+task-specific prediction layer, as in BERT.</p></li>
+<li><p>Decoders: given a sequence of <span
+class="math inline">\(T-1\)</span> observations, e.g. some word or
+sub-word units <span class="math inline">\(x_{&lt;T} = x_1 \cdots
+x_{T-1}\)</span>, predict the next word <span
+class="math inline">\(x_T\)</span>. This architecture is the basis of
+many common large language models, such as GPT.</p></li>
+<li><p>Encoder-Decoders: map a sequence <span
+class="math inline">\(x\)</span> to another sequence <span
+class="math inline">\(y\)</span>, which might be of a different length.
+For this, first <span class="math inline">\(x\)</span> is processed with
+an Encoder. Then <span class="math inline">\(y\)</span> is processed
+with a modified Decoder which uses a cross-attention mechanism to
+compute attention between <span class="math inline">\(x\)</span> and
+<span class="math inline">\(y\)</span>. Encoder-Decoder models are
+commonly used for machine translation, as well as in some
+general-purpose language models such as T5.</p></li>
+</ol>
+<p>Although these models are used for different purposes, the
+architectures are very similar. In these exercises, we focus first on
+the Encoder and then explain the other two.</p>
+<h2 id="attention">Attention</h2>
+<p><img src="assets/figs/imgs/att_cat_sample.png" style="width:8cm"
+alt="image" /> <img src="assets/figs/imgs/att_it_sample.png"
+style="width:8cm" alt="image" /></p>
+<figure>
+<img src="assets/figs/imgs/att_self_sample.png" id="fig:att_self_sample"
+style="width:8cm" alt="Self-Attention" />
+<figcaption aria-hidden="true">Self-Attention</figcaption>
+</figure>
+<figure>
+<img src="assets/figs/imgs/example.png" id="fig:example"
+style="width:8cm" alt="An example illustration" />
+<figcaption aria-hidden="true">An example illustration</figcaption>
+</figure>
+<p>Attention mechanisms have become a crucial component in effective
+sequence modeling across different tasks like machine translation <span
+class="citation" data-cites="bahdanau2014neural">(<a
+href="#ref-bahdanau2014neural" role="doc-biblioref">Bahdanau, Cho, and
+Bengio 2014</a>)</span>, and they predate transformers by several years.
+The general idea of an attention mechanism is that it assigns scores to
+the hidden states of a model so that it knows where to focus. Figure <a
+href="#fig:ed_att_sample" data-reference-type="ref"
+data-reference="fig:ed_att_sample">[fig:ed_att_sample]</a> shows how an
+attention mechanism can decide which source words to focus on when
+generating each target word. In the left image, we can clearly see that
+the attention of the token ‘cat’ is specifically directed towards the
+token ‘gato’, which corresponds to its accurate translation. Similarly,
+in the right image, the word ‘it’ is attentively aligned with the token
+‘gato’ once again. Transformers <span class="citation"
+data-cites="vaswani2017attention">(<a href="#ref-vaswani2017attention"
+role="doc-biblioref">Vaswani et al. 2017</a>)</span> use several
+varieties of attention, most famously self-attention, in which scores
+are produced to model the relationship between all pairs of tokens in a
+single sequence (see Figure <a href="#fig:att_self_sample"
+data-reference-type="ref"
+data-reference="fig:att_self_sample">1</a>).</p>
+<p>In order to understand why attention mechanisms are such powerful
+tools, it is helpful to understand the architectural limitations of
+models like RNNs. In an RNN, the hidden state <span
+class="math inline">\(h_t\)</span> has a direct connection to the
+previous hidden state <span class="math inline">\(h_{t-1}\)</span>, but
+not from all hidden states elsewhere in the sequence. This leads to
+information loss because all relevant information at time <span
+class="math inline">\(t\)</span> needs to be put into a single
+fixed-dimensionality vector – information from several steps in the past
+may be lost, so these models tend to have a recency bias. This can be a
+problem in natural language applications because there are often complex
+relationships that depend on words far away in the sequence, as in the
+example in Figure <a href="#fig:example" data-reference-type="ref"
+data-reference="fig:example">2</a>. For a human being, the question of
+whether the pronoun “it” refers to the cat or the tree is relatively
+simple due to our prior knowledge about cats and trees. With our
+understanding of these concepts, we can confidently determine the
+intended reference of the word “it.” For a model, however, discerning
+the referent of the pronoun “it” – whether it is the cat or the tree –
+may be more of a challenge because “the tree” occurred more recently. An
+attention mechanism enables a model to access all hidden states <span
+class="math inline">\(h_1 \cdots h_T\)</span>, not just the most
+recent.</p>
+<p>Now let’s explore each building block of the Transformer architecture
+and examine how the Attention mechanism fits in this.</p>
+<h2 id="sec:enc">Encoder Architecture</h2>
+<p>In the original paper for transformers <span class="citation"
+data-cites="vaswani2017attention">(<a href="#ref-vaswani2017attention"
+role="doc-biblioref">Vaswani et al. 2017</a>)</span>, a “sub-layer“ is
+formed by either a Feed-Forward (<span
+class="math inline">\(\mathrm{FF}\)</span>) or Multi-Head Attention
+<span class="math inline">\(\mathrm{MHA}\)</span> (or other named <span
+class="math inline">\(\mathrm{sub-block}\)</span>s) followed by a
+sequence of operations. In this section, we begin by explaining the
+encoder architecture. Note that the notation of “sub-layer“ also applies
+to the following sections.</p>
+<h3 id="simplified-encoder-architecture">Simplified Encoder
+Architecture</h3>
+<p>The encoder architecture can be succinctly described as stacking a
+number of <span class="math inline">\(N\)</span> blocks on top of each
+other combining a <span class="math inline">\(\mathrm{FF}\)</span> and
+<span class="math inline">\(\mathrm{MHA}\)</span> sub-blocks. A single
+block is defined as</p>
+<p><span class="math display">\[e^{n+1} =
+\mathrm{FF}(\mathrm(MHA(e^n)).\]</span></p>
+<p>The input to the first block <span class="math inline">\(e^0\)</span>
+is the sum of position <span class="math inline">\(P\)</span> and
+non-contextual embeddings <span class="math inline">\(E\)</span> of the
+input. Assuming <span class="math inline">\(x_1 \cdots x_T\)</span> is a
+sequence of integers (indices to a vocabulary of <span
+class="math inline">\(V\)</span> symbols) we have that</p>
+<p><span class="math display">\[e^{0}_t = \mathrm{E} \cdot
+\mathrm{1}_{x_t} + \mathrm{P} \cdot \mathrm{1}_t \quad \mbox{for} \quad
+t=1 \cdots T\]</span></p>
+<p>where <span class="math inline">\(\mathrm{1}_{x_t}\)</span> and <span
+class="math inline">\(\mathrm{1}_t\)</span> are indicators, i.e.
+one-hot, vectors for the token content (vocabulary symbol) and the token
+position. <span class="math inline">\(\mathrm{E} \in \mathbb{R}^{H
+\times V}\)</span> is the non-contextual embedding matrix for each
+symbol in the vocabulary and <span class="math inline">\(P^{H \times
+\tau}\)</span> is the position embedding matrix, where <span
+class="math inline">\(\tau-1\)</span> is the furthest position
+supported. See Figure <a href="#fig:e0" data-reference-type="ref"
+data-reference="fig:e0">3</a> for the construction of the input of the
+first block.<br />
+</p>
+<figure>
+<img src="assets/figs/imgs/e0.png" id="fig:e0" style="width:5cm"
+alt="Construction of the input of the t-th token in layer e^0" />
+<figcaption aria-hidden="true">Construction of the input of the <span
+class="math inline">\(t\)</span>-th token in layer <span
+class="math inline">\(e^0\)</span></figcaption>
+</figure>
+<p>The feed-forward (<span class="math inline">\(\mathrm{FF}\)</span>)
+is given by:</p>
+<p><span class="math display">\[FF(z) = W^2\cdot \mathrm{gelu}(W^1 \cdot
+z)\]</span></p>
+<p>with weight matrices <span class="math inline">\(W^2 \in
+\mathbb{R}^{H \times 4H}\)</span> and <span class="math inline">\(W^1
+\in \mathbb{R}^{4H \times H}\)</span>, that expand and contract the
+hidden dimension <span class="math inline">\(H\)</span>.</p>
+<p>Attention consists of three matrices: Query (<span
+class="math inline">\(Q\)</span>), Key (<span
+class="math inline">\(K\)</span>), and Value (<span
+class="math inline">\(V\)</span>). To obtain <span
+class="math inline">\(Q\)</span>, <span
+class="math inline">\(K\)</span>, and <span
+class="math inline">\(V\)</span>, we perform a linear projection of the
+input using corresponding matrices that are learned during the training
+process.</p>
+<p>The concept of Query, Key, and Value is similar to retrieval systems.
+When searching for an article on the web using a specific Query, the
+search engine maps the Query against a set of Keys or titles associated
+with candidate results in their database. It then presents the
+best-matched articles or Values to the user. In concrete terms, we can
+think of it as a weighted modification of a query <span
+class="math inline">\(Q\)</span>, given some context <span
+class="math inline">\(K\)</span> and <span
+class="math inline">\(V\)</span>. There are two cases to consider:</p>
+<ol>
+<li><p>Cross-Attention: The query <span class="math inline">\(Q=W^Q\cdot
+z_q\)</span> is a query from one sequence, and <span
+class="math inline">\(K=W^K\cdot z_c\)</span> and <span
+class="math inline">\(V=W^V\cdot z_c\)</span> are the context from
+another sequence.</p></li>
+<li><p>Self-Attention: The query <span class="math inline">\(Q=W^Q\cdot
+z\)</span> is a query from one sequence, and <span
+class="math inline">\(K=W^K\cdot z\)</span> and <span
+class="math inline">\(V=W^V\cdot z\)</span> are the context from the
+same sequence.</p></li>
+</ol>
+<p>In Figure <a href="#fig:att_kqv" data-reference-type="ref"
+data-reference="fig:att_kqv">4</a>, we present the computation for <span
+class="math inline">\(K\)</span>, <span
+class="math inline">\(Q\)</span>, and <span
+class="math inline">\(V\)</span> in a cross-attention scenario with a
+given input <span class="math inline">\(z_q\)</span> and a context <span
+class="math inline">\(z_c\)</span>. Notice that this case is more
+general, for self-attention, we have <span
+class="math inline">\(z_q=z_c=z\)</span>.</p>
+<figure>
+<img src="assets/figs/imgs/att_kqv.png" id="fig:att_kqv"
+style="width:8cm"
+alt="Query, Key, and Value projections from a given query z_q, and context z_c." />
+<figcaption aria-hidden="true">Query, Key, and Value projections from a
+given query <span class="math inline">\(z_q\)</span>, and context <span
+class="math inline">\(z_c\)</span>.</figcaption>
+</figure>
+<p>Then, to perform attention, we follow these steps:</p>
+<ol>
+<li><p>Measure Similarity: We calculate the similarity between, Query
+and Key. This is often done by taking the dot product of the two
+matrices.</p></li>
+<li><p>Find Maximum Match: We extract the key with the maximum match.
+This means identifying the Key that has the highest similarity with the
+Query.</p></li>
+<li><p>Retrieve Value: Once we have the Key with the maximum match, we
+can retrieve the corresponding Value associated with that Key.</p></li>
+</ol>
+<p>This simple 3-step process is in fact the Attention mechanism. Where
+we are looking for the best matching tokens for the source sequence in
+the target sequence. Let’s compute the cross-attention score
+step-by-step. The Key and Query matrices are multiplied by each other
+and normalized by a constant value <span
+class="math inline">\(\frac{1}{A} W^Q z_q \left(W^K
+z_c\right)^T\)</span> or <span class="math inline">\(\frac{1}{A} Q
+K^T\)</span>. The <span class="math inline">\(A\)</span> value is
+usually chosen to be the square root of the dimension of the key
+matrices. This leads to having more stable gradients.</p>
+<p>Then pass the result through a <span
+class="math inline">\(softmax\)</span> operation. The Softmax normalizes
+the scores so they’re all positive and add up to 1. In other words,
+extracts a distribution of relative scores from a given token for each
+token in the input sequence.</p>
+<p>After this multiply the output by the Value matrix: <span
+class="math inline">\(\underset{i \rightarrow}{\mathrm{softmax}}\left(
+\frac{1}{A} W^Q z \left(W^K z\right)^T \right) \cdot W^V \cdot
+z\)</span> or simply <span class="math inline">\(V \cdot \underset{i
+\rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} Q K^T \right)\)</span>.
+See Figure <a href="#fig:att_ops" data-reference-type="ref"
+data-reference="fig:att_ops">5</a></p>
+<figure>
+<img src="assets/figs/imgs/att_ops.png" id="fig:att_ops"
+style="width:10cm" alt="The attention mechanism" />
+<figcaption aria-hidden="true">The attention mechanism</figcaption>
+</figure>
+<p>The Multi-Head Attention (<span
+class="math inline">\(\mathrm{MHA}\)</span>) enhances the Attention
+layer in two ways: it allows the model to focus on different positions
+within the input, enabling a better understanding of pronoun references;
+and allowing projection of input embeddings into distinct representation
+subspaces, thereby improving overall performance.</p>
+<p>Finally getting the following mathematical form for the <span
+class="math inline">\(\mathrm{MHA}\)</span>:</p>
+<p><span class="math display">\[MHA(z) =  W^o \cdot
+\begin{bmatrix}
+    \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_1 z
+\left(W^K_1 z\right)^T \right) \cdot W^V_1 \cdot z \\
+    \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_2 z
+\left(W^K_2 z\right)^T \right) \cdot W^V_2 \cdot z \\
+    \cdots\\
+    \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_D z
+\left(W^K_D z\right)^T \right) \cdot W^V_D \cdot z \\
+\end{bmatrix}\nonumber\]</span></p>
+<p>where we have <span class="math inline">\(D\)</span> attention heads.
+Each head contracts the hidden dimension <span
+class="math inline">\(W^K, W^Q, W^V \in \mathbb{R}^{E \times H}\)</span>
+into a space of size <span class="math inline">\(E\)</span> which is
+equal to <span class="math inline">\(H / D\)</span> (this has practical
+implementation consequences, <span class="math inline">\(H\)</span> and
+<span class="math inline">\(D\)</span> should be set properly). Outputs
+of all heads are concatenated and projected again with <span
+class="math inline">\(W^o \in \mathbb{R}^{H \times H}\)</span>. Please
+note that the dimension of <span class="math inline">\(W^V\)</span> can
+be different in the general case. The above-mentioned dimensions are
+correct for the cases when the source and target sequences have equal
+lengths, which is mostly not the case.</p>
+<figure>
+<img src="assets/figs/imgs/encoder_block.png" id="fig:encoder_block"
+style="width:10cm" alt="Encoder block" />
+<figcaption aria-hidden="true">Encoder block</figcaption>
+</figure>
+<h3 id="adding-dropout-residuals-and-layer-normalization">Adding
+Dropout, Residuals, and Layer Normalization</h3>
+<p>To complete the “sub-layer“, a dropout followed by a residual
+connection and a layer normalization is applied to input <span
+class="math inline">\(z\)</span> that has been passed through a <span
+class="math inline">\(\mathrm{sub-block}\)</span>, where a <span
+class="math inline">\(\mathrm{sub-block} \in \{\mathrm{FF},
+MHA\}\)</span>. Together, we can express the function as</p>
+<p><span class="math display">\[C(x) =
+\mathrm{layernorm}(\mathrm{residual}(\mathrm{dropout}(\mathrm{sublayer}(z)),
+z)\]</span></p>
+<p>where <span class="math inline">\(\mathrm{sublayer} \in
+\{\mathrm{FF}, \mathrm{MHA}\}\)</span>.</p>
+<p>Specifically, we have</p>
+<ul>
+<li><p><span class="math inline">\(\mathrm{dropout}(x) = r * x\)</span>
+where <span class="math inline">\(r_j \sim
+\operatorname{Bernoulli}(p)\)</span> and <span
+class="math inline">\(*\)</span> refers to element-wise multiplication<a
+href="#fn1" class="footnote-ref" id="fnref1"
+role="doc-noteref"><sup>1</sup></a>,</p></li>
+<li><p><span class="math inline">\(\mathrm{residual}(x, z) = x +
+z\)</span>, and</p></li>
+<li><p><span class="math inline">\(\mathrm{layernorm}(x) =
+\frac{x-E(x)}{\sqrt{Var(x)+\epsilon}}*\gamma + \beta\)</span> where
+<span class="math inline">\(E(x)\)</span> and <span
+class="math inline">\(Var(x)\)</span> are computed among dimensions
+other than the dimension for the batch<a href="#fn2"
+class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>.</p></li>
+</ul>
+<p>After incorporating all of these subcomponents, we obtain the final
+Encoder block, as illustrated in Figure <a href="#fig:encoder_block"
+data-reference-type="ref" data-reference="fig:encoder_block">6</a></p>
+<h2 id="sec:dec">Decoder Architecture</h2>
+<p>This is identical to the Encoder architecture with two
+differences</p>
+<ol>
+<li><p>We feed if a partial sequence <span
+class="math inline">\(x_{&lt;t}\)</span> and take the last output <span
+class="math inline">\(h_{t-1}\)</span> as the hidden vector for <span
+class="math inline">\(x_t\)</span></p></li>
+<li><p>We mask every head of <span
+class="math inline">\(\mathrm{MHA}\)</span> to prevent any value of time
+<span class="math inline">\(p\)</span> to depend on values of <span
+class="math inline">\(&gt;p\)</span></p></li>
+</ol>
+<p>The implementation of training realizes 1) by masking input partial
+sequence <span class="math inline">\(x_{&lt;t}\)</span> and hidden units
+from the corresponding positions with an attention mask. This attention
+mask is also applied during inference time.</p>
+<figure>
+<img src="assets/figs/imgs/decoder_block.png" id="fig:decoder_block"
+style="width:10cm" alt="Decoder block" />
+<figcaption aria-hidden="true">Decoder block</figcaption>
+</figure>
+<p>Once all these subcomponents are integrated, we achieve the final
+Decoder block, which is depicted in Figure <a href="#fig:decoder_block"
+data-reference-type="ref" data-reference="fig:decoder_block">7</a>.</p>
+<h2 id="encoder-decoder-architecture">Encoder-Decoder Architecture</h2>
+<p>In the Encoder-Decoder Architecture, the encoder is the same as
+section <a href="#sec:enc" data-reference-type="ref"
+data-reference="sec:enc">5</a>. Therefore, we have the encoded
+embeddings as <span class="math inline">\(e^N =
+\mathrm{Encoder}(x)\)</span>.</p>
+<p>The decoder in the Encoder-Decoder Architecture is a little bit
+different than section <a href="#sec:dec" data-reference-type="ref"
+data-reference="sec:dec">6</a>. Each layer of the decoder will include
+one more Cross-Multi-Head Attention (CMHA) sub-layer, and the order of
+sub-layers in a decoder layer will be <span
+class="math inline">\(\mathrm{MHA}\)</span>-<span
+class="math inline">\(\mathrm{CMHA}\)</span>-<span
+class="math inline">\(\mathrm{FF}\)</span>, i.e.</p>
+<p><span class="math display">\[d^{m+1} = \mathrm{FF}(\mathrm(CMHA(e^N,
+MHA(d^m))).\]</span></p>
+<p>Specifically, the query matrix is computed from the layer below it,
+while the key and value matrix are computed from <span
+class="math inline">\(e^N\)</span>, which can be expressed as</p>
+<p><span class="math display">\[\mathrm{CMHA}(e^N, MHA(d^m)) = W^o \cdot
+\begin{bmatrix}
+    \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_1
+MHA(d^m) \left(W^K_1 e^N\right)^T \right) \cdot W^V_1 \cdot e^N \\
+    \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_2
+MHA(d^m) \left(W^K_2 e^N\right)^T \right) \cdot W^V_2 \cdot e^N \\
+    \cdots\\
+    \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_D
+MHA(d^m) \left(W^K_D e^N\right)^T \right) \cdot W^V_D \cdot e^N \\
+\end{bmatrix}\nonumber.\]</span></p>
+<figure>
+<img src="assets/figs/imgs/encoder_decoder.png" id="fig:encoder_decoder"
+style="width:16cm" alt="Encoder-Decoder Architecture" />
+<figcaption aria-hidden="true">Encoder-Decoder Architecture</figcaption>
+</figure>
+<p>By combining <span class="math inline">\(N\)</span> blocks of Encoder
+and Decoder, we obtain the complete view of the Transformer
+architecture, as illustrated in Figure <a href="#fig:encoder_decoder"
+data-reference-type="ref"
+data-reference="fig:encoder_decoder">8</a>.</p>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 4.2</div>
+<p>Cross Multi-Head Attention &amp; Multi-Head Attention Now let’s
+implement our own Attention mechanism, to that end let’s:</p>
+<ol>
+<li><p>Complete the <span><code>cross_attention</code></span> function.
+Given two input sequences <span class="math inline">\(S_1\)</span> and
+<span class="math inline">\(S_2\)</span> and the transformation weights
+<span class="math inline">\(W_Q\)</span>, <span
+class="math inline">\(W_K\)</span>, and <span
+class="math inline">\(W_V\)</span>. You need to implement the
+following:</p>
+<ol>
+<li><p>Calculate the query, key, and value projections using linear
+transformations.</p></li>
+<li><p>Compute the attention scores by performing the dot product
+between the query and key tensors.</p></li>
+<li><p>Apply softmax activation to the attention scores to obtain the
+attention weights.</p></li>
+<li><p>Multiply the attention weights with the value tensor to get the
+attended values.</p></li>
+<li><p>Return the attended values.</p></li>
+</ol>
+<pre><code class="language-python">import torch
+import torch.nn.functional as F
+
+def cross_attention(S1, S2, W_Q, W_K, W_V):
+    ## Your code here
+    return attended_values</code></pre></li>
+<li><p>Complete the <span><code>CausalSelfAttention</code></span> class.
+First, you should create linear projections
+<span><code>query_proj</code></span>, <span><code>key_proj</code></span>
+and <span><code>value_proj</code></span>.</p>
+<pre><code class="language-python">import math
+import torch.nn as nn
+
+class CausalSelfAttention(nn.Module):
+
+    def __init__(self, config):
+        super().__init__()
+        
+        # Initialize layers and parameters
+        self.hidden_size = config.n_embd
+        self.num_heads = config.n_head
+
+        # TODO: Create the linear projections
+
+        self.output_proj = nn.Linear(config.n_embd, config.n_embd)
+
+        self.attn_dropout = nn.Dropout(config.attn_pdrop)
+        self.resid_dropout = nn.Dropout(config.resid_pdrop)
+
+        self.register_buffer(
+            &quot;bias&quot;,
+            torch.tril(torch.ones(config.block_size, config.block_size)).view(
+                1, 1, config.block_size, config.block_size))</code></pre>
+<p>Then apply <span><code>query_proj</code></span>,
+<span><code>key_proj</code></span> and
+<span><code>value_proj</code></span> to split input into query, key, and
+value tensors:</p>
+<pre><code class="language-python">def forward(self, x: torch.Tensor) -&gt; torch.Tensor:
+        B, T, C = x.size()
+
+        # TODO: Split input into query, key, and value tensors
+
+        # Reshape and transpose tensors for multi-head computation
+        query = query.view(B, T, self.num_heads,
+                           self.hidden_size // self.num_heads).transpose(1, 2)
+        key = key.view(B, T, self.num_heads,
+                       self.hidden_size // self.num_heads).transpose(1, 2)
+        value = value.view(B, T, self.num_heads,
+                           self.hidden_size // self.num_heads).transpose(1, 2)</code></pre>
+<p>Then compute the attention scores. Note that the shape of scores
+should be <span><code>(B, num_heads, T, T)</code></span></p>
+<pre><code class="language-python"># TODO: Compute attention scores
+
+        # Apply a causal mask to restrict attention to the left in the input sequence
+        mask = self.bias[:, :, :T, :T]
+        scores = scores.masked_fill(mask == 0, float(&#39;-inf&#39;))</code></pre>
+<p>Finally, apply soft-max activation and multiply attention weights
+with values to get attended values:</p>
+<pre><code class="language-python"># TODO: Apply softmax activation to get attention weights
+
+        # TODO: Multiply attention weights with values to get attended values
+
+        # Transpose and reshape attended values to restore original shape
+        attended_values = attended_values.transpose(1, 2).contiguous().view(
+            B, T, C)
+
+        # Apply output projection and dropout
+        output = self.resid_dropout(self.output_proj(attended_values))
+
+        return output</code></pre></li>
+</ol>
+</div>
+<h2 id="training-different-transformers">Training different
+Transformers</h2>
+<p>We have introduced different architectures of transformers and will
+present different variants of transformers that are trained with
+different objectives, and thus applied to different downstream tasks. We
+briefly introduce all these transformers and provide references so you
+can read these papers if you are interested.</p>
+<h3 id="training-with-encoders">Training with Encoders</h3>
+<p>Encoder models solely utilize the encoder component of a Transformer
+model. In each step, the attention layers have the ability to consider
+all the words present in the original sentence. These models are known
+as ’auto-encoding models’ and are recognized for their ’bi-directional’
+attention mechanism.</p>
+<p>The pretraining of these models typically involves manipulating a
+given sentence, often by obscuring random words and assigning the model
+the task of identifying or reconstructing the original sentence. This
+objective is commonly referred to as Masked Language Modeling (MLM), and
+models pre-trained with this objective are known as Masked Language
+Models.</p>
+<p>For a text sequence <span class="math inline">\(\textbf{x}\)</span>,
+the BERT model first constructs a corrupted version <span
+class="math inline">\(\hat{\textbf{x}}\)</span>. Let the masked tokens
+be <span class="math inline">\(\bar{\textbf{x}}\)</span>. The training
+objective is to reconstruct <span
+class="math inline">\(\bar{\textbf{x}}\)</span> from <span
+class="math inline">\(\hat{\textbf{x}}\)</span>:</p>
+<p><span class="math display">\[\begin{aligned}
+max_{\theta}logP_{\theta}(\bar{\textbf{x}}|\hat{\textbf{x}})\approx
+\sum_{t=1}^Tm_tlogP_{\theta}(x_t|\hat{\textbf{x}})
+=\sum_{t=1}^Tm_tlog\frac{exp(H_{\theta}(\hat{\textbf{x}})_t^Te(x_t))}{\sum_{x\prime}
+{exp(H_{\theta}(\hat{\textbf{x}})_t^Te(x\prime)}}\end{aligned}\]</span></p>
+<p>Where the <span class="math inline">\(\approx\)</span> indicates that
+all <span class="math inline">\(\bar{\textbf{x}}\)</span> elements are
+independent (seperately reconstructed), <span
+class="math inline">\(m_t\)</span> indicates weather or not <span
+class="math inline">\(x_t\)</span> is masked (1-masked, 0-not), <span
+class="math inline">\(H_{\theta}\)</span> is a Transformer that maps a
+sequence <span class="math inline">\(x\)</span> of length <span
+class="math inline">\(T\)</span> and contains infomation about the
+context on both sides <span
+class="math inline">\(H_{\theta}(X)=[H_{\theta}(x)_1,
+H_{\theta}(x)_2,...H_{\theta}(x)_T]\)</span>, and <span
+class="math inline">\(e(x)\)</span> denotes the embedding of <span
+class="math inline">\(x\)</span>.</p>
+<p>Encoder models excel in tasks that demand a comprehensive
+understanding of the entire sentence. These tasks include sentence
+classification, word classification tasks e.g. named entity recognition,
+and extractive question answering. Widely used representatives of this
+model family include BERT <span class="citation"
+data-cites="devlin2018bert">(<a href="#ref-devlin2018bert"
+role="doc-biblioref">Devlin et al. 2018</a>)</span> and RoBERTa <span
+class="citation" data-cites="liu2019roberta">(<a
+href="#ref-liu2019roberta" role="doc-biblioref">Liu et al.
+2019</a>)</span>.</p>
+<p><strong>BERT</strong> <span class="citation"
+data-cites="devlin2018bert">(<a href="#ref-devlin2018bert"
+role="doc-biblioref">Devlin et al. 2018</a>)</span> is trained on
+MLM(Masked Language Modeling) and NSP(Next Sentence Prediction)
+objectives. In the <strong>MLM</strong> objective, 15% of the input
+tokens are selected. Among these selected tokens:</p>
+<ul>
+<li><p>80% of the time, the mask token is inserted in place of the
+original token.</p></li>
+<li><p>10% of the time, a random token is inserted in place of the
+original token.</p></li>
+<li><p>10% of the time, the original token remains unchanged.</p></li>
+</ul>
+<p>The <strong>NSP</strong> objective is applied to pairs of sentences,
+A and B, taken from the training set. In 50% of the cases, sentence B
+directly follows sentence A in the input, while in other cases, the
+pairs are randomly selected. The objective is to perform binary
+classification and predict whether sentence B follows sentence A or
+not.</p>
+<p><strong>RoBERTa</strong> <span class="citation"
+data-cites="liu2019roberta">(<a href="#ref-liu2019roberta"
+role="doc-biblioref">Liu et al. 2019</a>)</span> builds upon BERT’s
+pre-training by addressing its perceived undertraining. It introduces
+the following modifications:</p>
+<ul>
+<li><p>Longer and larger-scale training: RoBERTa trains the model for an
+extended period using larger batches, more data, and longer
+sequences.</p></li>
+<li><p>Removal of NSP objective: The next sentence prediction (NSP)
+objective, present in BERT, is eliminated in RoBERTa.</p></li>
+<li><p>Dynamic masking: RoBERTa employs dynamic masking by duplicating
+the training data ten times and applying different mask patterns to each
+sample. This contrasts with BERT’s static masking, where a fixed mask is
+used for each sample.</p></li>
+</ul>
+<p>These modifications aim to enhance RoBERTa’s pre-training performance
+and overall language understanding capabilities.</p>
+<h3 id="training-with-decoders">Training with Decoders</h3>
+<p>Decoder-only or Autoregressive modeling performs pretraining by
+maximizing the likelihood under the forward autoregressive
+factorization: <span
+class="math display">\[max_{\theta}logP_{\theta}(\textbf{x})=\sum_{t=1}^TlogP_{\theta}(x_t|\textbf{x}_{&lt;t})
+=
+\sum_{t=1}^T{log\frac{exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x_t))}{\sum_{x\prime}exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x\prime))}}\]</span></p>
+<p>Where the <span
+class="math inline">\(h_{\theta}(\textbf{x}_{1:t-1})\)</span> is the
+context representation produced by the neural model, and it contains
+information (conditioned) about the tokens up to position <span
+class="math inline">\(t\)</span>, and <span
+class="math inline">\(e(x_t)\)</span> is the embedding of a token <span
+class="math inline">\(x_t\)</span>.</p>
+<p>A Decoder-only or Autoregressive model operates differently compared
+to Encoder-only or Autoencoder model by focusing on density estimation
+rather than reconstructing corrupted input. These models aim to estimate
+probability distributions, which limits their ability to capture
+bidirectional context. As a result, they are restricted to
+uni-directional processing.</p>
+<h5 id="gpts.">GPTs.</h5>
+<p>The class of GPTs is a series of pre-trained decoder-only
+transformers. Models are pre-trained to perform the next token
+prediction with the Cross-Entropy criterion. Since the release of GPT-1
+<span class="citation" data-cites="gpt-1">(<a href="#ref-gpt-1"
+role="doc-biblioref">Radford et al. 2018</a>)</span>, GPTs are being
+trained with more parameters and training data, with GPT-2 <span
+class="citation" data-cites="gpt-2">(<a href="#ref-gpt-2"
+role="doc-biblioref">Radford et al. 2019</a>)</span>, GPT-3 <span
+class="citation" data-cites="gpt-3">(<a href="#ref-gpt-3"
+role="doc-biblioref">T. B. Brown et al. 2020</a>)</span>, InstructGPT
+<span class="citation" data-cites="instructgpt">(<a
+href="#ref-instructgpt" role="doc-biblioref">Ouyang et al.
+2022</a>)</span> and GPT-4 <span class="citation" data-cites="gpt-4">(<a
+href="#ref-gpt-4" role="doc-biblioref">OpenAI 2023</a>)</span> being
+subsequently released. Note that since the release of InstructGPT <span
+class="citation" data-cites="instructgpt">(<a href="#ref-instructgpt"
+role="doc-biblioref">Ouyang et al. 2022</a>)</span>, this class of
+language models has been trained with reinforcement learning with human
+feedback <span class="citation" data-cites="rlhf">(<a href="#ref-rlhf"
+role="doc-biblioref">Bai et al. 2022</a>)</span>, which enables the
+model to manifest interesting behaviors that you see when using
+ChatGPT.</p>
+<h3 id="training-with-encoder-decoder">Training with
+Encoder-Decoder</h3>
+<p>To leverage the strengths of both Encoder-only and Decoder-only
+models, the concept of Encoder-Decoder models was introduced. While
+previous methods effectively captured bidirectional information for text
+generation, they had certain limitations in terms of contextual token
+representations. One common approach involved concatenating the
+left-to-right and right-to-left representations <span class="citation"
+data-cites="peters2018deep">(<a href="#ref-peters2018deep"
+role="doc-biblioref">Peters et al. 2018</a>)</span>.</p>
+<p>Encoder-Decoder models aim to overcome these limitations by combining
+the advantages of both approaches. These models can effectively capture
+bidirectional information while maintaining robust contextual
+representations for each token. By leveraging the strengths of both
+encoders and decoders, Encoder-Decoder models offer enhanced
+capabilities for various natural language processing tasks, including
+text generation.</p>
+<p>Commonly employed members of this model family include BART <span
+class="citation" data-cites="lewis-etal-2020-bart">(<a
+href="#ref-lewis-etal-2020-bart" role="doc-biblioref">Lewis et al.
+2020</a>)</span> and T5 <span class="citation"
+data-cites="raffel2020exploring">(<a href="#ref-raffel2020exploring"
+role="doc-biblioref">Raffel et al. 2020</a>)</span>, which have gained
+significant popularity in the field.</p>
+<h5 id="bart.">BART.</h5>
+<p>BART <span class="citation" data-cites="lewis-etal-2020-bart">(<a
+href="#ref-lewis-etal-2020-bart" role="doc-biblioref">Lewis et al.
+2020</a>)</span> an encoder-decoder model pre-trained on five tasks
+injecting noises into the input text: i) token masking (same as BERT
+<span class="citation" data-cites="devlin2018bert">(<a
+href="#ref-devlin2018bert" role="doc-biblioref">Devlin et al.
+2018</a>)</span>), ii) token deletion, iii) text infilling by replacing
+sampled input spans with single masks, iv) sentence permutation, and v)
+document rotation. The powerful pre-trained denoising autoencoder is
+commonly used in generation tasks.</p>
+<h5 id="t5.">T5.</h5>
+<p>T5 (Raffel et al., 2020) utilizes a text-to-text methodology. In this
+approach, various tasks like translation, question answering, and
+classification are transformed into a unified format. The model is
+provided with input text and trained to generate the corresponding
+output text. To achieve this, a task-specific prefix(instruction) is
+added to the input sequence, and the model is pre-trained to produce
+outputs specific to each task.<br />
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 4.3</div></p>
+<p>Training Transformers</p>
+<p>Let’s delve into practical training of a Transformer model to gain
+hands-on experience. Our initial step will involve creating a
+Decoder-based model (GPT-2 <span class="citation" data-cites="gpt-2">(<a
+href="#ref-gpt-2" role="doc-biblioref">Radford et al. 2019</a>)</span>)
+and training it on a modest dataset. Once this is completed, we can
+visualize the attention mechanism before and after the training process.
+Finally, we can compare the performance of the trained model during
+inference with that of the smaller trained model.</p>
+<div class="exercise">
+<p>Training a Weather Prediction Model Using Autoregressive
+Transformer.</p>
+<p>In this exercise, we will be working with a dummy weather dataset
+comprising sequences of weather observations and their corresponding
+states. The objective is to train a compact autoregressive transformer
+model that can predict the weather state based on previous observations.
+Let’s begin by importing the required modules and classes, and setting a
+seed value to ensure consistent output every time we run the file.</p>
+<pre><code class="language-python">import random
+import time
+
+import numpy as np
+import torch
+from torch.utils.data.dataloader import DataLoader
+
+random.seed(42)
+
+from lxmls.transformers.bpe import BPETokenizer
+from lxmls.transformers.dataset import WeatherDataset
+from lxmls.transformers.model import GPT
+from lxmls.transformers.trainer import Trainer
+from lxmls.transformers.utils import set_seed</code></pre>
+</div>
+<p>To begin, we initialize the training dataset, which comprises
+sequences of weather observations along with their corresponding states.
+These sequences are transformed into indices and then concatenated to
+create the input and output sequences for the transformer model. For
+more information on this, refer to: "lxmls/transformers/dataset.py".</p>
+<pre><code class="language-python">fixed_proba = {}
+fixed_proba[&quot;initial&quot;] = [0.5, 0.3, 0.2]
+fixed_proba[&quot;transition&quot;] = [[0.5, 0.5, 0], [0, 0.5, 0.5], [0.5, 0, 0.5]]
+fixed_proba[&quot;emission&quot;] = [
+    [0.5, 0, 0.2, 0, 0.3],
+    [0, 0.5, 0.4, 0, 0.1],
+    [0, 0, 0.1, 0.5, 0.4],
+]
+</code></pre>
+<p>Let’s print an example instance of the dataset.</p>
+<pre><code class="language-python">train_dataset = WeatherDataset(&quot;train&quot;, proba=fixed_proba)
+test_dataset = WeatherDataset(&quot;test&quot;, proba=train_dataset.proba)
+x, y = train_dataset[0]
+
+print(&quot;Sampling from the dataset:&quot;)
+print(f&quot;Input: {train_dataset.decode_obs(x.tolist()[:6])}&quot;)
+print(f&quot;Labels: {train_dataset.decode_st(y.tolist()[5:])}&quot;)
+print(&quot;-&quot; * 50)
+print(&quot;Tokenized sequences:&quot;)
+print(f&quot;Input: {x.tolist()}&quot;)
+print(f&quot;Labels: {y.tolist()}&quot;)</code></pre>
+<p>Moving forward, we construct a model using the default configuration
+for the GPT model, which encompasses parameters defining the model’s
+size and structure. In this case, we employ a compact variant known as
+GPT Nano.</p>
+<pre><code class="language-python">model_config = GPT.get_default_config()
+model_config.model_type = &quot;gpt-nano&quot;
+model_config.vocab_size = train_dataset.get_vocab_size()
+model_config.block_size = train_dataset.get_block_size()
+model = GPT(model_config)
+
+print(model_config)</code></pre>
+<p>To facilitate the training of our model, we instantiate a Trainer
+object. The Trainer manages various aspects of the training process,
+such as configuring the learning rate, specifying the maximum number of
+iterations, and determining the number of workers for data loading. We
+initialize the Trainer with the model, training dataset, and validation
+dataset.</p>
+<pre><code class="language-python">train_config = Trainer.get_default_config()
+train_config.learning_rate = (
+    5e-4  # The model we&#39;re using is so small that we can go a bit faster
+)
+train_config.max_iters = 2000
+train_config.num_workers = 0
+train_config.device = &quot;mps&quot;
+trainer = Trainer(train_config, model, train_dataset)
+
+print(train_config)</code></pre>
+<p>With all these components in position, we are fully prepared to train
+our model using the weather dataset and leverage the acquired patterns
+to generate predictions.</p>
+<pre><code class="language-python">def batch_end_callback(trainer):
+    if trainer.iter_num % 100 == 0:
+        print(
+            f&quot;iter_dt {trainer.iter_dt * 1000:.2f}ms; iter {trainer.iter_num}: train loss {trainer.loss.item():.5f}&quot;
+        )
+
+
+trainer.set_callback(&quot;on_batch_end&quot;, batch_end_callback)
+
+start_time = time.time()
+trainer.run()
+end_time = time.time()
+elapsed_time = end_time - start_time
+
+# Print the training time
+print(&quot;Training time: {:.2f} seconds&quot;.format(elapsed_time))</code></pre>
+<p>Now, let’s visualize the attention heads of our trained model. To do
+this, we need to install the HF transformers and bertviz packages. You
+can install them by running the following command: "pip install
+transformers bertviz".</p>
+<pre><code class="language-python">from transformers import BertTokenizer, BertModel
+from bertviz import head_view
+
+# Define a sample input text
+text = &quot;I will go for a run and will jump into a lake.&quot;
+
+# Instantiate the BERT tokenizer and model
+tokenizer = BertTokenizer.from_pretrained(&quot;bert-base-uncased&quot;)
+model = BertModel.from_pretrained(&quot;bert-base-uncased&quot;)
+
+# Tokenize the input text
+tokens = tokenizer.tokenize(text)
+
+# Convert tokens to token IDs
+token_ids = tokenizer.convert_tokens_to_ids(tokens)
+
+# Create attention mask
+attention_mask = [1] * len(token_ids)
+
+# Convert token IDs and attention mask to tensors
+input_ids = torch.tensor([token_ids])
+attention_mask = torch.tensor([attention_mask])
+
+# Generate the transformer output
+outputs = model(input_ids, attention_mask=attention_mask, output_attentions=True)
+
+head_view(outputs.attentions, tokens=tokens)</code></pre>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 4.4</div>
+<p>Promoting a GPT-2 model Now that we have trained our own Transformer
+model and gained some understanding of its functioning, let’s explore a
+larger pre-trained model that has been trained on a vast amount of
+natural data. By doing so, we can experience generating output that
+closely resembles human-like responses.</p>
+<pre><code class="language-python">model_type = &quot;gpt2&quot;
+device = &quot;mps&quot;
+
+model = GPT.from_pretrained(model_type)
+
+# move model to the device(GPU if available)
+# set to eval mode to avoid gradient accumulation
+model.to(device)
+model.eval()
+
+# Random prompt, uses pooling
+for i in range(5):
+    set_seed(42)
+    model.prompt(&quot;Alan Turing, the&quot;, 50, 3)
+
+# Deterministic prompt, does NOT use pooling
+for i in range(5):
+    model.prompt_topK(&quot;Alan Turing, the&quot;, 50, 3)</code></pre>
+<p>Get ready to embark on an intriguing journey by playing with the
+input prompt and witnessing the fascinating and captivating outputs that
+await you!</p>
+</div>
+</div>
+<h1 class="unnumbered" id="bibliography">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-bahdanau2014neural" class="csl-entry"
+role="doc-biblioentry">
+Bahdanau, Dzmitry, Kyunghyun Cho, and Yoshua Bengio. 2014. <span>“Neural
+Machine Translation by Jointly Learning to Align and Translate.”</span>
+<em>arXiv Preprint arXiv:1409.0473</em>.
+</div>
+<div id="ref-rlhf" class="csl-entry" role="doc-biblioentry">
+Bai, Yuntao, Andy Jones, Kamal Ndousse, Amanda Askell, Anna Chen, Nova
+DasSarma, Dawn Drain, et al. 2022. <span>“Training a Helpful and
+Harmless Assistant with Reinforcement Learning from Human
+Feedback.”</span> <a
+href="https://arxiv.org/abs/2204.05862">https://arxiv.org/abs/2204.05862</a>.
+</div>
+<div id="ref-gpt-3" class="csl-entry" role="doc-biblioentry">
+Brown, Tom B., Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan,
+Prafulla Dhariwal, Arvind Neelakantan, et al. 2020. <span>“Language
+Models Are Few-Shot Learners.”</span> <em>CoRR</em> abs/2005.14165. <a
+href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a>.
+</div>
+<div id="ref-brown2020language" class="csl-entry"
+role="doc-biblioentry">
+Brown, Tom, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared D Kaplan,
+Prafulla Dhariwal, Arvind Neelakantan, et al. 2020. <span>“Language
+Models Are Few-Shot Learners.”</span> <em>Advances in Neural Information
+Processing Systems</em> 33: 1877–1901.
+</div>
+<div id="ref-devlin2018bert" class="csl-entry" role="doc-biblioentry">
+Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2018.
+<span>“Bert: Pre-Training of Deep Bidirectional Transformers for
+Language Understanding.”</span> <em>arXiv Preprint
+arXiv:1810.04805</em>.
+</div>
+<div id="ref-lewis-etal-2020-bart" class="csl-entry"
+role="doc-biblioentry">
+Lewis, Mike, Yinhan Liu, Naman Goyal, Marjan Ghazvininejad, Abdelrahman
+Mohamed, Omer Levy, Veselin Stoyanov, and Luke Zettlemoyer. 2020.
+<span>“<span>BART</span>: Denoising Sequence-to-Sequence Pre-Training
+for Natural Language Generation, Translation, and Comprehension.”</span>
+In <em>Proceedings of the 58th Annual Meeting of the Association for
+Computational Linguistics</em>, 7871–80. Online: Association for
+Computational Linguistics. <a
+href="https://doi.org/10.18653/v1/2020.acl-main.703">https://doi.org/10.18653/v1/2020.acl-main.703</a>.
+</div>
+<div id="ref-liu2019roberta" class="csl-entry" role="doc-biblioentry">
+Liu, Yinhan, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi
+Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov.
+2019. <span>“RoBERTa: A Robustly Optimized BERT Pretraining
+Approach.”</span> <a
+href="https://arxiv.org/abs/1907.11692">https://arxiv.org/abs/1907.11692</a>.
+</div>
+<div id="ref-gpt-4" class="csl-entry" role="doc-biblioentry">
+OpenAI. 2023. <span>“GPT-4 Technical Report.”</span> <a
+href="https://arxiv.org/abs/2303.08774">https://arxiv.org/abs/2303.08774</a>.
+</div>
+<div id="ref-instructgpt" class="csl-entry" role="doc-biblioentry">
+Ouyang, Long, Jeff Wu, Xu Jiang, Diogo Almeida, Carroll L. Wainwright,
+Pamela Mishkin, Chong Zhang, et al. 2022. <span>“Training Language
+Models to Follow Instructions with Human Feedback.”</span> <a
+href="https://arxiv.org/abs/2203.02155">https://arxiv.org/abs/2203.02155</a>.
+</div>
+<div id="ref-peters2018deep" class="csl-entry" role="doc-biblioentry">
+Peters, Matthew E., Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher
+Clark, Kenton Lee, and Luke Zettlemoyer. 2018. <span>“Deep
+Contextualized Word Representations.”</span> <a
+href="https://arxiv.org/abs/1802.05365">https://arxiv.org/abs/1802.05365</a>.
+</div>
+<div id="ref-gpt-1" class="csl-entry" role="doc-biblioentry">
+Radford, Alec, Karthik Narasimhan, Tim Salimans, and Ilya Sutskever.
+2018. <span>“Improving Language Understanding by Generative
+Pre-Training.”</span>
+</div>
+<div id="ref-gpt-2" class="csl-entry" role="doc-biblioentry">
+Radford, Alec, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, Ilya
+Sutskever, et al. 2019. <span>“Language Models Are Unsupervised
+Multitask Learners.”</span> <em>OpenAI Blog</em> 1 (8): 9.
+</div>
+<div id="ref-raffel2020exploring" class="csl-entry"
+role="doc-biblioentry">
+Raffel, Colin, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang,
+Michael Matena, Yanqi Zhou, Wei Li, and Peter J. Liu. 2020.
+<span>“Exploring the Limits of Transfer Learning with a Unified
+Text-to-Text Transformer.”</span> <a
+href="https://arxiv.org/abs/1910.10683">https://arxiv.org/abs/1910.10683</a>.
+</div>
+<div id="ref-bpe" class="csl-entry" role="doc-biblioentry">
+Sennrich, Rico, Barry Haddow, and Alexandra Birch. 2016. <span>“Neural
+Machine Translation of Rare Words with Subword Units.”</span> In
+<em>Proceedings of the 54th Annual Meeting of the Association for
+Computational Linguistics (Volume 1: Long Papers)</em>, 1715–25. Berlin,
+Germany: Association for Computational Linguistics. <a
+href="https://doi.org/10.18653/v1/P16-1162">https://doi.org/10.18653/v1/P16-1162</a>.
+</div>
+<div id="ref-vaswani2017attention" class="csl-entry"
+role="doc-biblioentry">
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion
+Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017.
+<span>“Attention Is All You Need.”</span> <em>Advances in Neural
+Information Processing Systems</em> 30.
+</div>
+</div>
+<section class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>Note that the default <span
+class="math inline">\(p\)</span> is <span
+class="math inline">\(0.1\)</span>.<a href="#fnref1"
+class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Note that the default <span
+class="math inline">\(\epsilon\)</span> is <span
+class="math inline">\(1e-5\)</span>. <span
+class="math inline">\(\gamma\)</span> and <span
+class="math inline">\(\beta\)</span> are learnable affine parameters if
+we want to learn, otherwise set to <span
+class="math inline">\(1\)</span> and <span
+class="math inline">\(0\)</span><a href="#fnref2" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+					</article>
+<nav class="guide-pagenav">
+<a class="prev" href="day3.html"><span class="label">Previous</span><span class="title">&larr; Day 3 &middot; Sequence Models</span></a>
+<span></span>
+</nav>
+				</main>
+			</div>
+		</div>
+
+		<footer class="ftco-footer ftco-bg-dark ftco-section">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<img src="../images/lxmls-logo-2.png" width="63%" style="margin:0 5% 0 0">
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Contact us!</h2>
+							<div class="block-23 mb-3">
+								<ul>
+									<li><span class="text">IT &ndash; Lisboa, Instituto Superior T&eacute;cnico - Torre Norte - Piso 10,<br>
+									Av. Rovisco Pais, 1, 1049 - 001 LISBOA, Portugal</span></li>
+									<li><a href="mailto:lxmls-2026@googlegroups.com"><span class="text">lxmls-2026@googlegroups.com</span></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<p style="font-size:80%">
+							Copyright &copy;2021-<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://colorlib.com/" target="_blank">Colorlib</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="../files/jquery.min.js"></script>
+		<script src="../files/popper.min.js"></script>
+		<script src="../files/bootstrap.min.js"></script>
+		<script src="assets/highlight/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+		<script src="assets/copy-button.js"></script>
+	</body>
+</html>

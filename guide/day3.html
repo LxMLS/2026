@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Day 3 Sequence Models &middot; LxMLS Lab Guide</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="../files/css" rel="stylesheet">
+		<link rel="stylesheet" href="../files/open-iconic-bootstrap.min.css">
+		<link rel="stylesheet" href="../files/flaticon.css">
+		<link rel="stylesheet" href="../files/icomoon.css">
+		<link rel="stylesheet" href="../files/style.css">
+		<link rel="stylesheet" href="assets/highlight/github.min.css">
+		<link rel="stylesheet" href="assets/guide.css">
+		<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: [['\\(', '\\)']],
+				displayMath: [['\\[', '\\]']],
+				tags: 'ams',
+				macros: {
+					"D": ["\\frac{\\partial #1}{\\partial #2}", 2],
+					"F": "\\boldsymbol{f}",
+					"Ind": "\\textbf{1}",
+					"KL": "\\mathop{\\rm KL}",
+					"Max": "\\max",
+					"Min": "\\min",
+					"Q": "\\mathcal{Q}",
+					"V": "\\mathcal{V}",
+					"Vs": "\\mathcal{S}",
+					"W": "\\boldsymbol{w}",
+					"X": "\\mathcal{X}",
+					"Xp": "\\mathbf{E}",
+					"XpD": "\\mathbf{\\widehat{E}}",
+					"Y": "\\mathcal{Y}",
+					"argmax": "\\operatorname*{arg\\,max}",
+					"argmin": "\\operatorname*{arg\\,min}",
+					"auxq": "q(\\hseq \\mid \\sent)",
+					"bX": "\\mathbf{X}",
+					"bY": "\\mathbf{Y}",
+					"bZ": "\\mathbf{Z}",
+					"bm": ["\\boldsymbol{#1}", 1],
+					"bx": "\\mathbf{x}",
+					"by": "\\mathbf{y}",
+					"bz": "\\mathbf{z}",
+					"chaptername": "Day",
+					"code": ["\\texttt{#1}", 1],
+					"ensuremath": ["#1", 1],
+					"hs": "\\by",
+					"hseq": "\\bar{\\by}",
+					"hv": "{y}",
+					"hvocab": "\\mathbf{Y}",
+					"independent": "{\\perp\\!\\!\\!\\perp}",
+					"ip": ["#1\\cdot#2 ", 2],
+					"joint": "p_{\\theta}(\\sent ,\\hseq)",
+					"len": ["||#1||", 1],
+					"likelihood": "\\mathcal{L}",
+					"marginal": "p_{\\theta}(\\sent)",
+					"nll": "{\\rm \\emph{null}}",
+					"obj": "\\mathcal{O}",
+					"obs": "\\bx",
+					"pd": ["\\frac{\\partial#1}{\\partial#2}", 2],
+					"pdd": ["\\frac{\\partial^2 #1}{\\partial #2^2}", 2],
+					"pos": "Part-of-Speech",
+					"posi": "Part-of-Speech induction",
+					"posterior": "p_{\\theta}(\\hseq \\mid \\sent)",
+					"sent": "\\bar{\\bx}",
+					"setQ": "\\Q_{\\sent}",
+					"st": "\\operatorname*{s.t.}",
+					"state": "{s}",
+					"statevocab": "\\Lambda",
+					"trex": "\\bar{\\bx},\\bar{\\by} \\in \\mathcal{D}",
+					"vect": ["\\boldsymbol{#1}", 1],
+					"vectornorm": ["\\left|\\left|#1\\right|\\right|_{#2}", 2],
+					"vocab": "\\Sigma",
+					"vv": "{v}"
+				}
+			},
+			options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+		};
+		</script>
+		<script id="MathJax-script" async src="assets/mathjax/tex-chtml.js"></script>
+	</head>
+	<body class="guide-body">
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" href="../index.html"><img alt="LxMLS 2026" src="../images/lxmls-logo.png" width="33%" style="margin:0 5% 0 0"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"> Menu</button>
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="../index.html#about" class="nav-link">About</a></li>
+						<li class="nav-item"><a href="../index.html#dates" class="nav-link">Dates</a></li>
+						<li class="nav-item"><a href="../index.html#faq" class="nav-link">FAQ</a></li>
+						<li class="nav-item"><a href="../index.html#schedule" class="nav-link">Schedule</a></li>
+						<li class="nav-item"><a href="../index.html#speakers" class="nav-link">Speakers</a></li>
+						<li class="nav-item"><a href="../index.html#organizers" class="nav-link">Organizers</a></li>
+						<li class="nav-item active"><a href="index.html" class="nav-link">Guide</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="guide-wrap container-fluid">
+			<div class="row">
+				<aside class="col-lg-3 col-md-4 guide-sidebar">
+					<div class="guide-sidebar-inner">
+						<button class="guide-sidebar-toggle d-md-none" type="button" data-toggle="collapse" data-target="#guide-toc" aria-expanded="false" aria-controls="guide-toc">Contents</button>
+						<div class="collapse d-md-block" id="guide-toc">
+							<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
+<nav>
+<ul>
+<li><a class="toc-h3" href="#feed-forward-networks-unfolded-in-time">Feed Forward Networks
+Unfolded in Time</a></li>
+<li><a class="toc-h3" href="#backpropagating-through-unfolded-networks">Backpropagating
+through Unfolded Networks</a></li>
+<li><a class="toc-h2" href="#implementing-your-own-rnn-in-pytorch">Implementing your own RNN
+in Pytorch</a></li>
+</ul>
+</nav>
+						</div>
+					</div>
+				</aside>
+				<main class="col-lg-9 col-md-8 guide-main">
+					<article class="guide-content">
+<h1>Sequence Models <small class="text-muted">Day 3</small></h1>
+<p>Today’s class will be focused on advanced deep learning concepts,
+mainly Recurrent Neural Networks (RNNs). In the first day we saw how the
+chain-rule allowed us to compute gradients for arbitrary computation
+graphs. Today we will see that we can still do this for more complex
+models like Recurrent Neural Networks (RNNs). In these models we will
+input data in different points of the graph, which will correspond to
+different time instants. The key factor to consider is that, for a fixed
+number of time steps, this is still a computation graph and all what we
+saw on the first day applies with no need for extra math.</p>
+<p>If you managed to finish the previous day completely you should aim
+at finishing this as well. If you still have pending exercises from the
+first day e.g. the Pytorch part. It is recommended that you try to solve
+them first and then continue with this day.</p>
+<h2
+id="recurrent-neural-networks-backpropagation-through-time">Recurrent
+Neural Networks: Backpropagation Through Time</h2>
+<h3 id="feed-forward-networks-unfolded-in-time">Feed Forward Networks
+Unfolded in Time</h3>
+<figure>
+<img src="assets/figs/deep_learning/RNN2.svg" id="fig:RNN"
+alt="The simplest RNN can be seen as replicating a single hidden-layer FF network T times and passing the intermediate hidden variable \mathbf{h}_t across different steps. Note that all nodes operate over vector inputs e.g,. \mathbf{x}_t \in \mathbb{R}^I. Circles indicate matrix multiplications." />
+<figcaption aria-hidden="true">The simplest RNN can be seen as
+replicating a single hidden-layer FF network <span
+class="math inline">\(T\)</span> times and passing the intermediate
+hidden variable <span class="math inline">\(\mathbf{h}_t\)</span> across
+different steps. Note that all nodes operate over vector inputs e.g,.
+<span class="math inline">\(\mathbf{x}_t \in \mathbb{R}^I\)</span>.
+Circles indicate matrix multiplications.</figcaption>
+</figure>
+<p>We have seen already Feed Forward (FF) networks. These networks are
+ill suited to learn variable length patterns since they only accept
+inputs of a fixed size. In order to learn sequences using neural
+networks, we need therefore to define some architecture that is able to
+process variable length inputs. Recurrent Neural Networks (RNNs) solve
+this problem by unfolding the computation graph in time. In other words,
+the network is replicated as many times as it is necessary to cover the
+sequence to be modeled. In order to model the sequence one or more
+connections across different time instants are created. This allows the
+network to have a memory in time and thus capture complex patterns in
+sequences. In the simplest model, depicted in Fig. <a href="#fig:RNN"
+data-reference-type="ref" data-reference="fig:RNN">1</a>, and detailed
+in Algorithm <a href="#algo:rnnforward" data-reference-type="ref"
+data-reference="algo:rnnforward">[algo:rnnforward]</a>, a RNN is created
+by replicating a single hidden-layer FF network <span
+class="math inline">\(T\)</span> times and passing the intermediate
+hidden variable across different steps. The strength of the connection
+is determined by the weight matrix <span
+class="math inline">\(\mathbf{W}_h\)</span></p>
+<h3 id="backpropagating-through-unfolded-networks">Backpropagating
+through Unfolded Networks</h3>
+<figure>
+<img src="assets/figs/deep_learning/RNN2_backprop.svg"
+id="fig:RNNbackprop"
+alt="Forward-pass (blue) and backpropagated error (red) to the input layer of an RNN. Note that a copy of the error is sent to each output of each sum node (+)" />
+<figcaption aria-hidden="true">Forward-pass (blue) and backpropagated
+error (red) to the input layer of an RNN. Note that a copy of the error
+is sent to each output of each sum node <span
+class="math inline">\((+)\)</span></figcaption>
+</figure>
+<p>It is important to note that there is no formal changes needed to
+apply backpropagation to RNNs. It concerns applying the chain rule just
+as it happened with FFs. It is however useful to consider the following
+properties of derivatives, which are not relevant when dealing with
+FFs</p>
+<ul>
+<li><p>When two variables are summed up in the forward-pass, the error
+is backpropagated to each of the summand sub-graphs</p></li>
+<li><p>When unfolding in <span class="math inline">\(T\)</span> steps
+the same parameters will be copied <span
+class="math inline">\(T\)</span> times. All updates for each copy are
+summed up to compute the total gradient.</p></li>
+</ul>
+<p>Despite the lack of formal changes, the fact that we backpropagate an
+error over the length of the entire sequence often leads to numerical
+problems. The problem of <em>vanishing</em> and <em>exploding</em>
+gradients are a well know limitation. A number of solutions are used to
+mitigate this issue. One simple, yet inelegant, method is clipping the
+gradients to a fixed threshold. Another solution is to resort to more
+complex RNN models that are able to better handle long range
+dependencies and are less sensitive to this phenomena. It is important
+to bear in mind, however, that all RNNs still use backpropagation as
+seen in the previous day, although it is often referred as
+<em>Backpropagation through time</em>.</p>
+<figure class="guide-algorithm"><figcaption>Algorithm 3.1: Forward pass of a Recurrent Neural Network (RNN) with embeddings</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b> Initial parameters for an RNN Input \(\Theta=\{\mathbf{W}^e \in \mathbb{R}^{E \times I}, \mathbf{W}^x \in \mathbb{R}^{J \times E}, \mathbf{W}^h \in \mathbb{R}^{J \times J}, \mathbf{W}^y \in \mathbb{R}^{K \times J} \}\) embedding, input, recurrent and output linear transformations respectively.</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> <b>input:</b> Input data matrix \(\mathbf{x} \in \mathbb{R}^{I \times M'}\), representing sentence of \(M'\) time steps. Initial recurrent variable \(\mathbf{h}_0\).</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(m=1\) <b>to</b> \(M'\) <b>do</b></div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">4:</span> Apply embedding layer         \(z_{dm}^e = \sum_{i=1}^{I} W^e_{di} x_{im}\)</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">5:</span> Apply linear transformation combining embedding and recurrent signals         \(z_{jm}^h = \sum_{d=1}^{E} W_{jd}^x z_{dm}^e + \sum_{j'=1}^{J} W_{jj'}^h h_{j'm-1}\)</div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">6:</span> Apply non-linear transformation e.g. sigmoid (hereby denoted \(\sigma()\))         \(h_{jm} = \sigma(z_{jm}^h)  = \frac{1}{1+\exp(-z_{jm}^h)}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">7:</span> Apply final linear transformation to each of the recurrent variables \(\mathbf{h}_1 \cdots \mathbf{h}_{M'}\)  \(z_{km}^y = \sum_{j=1}^{J} W_{kj}^y h_{jm}\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">8:</span> Apply final non-linear transformation e.g. softmax     \(p(y_m=k|\mathbf{x}_{1:m+1}) = \tilde{z}_{km}^y  = \frac{\exp(z_{km}^y)}{\sum_{k'=1}^{K} \exp(z_{k'm}^y)}\)</div></div></figure>
+<figure class="guide-algorithm"><figcaption>Algorithm 3.2: Backpropagation for a Recurrent Neural Network (RNN) with embeddings</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b>         Data \(\mathcal{D}=\{\mathcal{D}_1,\mathcal{D}_2,...,\mathcal{D}_B\}\) split into \(B\) sequences (batch size 1) of size \(M'\). RNN with parameters \(\Theta=\{\mathbf{W}^e \in \mathbb{R}^{E \times I}, \mathbf{W}^x \in \mathbb{R}^{J \times E}, \mathbf{W}^h \in \mathbb{R}^{J \times J}, \mathbf{W}^y \in \mathbb{R}^{K \times J} \}\) embedding, input, recurrent and output linear transformations respectively. Number of rounds \(T\), learning rate \(\eta\)</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> initialize parameters \(\Theta\) randomly</div>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(t=1\) <b>to</b> \(T\) <b>do</b></div>
+<div class="algo-line" style="padding-left:3.0em"><span class="algo-num">4:</span> <b>for</b> \(b=1\) <b>to</b> \(B\)}  	\vspace{0.3cm <b>do</b></div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">5:</span> <b>for</b> \(m=1\) <b>to</b> \(M'\) <b>do</b></div>
+<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">6:</span> Compute the {forward pass} for sentence \(b\) (\(M'\) time steps);         keep not only \(\tilde{z}_{km}^y\) but also, the RNN layer activations \(h_{jm}\) and the embedding layer activations \(z^e_{dm}\).</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">7:</span> <b>for</b> \(m=1\) <b>to</b> \(M'\) <b>do</b></div>
+<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">8:</span> {Initialize the error at last layer for a CE cost and backpropagate it through the output linear layer:         \(\mathbf{e}^m_{y} = (\mathbf{W}^y)^T \Big(\mathrm{\mathbf{1}}_{k(m)} - \tilde{\mathbf{z}}_{m}^y \Big).\)}</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">9:</span> Initialize recurrent layer error \(\mathbf{e}_r\) to a vector of zeros of size \(J\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">10:</span> <b>for</b> \(m=M'\) <b>to</b> \(1\) <b>do</b></div>
+<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">11:</span> Add the recurrent layer backpropagated error and backpropagate through the sigmoid non-linearity:         \(\mathbf{e}^m_{h} = \Big(\mathbf{e}_{r} + \mathbf{e}^m_y\Big) \odot \mathbf{h}_m \odot (\mathbf{\mathrm{1}}-\mathbf{h}_m)\)</div>
+<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">12:</span> where \(\odot\) is the element-wise product and the \(\mathbf{\mathrm{1}}\) is replicated to match the size of \(\mathbf{h}^n\).</div>
+<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">13:</span> {Backpropagate} the error through the recurrent linear layer     \(\mathbf{e}_r = (\mathbf{W}^h)^T \mathbf{e}_h^m\)</div>
+<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">14:</span> {Backpropagate} the error through the input linear layer     \(\mathbf{e}_e^m = (\mathbf{W}^x)^T \mathbf{e}_h^m\)</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">15:</span> {Compute the gradients} using the backpropagated errors and the inputs from the forward pass. For example for the recurrent layer          \(\nabla_{\mathbf{W}^h}\mathcal{F}(\mathcal{D_b};\Theta)  = -\frac{1}{M'} \sum_{m=1}^{M'} \mathbf{e}^m_h \cdot \left(\mathbf{h}_{m-1}\right)^T,\)      For the input layer          \(\nabla_{\mathbf{W}^x}\mathcal{F}(\mathcal{D_b};\Theta)  = -\frac{1}{M'} \sum_{m=1}^{M'} \mathbf{e}^m_h \cdot \left(\mathbf{z}^e_{m}\right)^T,\)  	\vspace{0.3cm}</div>
+<div class="algo-line" style="padding-left:4.5em"><span class="algo-num">16:</span> Update the parameters, for example for the input layer         \(\mathbf{W}^x \leftarrow \mathbf{W}^x - \eta \nabla_\mathbf{W^x}\mathcal{F},\)</div></div></figure>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.1</div>
+<p><span id="exercise:rnnnumpy" label="exercise:rnnnumpy"></span>
+Convince yourself that a RNN is just an FF unfolded in time. Complete
+the backpropagation() method in NumpyRNN class in
+lxmls/deep_learning/numpy_models/rnn.py and compare it with<br />
+lxmls/deep_learning/numpy/models/mlp.py.<br />
+To work with RNNs we will use the Part-of-speech data-set.</p>
+<pre><code class="language-python"># Load Part-of-Speech data 
+from lxmls.readers.pos_corpus import PostagCorpusData
+data = PostagCorpusData() </code></pre>
+<p>Load and configure the NumpyRNN. Remember to use reload if you want
+to modify the code inside the rnns module</p>
+<pre><code class="language-python"># Instantiate RNN
+from lxmls.deep_learning.numpy_models.rnn import NumpyRNN
+model = NumpyRNN(
+    input_size=data.input_size,
+    embedding_size=50,
+    hidden_size=20,
+    output_size=data.output_size,
+    learning_rate=0.1
+)</code></pre>
+<p>As in the case of the feed-forward networks you can use the following
+setup to test step by step the implementation of the gradients. First
+compute the cost variation for the variation of a single weight</p>
+<pre><code class="language-python">from lxmls.deep_learning.rnn import get_rnn_parameter_handlers, get_rnn_loss_range
+
+# Get functions to get and set values of a particular weight of the model
+get_parameter, set_parameter = get_rnn_parameter_handlers(
+    layer_index=-1,
+    row=0, 
+    column=0
+)
+
+# Get batch of data
+batch = data.batches(&#39;train&#39;, batch_size=1)[0]
+
+# Get loss and weight value
+current_loss = model.cross_entropy_loss(batch[&#39;input&#39;], batch[&#39;output&#39;])
+current_weight = get_parameter(model.parameters)
+
+# Get range of values of the weight and loss around current parameters values
+weight_range, loss_range = get_rnn_loss_range(model, get_parameter, set_parameter, batch)</code></pre>
+<p>then compute the desired gradient from your implementation</p>
+<pre><code class="language-python"># Get the gradient value for that weight
+gradients = model.backpropagation(batch[&#39;input&#39;], batch[&#39;output&#39;])
+current_gradient = get_parameter(gradients)</code></pre>
+<p>and finally call matlplotlib to plot the loss variation versus the
+gradient</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+# Plot empirical
+plt.plot(weight_range, loss_range)
+plt.plot(current_weight, current_loss, &#39;xr&#39;)
+plt.ylabel(&#39;loss value&#39;)
+plt.xlabel(&#39;weight value&#39;)
+# Plot real
+h = plt.plot(
+    weight_range,
+    current_gradient*(weight_range - current_weight) + current_loss, 
+    &#39;r--&#39;
+)</code></pre>
+<p>After you have completed the gradients you can run the model in the
+POS task</p>
+<pre><code class="language-python">import numpy as np
+import time
+
+# Hyper-parameters
+num_epochs = 20
+
+# Get batch iterators for train and test
+train_batches = data.batches(&#39;train&#39;, batch_size=1)
+dev_set = data.batches(&#39;dev&#39;, batch_size=1)
+test_set = data.batches(&#39;test&#39;, batch_size=1)
+
+# Epoch loop
+start = time.time()
+for epoch in range(num_epochs):
+
+    # Batch loop
+    for batch in train_batches:
+        model.update(input=batch[&#39;input&#39;], output=batch[&#39;output&#39;])
+
+    # Evaluation dev
+    is_hit = []
+    for batch in dev_set:
+        is_hit.extend(model.predict(input=batch[&#39;input&#39;]) == batch[&#39;output&#39;])
+    accuracy = 100*np.mean(is_hit)
+    print(&quot;Epoch %d: dev accuracy %2.2f %%&quot; % (epoch+1, accuracy))
+
+print(&quot;Training took %2.2f seconds per epoch&quot; % ((time.time() - start)/num_epochs))
+
+# Evaluation test
+is_hit = []
+for batch in test_set:
+    is_hit.extend(model.predict(input=batch[&#39;input&#39;]) == batch[&#39;output&#39;])
+accuracy = 100*np.mean(is_hit)
+
+# Inform user
+print(&quot;Test accuracy %2.2f %%&quot; % accuracy)</code></pre>
+</div>
+<h2 id="implementing-your-own-rnn-in-pytorch">Implementing your own RNN
+in Pytorch</h2>
+<p>One of the big advantages of toolkits like Pytorch or Dynet is that
+creating computation graphs that dynamically change size is very simple.
+In many other tookits it is directly not possible to use a Python for
+loop with a variable length to define a computation graph. Again, as in
+other toolkits we will only need to create the forward pass of the RNN
+and the gradients will be computed automatically for us.</p>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.2</div>
+<p>As we did with the feed-forward network, we will now implement a
+Recurrent Neural Network (RNN) in Pytorch. For this complete the
+log_forward() method in lxmls/deep_learning/pytorch_models/rnn.py.</p>
+<p>Load the RNN model in numpy and Pytorch for comparison</p>
+<pre><code class="language-python"># Numpy version
+from lxmls.deep_learning.numpy_models.rnn import NumpyRNN
+numpy_model = NumpyRNN(
+    input_size=data.input_size,
+    embedding_size=50,
+    hidden_size=20,
+    output_size=data.output_size,
+    learning_rate=0.1
+)
+
+# Pytorch version
+from lxmls.deep_learning.pytorch_models.rnn import PytorchRNN
+model = PytorchRNN(
+    input_size=data.input_size,
+    embedding_size=embedding_size,
+    hidden_size=hidden_size,
+    output_size=data.output_size,
+    learning_rate=learning_rate
+)</code></pre>
+<p>To debug your code you can compare the numpy and Pytorch gradients
+using</p>
+<pre><code class="language-python"># Get gradients for both models
+batch = data.batches(&#39;train&#39;, batch_size=1)[0]
+gradient_numpy = numpy_model.backpropagation(batch[&#39;input&#39;], batch[&#39;output&#39;])
+gradient = model.backpropagation(batch[&#39;input&#39;], batch[&#39;output&#39;])</code></pre>
+<p>and then plotting them with matplotlib</p>
+<pre><code class="language-python">import matplotlib.pyplot as plt
+# Gradient for  word embeddings in the example
+plt.subplot(2,2,1)
+plt.imshow(gradient_numpy[0][batch[&#39;input&#39;], :], aspect=&#39;auto&#39;, interpolation=&#39;nearest&#39;)
+plt.colorbar()
+plt.subplot(2,2,2)
+plt.imshow(gradient[0].numpy()[batch[&#39;input&#39;], :], aspect=&#39;auto&#39;, interpolation=&#39;nearest&#39;)
+plt.colorbar()
+# Gradient for  word embeddings in the example
+plt.subplot(2,2,3)
+plt.imshow(gradient_numpy[1], aspect=&#39;auto&#39;, interpolation=&#39;nearest&#39;)
+plt.colorbar()
+plt.subplot(2,2,4)
+plt.imshow(gradient[1].numpy(), aspect=&#39;auto&#39;, interpolation=&#39;nearest&#39;)
+plt.colorbar()
+plt.show()</code></pre>
+<p>Once you are confident that your implementation is working correctly
+you can run it on the POS task using the Pytorch code from the
+Exercise <a href="#exercise:rnnnumpy" data-reference-type="ref"
+data-reference="exercise:rnnnumpy">[exercise:rnnnumpy]</a>.</p>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.3</div>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.4</div>
+</div>
+
+					</article>
+<nav class="guide-pagenav">
+<a class="prev" href="day2.html"><span class="label">Previous</span><span class="title">&larr; Day 2 &middot; Non-Linear Classifiers</span></a>
+<a class="next" href="day4.html"><span class="label">Next</span><span class="title">Day 4 &middot; Transformers &rarr;</span></a>
+</nav>
+				</main>
+			</div>
+		</div>
+
+		<footer class="ftco-footer ftco-bg-dark ftco-section">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<img src="../images/lxmls-logo-2.png" width="63%" style="margin:0 5% 0 0">
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Contact us!</h2>
+							<div class="block-23 mb-3">
+								<ul>
+									<li><span class="text">IT &ndash; Lisboa, Instituto Superior T&eacute;cnico - Torre Norte - Piso 10,<br>
+									Av. Rovisco Pais, 1, 1049 - 001 LISBOA, Portugal</span></li>
+									<li><a href="mailto:lxmls-2026@googlegroups.com"><span class="text">lxmls-2026@googlegroups.com</span></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<p style="font-size:80%">
+							Copyright &copy;2021-<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://colorlib.com/" target="_blank">Colorlib</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="../files/jquery.min.js"></script>
+		<script src="../files/popper.min.js"></script>
+		<script src="../files/bootstrap.min.js"></script>
+		<script src="assets/highlight/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+		<script src="assets/copy-button.js"></script>
+	</body>
+</html>
