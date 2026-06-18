@@ -339,7 +339,7 @@ other combining a <span class="math inline">\(\mathrm{FF}\)</span> and
 <span class="math inline">\(\mathrm{MHA}\)</span> sub-blocks. A single
 block is defined as</p>
 <p><span class="math display">\[e^{n+1} =
-\mathrm{FF}(\mathrm(MHA(e^n)).\]</span></p>
+\mathrm{FF}(\mathrm{MHA}(e^n)).\]</span></p>
 <p>The input to the first block <span class="math inline">\(e^0\)</span>
 is the sum of position <span class="math inline">\(P\)</span> and
 non-contextual embeddings <span class="math inline">\(E\)</span> of the
@@ -445,10 +445,10 @@ K^T\)</span>. The <span class="math inline">\(A\)</span> value is
 usually chosen to be the square root of the dimension of the key
 matrices. This leads to having more stable gradients.</p>
 <p>Then pass the result through a <span
-class="math inline">\(softmax\)</span> operation. The Softmax normalizes
-the scores so they’re all positive and add up to 1. In other words,
-extracts a distribution of relative scores from a given token for each
-token in the input sequence.</p>
+class="math inline">\(\mathrm{softmax}\)</span> operation. The Softmax
+normalizes the scores so they’re all positive and add up to 1. In other
+words, extracts a distribution of relative scores from a given token for
+each token in the input sequence.</p>
 <p>After this multiply the output by the Value matrix: <span
 class="math inline">\(\underset{i \rightarrow}{\mathrm{softmax}}\left(
 \frac{1}{A} W^Q z \left(W^K z\right)^T \right) \cdot W^V \cdot
@@ -469,7 +469,7 @@ and allowing projection of input embeddings into distinct representation
 subspaces, thereby improving overall performance.</p>
 <p>Finally getting the following mathematical form for the <span
 class="math inline">\(\mathrm{MHA}\)</span>:</p>
-<p><span class="math display">\[MHA(z) =  W^o \cdot
+<p><span class="math display">\[\mathrm{MHA}(z) =  W^o \cdot
 \begin{bmatrix}
     \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_1 z
 \left(W^K_1 z\right)^T \right) \cdot W^V_1 \cdot z \\
@@ -504,7 +504,7 @@ connection and a layer normalization is applied to input <span
 class="math inline">\(z\)</span> that has been passed through a <span
 class="math inline">\(\mathrm{sub-block}\)</span>, where a <span
 class="math inline">\(\mathrm{sub-block} \in \{\mathrm{FF},
-MHA\}\)</span>. Together, we can express the function as</p>
+\mathrm{MHA}\}\)</span>. Together, we can express the function as</p>
 <p><span class="math display">\[C(x) =
 \mathrm{layernorm}(\mathrm{residual}(\mathrm{dropout}(\mathrm{sublayer}(z)),
 z)\]</span></p>
@@ -570,20 +570,24 @@ sub-layers in a decoder layer will be <span
 class="math inline">\(\mathrm{MHA}\)</span>-<span
 class="math inline">\(\mathrm{CMHA}\)</span>-<span
 class="math inline">\(\mathrm{FF}\)</span>, i.e.</p>
-<p><span class="math display">\[d^{m+1} = \mathrm{FF}(\mathrm(CMHA(e^N,
-MHA(d^m))).\]</span></p>
+<p><span class="math display">\[d^{m+1} = \mathrm{FF}(\mathrm{CMHA}(e^N,
+\mathrm{MHA}(d^m))).\]</span></p>
 <p>Specifically, the query matrix is computed from the layer below it,
 while the key and value matrix are computed from <span
 class="math inline">\(e^N\)</span>, which can be expressed as</p>
-<p><span class="math display">\[\mathrm{CMHA}(e^N, MHA(d^m)) = W^o \cdot
+<p><span class="math display">\[\mathrm{CMHA}(e^N, \mathrm{MHA}(d^m)) =
+W^o \cdot
 \begin{bmatrix}
     \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_1
-MHA(d^m) \left(W^K_1 e^N\right)^T \right) \cdot W^V_1 \cdot e^N \\
+\mathrm{MHA}(d^m) \left(W^K_1 e^N\right)^T \right) \cdot W^V_1 \cdot e^N
+\\
     \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_2
-MHA(d^m) \left(W^K_2 e^N\right)^T \right) \cdot W^V_2 \cdot e^N \\
+\mathrm{MHA}(d^m) \left(W^K_2 e^N\right)^T \right) \cdot W^V_2 \cdot e^N
+\\
     \cdots\\
     \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_D
-MHA(d^m) \left(W^K_D e^N\right)^T \right) \cdot W^V_D \cdot e^N \\
+\mathrm{MHA}(d^m) \left(W^K_D e^N\right)^T \right) \cdot W^V_D \cdot e^N
+\\
 \end{bmatrix}\nonumber.\]</span></p>
 <figure>
 <img src="assets/figs/imgs/encoder_decoder.png" id="fig:encoder_decoder"
@@ -716,9 +720,10 @@ objective is to reconstruct <span
 class="math inline">\(\bar{\textbf{x}}\)</span> from <span
 class="math inline">\(\hat{\textbf{x}}\)</span>:</p>
 <p><span class="math display">\[\begin{aligned}
-max_{\theta}logP_{\theta}(\bar{\textbf{x}}|\hat{\textbf{x}})\approx
-\sum_{t=1}^Tm_tlogP_{\theta}(x_t|\hat{\textbf{x}})
-=\sum_{t=1}^Tm_tlog\frac{exp(H_{\theta}(\hat{\textbf{x}})_t^Te(x_t))}{\sum_{x\prime}
+\max_{\theta} \log P_{\theta}(\bar{\textbf{x}}|\hat{\textbf{x}})\approx
+\sum_{t=1}^T m_t \log P_{\theta}(x_t|\hat{\textbf{x}})
+=\sum_{t=1}^T m_t \log
+\frac{exp(H_{\theta}(\hat{\textbf{x}})_t^Te(x_t))}{\sum_{x\prime}
 {exp(H_{\theta}(\hat{\textbf{x}})_t^Te(x\prime)}}\end{aligned}\]</span></p>
 <p>Where the <span class="math inline">\(\approx\)</span> indicates that
 all <span class="math inline">\(\bar{\textbf{x}}\)</span> elements are
@@ -785,10 +790,11 @@ and overall language understanding capabilities.</p>
 <h3 id="training-with-decoders">Training with Decoders</h3>
 <p>Decoder-only or Autoregressive modeling performs pretraining by
 maximizing the likelihood under the forward autoregressive
-factorization: <span
-class="math display">\[max_{\theta}logP_{\theta}(\textbf{x})=\sum_{t=1}^TlogP_{\theta}(x_t|\textbf{x}_{&lt;t})
+factorization: <span class="math display">\[\max_{\theta} \log
+P_{\theta}(\textbf{x})=\sum_{t=1}^T \log
+P_{\theta}(x_t|\textbf{x}_{&lt;t})
 =
-\sum_{t=1}^T{log\frac{exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x_t))}{\sum_{x\prime}exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x\prime))}}\]</span></p>
+\sum_{t=1}^T{\log\frac{exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x_t))}{\sum_{x\prime}exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x\prime))}}\]</span></p>
 <p>Where the <span
 class="math inline">\(h_{\theta}(\textbf{x}_{1:t-1})\)</span> is the
 context representation produced by the neural model, and it contains
