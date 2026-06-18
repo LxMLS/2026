@@ -116,7 +116,8 @@ Installing the Tools in your own Computer</a></li>
 Troubleshooting</a></li>
 <li><a class="toc-h3" href="#deciding-on-the-ide-and-interactive-shell-to-use">Deciding on
 the IDE and interactive shell to use</a></li>
-<li><a class="toc-h3" href="#jupyter-notebook">Jupyter Notebook</a></li>
+<li><a class="toc-h3" href="#jupyter-notebook-and-jupyterlab">Jupyter Notebook and
+JupyterLab</a></li>
 <li><a class="toc-h2" href="#sec:SolvingExercises">Solving the Exercises</a></li>
 <li><a class="toc-h2" href="#sec:Python">Python</a></li>
 <li><a class="toc-h3" href="#python-basics">Python Basics</a></li>
@@ -233,20 +234,20 @@ comes installed with Anaconda and is part of the pip-installed packages.
 The Jupyter notebook is described in the next section. In case you run
 into problems or you feel uncomfortable with the Jupyter notebook you
 can use the simpler iPython command line.</p>
-<h3 id="jupyter-notebook">Jupyter Notebook</h3>
+<h3 id="jupyter-notebook-and-jupyterlab">Jupyter Notebook and
+JupyterLab</h3>
 <p>Jupyter is a good choice for writing Python code. It is an
 interactive computational environment for data science and scientific
 computing, where you can combine code execution, rich text, mathematics,
 plots and rich media. The Jupyter Notebook is a web application that
-allows you to create and share documents, which contains live code,
-equations, visualizations and explanatory text. It is very popular in
-the areas of data cleaning and transformation, numerical simulation,
-statistical modeling, machine learning and so on. It supports more than
-40 programming languages, including all those popular ones used in Data
-Science such as Python, R, and Scala. It can also produce many different
-types of output such as images, videos, LaTex and JavaScript. More over
-with its interactive widgets, you can manipulate and visualize data in
-real time.</p>
+allows you to create and share documents which contain live code,
+equations, visualizations and explanatory text. It is very popular for
+data cleaning, numerical simulation, statistical modeling, and machine
+learning.</p>
+<p>The modern interface is <strong>JupyterLab</strong>, which replaces
+the classic Jupyter Notebook with a more complete IDE-like environment
+while remaining fully compatible with <code>.ipynb</code> notebook
+files. Both are installed as part of the toolkit setup.</p>
 <p>The main features and advantages using the Jupyter Notebook are the
 following:</p>
 <ul>
@@ -300,16 +301,16 @@ troubleshooting)</td>
 </table>
 </div>
 </div>
-<p>A more detailed user guide can be found here:</p>
-<pre><code class="nohighlight">http://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/index.html</code></pre>
+<p>A more detailed user guide can be found at <a
+href="https://docs.jupyter.org/en/latest/"
+class="uri">https://docs.jupyter.org/en/latest/</a>.</p>
 <h2 id="sec:SolvingExercises">Solving the Exercises</h2>
 <p>In the student branch we provide the <code>solve.py</code> script.
 This can be used to solve the exercises of each day, e.g.,</p>
 <pre><code class="nohighlight">python ./solve.py linear_classifiers</code></pre>
-<p>where the solvable days are: linear_classifiers, sequence_models,
-structure_predictors, non-linear_classifiers,
-non-linear_sequence_models, reinforcement_learning. You can also undo
-the solving of an exercise by using</p>
+<p>where the solvable days are: linear_classifiers, deep_learning,
+deep_learning_rnn, transformers. You can also undo the solving of an
+exercise by using</p>
 <pre><code class="nohighlight">python ./solve.py --undo linear_classifiers</code></pre>
 <p>Note that this script just downloads the master or student versions
 of certain files from the GitHub repository. It needs an Internet
@@ -385,32 +386,20 @@ print(3 - 5)
 print(3 * 5)
 print(3 / 5)
 print(3 ** 5)</code></pre>
-<p>will produce the following output in Python 2:</p>
-<pre><code class="language-python">8
--2
-15
-0
-243</code></pre>
-<p>and the following output in Python 3:</p>
+<p>will produce the following output:</p>
 <pre><code class="language-python">8
 -2
 15
 0.6
 243</code></pre>
-<p><strong>Important</strong>: Notice that in Python 2 division is
-always considered as integer division, hence the result being 0 on the
-example above. To force a floating point division in Python 2 you can
-force one of the operands to be a floating point number:</p>
-<pre><code class="language-python">print(3 / 5.0)
-0.6</code></pre>
-<p>For Python 3, the division is considered float point, so the
-operation (3 / 5) or (3 / 5.0) is always 0.6.</p>
-<p>Also, notice that the symbol <code>**</code> is used as exponentation
-operator, unlike other major languages which use the symbol
-<code>^</code>. In fact, the <code>^</code> symbol has a different
-meaning in Python (bitwise XOR) so, in the beginning, be sure to
-double-check your code if it uses exponentiation and it is giving
-unexpected results.</p>
+<p>Note that division always returns a float in Python 3:
+<code>3 / 5</code> gives <code>0.6</code>. To perform integer (floor)
+division, use <code>//</code>: <code>3 // 5</code> gives
+<code>0</code>.</p>
+<p>Also, notice that the symbol <code>**</code> is used as the
+exponentiation operator, unlike other languages that use <code>^</code>.
+In Python, <code>^</code> means bitwise XOR, so double-check your code
+if it uses exponentiation and gives unexpected results.</p>
 <h4 id="data-structures">Data Structures</h4>
 <p>In Python, you can create lists of items with the following
 syntax:</p>
@@ -563,14 +552,17 @@ variable auto complete and colors. Unfortunately ipdb has some
 compatibility problems with Jupyter. We therefore recommend to use ipdb
 only in spartan configurations such as vim+ipdb as IDE.</p>
 <p>In the following example, we use this module to inspect the
-<code>greet</code> function:</p>
+<code>greet</code> function. Since Python 3.7, the built-in
+<code>breakpoint()</code> function is the preferred way to set a
+breakpoint — it calls <code>pdb.set_trace()</code> by default but can be
+configured to use other debuggers:</p>
 <pre><code class="language-python">def greet(hour):
     if hour &lt; 12:
         print(&#39;Good morning!&#39;)
     elif hour &gt;= 12 and hour &lt; 20:
         print(&#39;Good afternoon!&#39;)
     else:
-        import pdb; pdb.set_trace()
+        breakpoint()  # equivalent to: import pdb; pdb.set_trace()
         print(&#39;Good evening!&#39;)</code></pre>
 <p>Load the new definition of the function by writing this code in a
 file or a Jupyter cell and running it. Now, if you try
@@ -869,11 +861,9 @@ print(C.ptp())</code></pre>
 <p><span class="math display">\[\int_0^{1} f(x)dx \approx \sum_{i =
 0}^{999} \frac{f(i/1000)}{1000}.\]</span></p>
 <p>Use numpy to implement this for <span class="math inline">\(f(x) =
-x^2\)</span>. You should not need to use any loops. Note that integer
-division in Python 2.x returns the floor division (use floats – e.g.
-<span class="math inline">\(5.0/2.0\)</span> – to obtain rationals). The
-exact value is <span class="math inline">\(1/3\)</span>. How close is
-the approximation?</p>
+x^2\)</span>. You should not need to use any loops. The exact value is
+<span class="math inline">\(1/3\)</span>. How close is the
+approximation?</p>
 </div>
 <h2 id="essential-linear-algebra">Essential Linear Algebra</h2>
 <p>Linear Algebra provides a compact way of representing and operating
