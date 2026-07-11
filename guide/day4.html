@@ -141,14 +141,20 @@ Encoder-Decoder</a></li>
 class="citation" data-cites="vaswani2017attention">(<a
 href="#ref-vaswani2017attention" role="doc-biblioref">Vaswani et al.
 2017</a>)</span>. Transformers have become the dominant model in Natural
-Language Processing, pushing the performance of many tasks through
-models like BERT <span class="citation" data-cites="devlin2018bert">(<a
-href="#ref-devlin2018bert" role="doc-biblioref">Devlin et al.
-2018</a>)</span> and GPT <span class="citation"
-data-cites="brown2020language">(<a href="#ref-brown2020language"
-role="doc-biblioref">T. Brown et al. 2020</a>)</span>. In this class, we
-will review the transformer architecture. The focus of the class is to
-understand and implement the self-attention mechanism in Pytorch. For
+Language Processing and Artificial Intelligence more broadly, powering
+models such as BERT <span class="citation"
+data-cites="devlin2018bert">(<a href="#ref-devlin2018bert"
+role="doc-biblioref">Devlin et al. 2018</a>)</span>, GPT <span
+class="citation" data-cites="brown2020language">(<a
+href="#ref-brown2020language" role="doc-biblioref">T. Brown et al.
+2020</a>)</span>, LLaMA <span class="citation"
+data-cites="touvron2023llama">(<a href="#ref-touvron2023llama"
+role="doc-biblioref">Touvron et al. 2023</a>)</span>, and the current
+generation of large language models (LLMs) like GPT-4 <span
+class="citation" data-cites="gpt-4">(<a href="#ref-gpt-4"
+role="doc-biblioref">OpenAI 2023</a>)</span> and Claude. In this class,
+we will review the transformer architecture. The focus of the class is
+to understand and implement the self-attention mechanism in Pytorch. For
 this, we will use an annotated version of Karpathy’s minGPT code (<a
 href="https://github.com/karpathy/minGPT"
 class="uri">https://github.com/karpathy/minGPT</a>).</p>
@@ -169,7 +175,17 @@ class="math inline">\(PE\)</span>) is to use the sinusoidal expressed as
 class="math display">\[PE_{(pos,2i+1)} = cos(\frac{pos}{
 10000^{2i/d_{model}}}),\]</span></p>
 <p>where <span class="math inline">\(pos\)</span> is the position and
-<span class="math inline">\(i\)</span> is the dimension.</p>
+<span class="math inline">\(i\)</span> is the dimension. Many modern
+LLMs instead use learned absolute positional embeddings (as in GPT-2) or
+Rotary Position Embedding (RoPE) <span class="citation"
+data-cites="su2024roformer">(<a href="#ref-su2024roformer"
+role="doc-biblioref">Su et al. 2024</a>)</span>, which encodes relative
+positions directly into the attention computation and is used in models
+such as LLaMA <span class="citation" data-cites="touvron2023llama">(<a
+href="#ref-touvron2023llama" role="doc-biblioref">Touvron et al.
+2023</a>)</span> and Mistral <span class="citation"
+data-cites="jiang2023mistral">(<a href="#ref-jiang2023mistral"
+role="doc-biblioref">Jiang et al. 2023</a>)</span>.</p>
 <h3 id="tokenization">Tokenization</h3>
 <p>Transformers operate on sequences of input. In the case of natural
 language, these sequences could be whole words, single characters, or
@@ -323,7 +339,7 @@ other combining a <span class="math inline">\(\mathrm{FF}\)</span> and
 <span class="math inline">\(\mathrm{MHA}\)</span> sub-blocks. A single
 block is defined as</p>
 <p><span class="math display">\[e^{n+1} =
-\mathrm{FF}(\mathrm(MHA(e^n)).\]</span></p>
+\mathrm{FF}(\mathrm{MHA}(e^n)).\]</span></p>
 <p>The input to the first block <span class="math inline">\(e^0\)</span>
 is the sum of position <span class="math inline">\(P\)</span> and
 non-contextual embeddings <span class="math inline">\(E\)</span> of the
@@ -429,10 +445,10 @@ K^T\)</span>. The <span class="math inline">\(A\)</span> value is
 usually chosen to be the square root of the dimension of the key
 matrices. This leads to having more stable gradients.</p>
 <p>Then pass the result through a <span
-class="math inline">\(softmax\)</span> operation. The Softmax normalizes
-the scores so they’re all positive and add up to 1. In other words,
-extracts a distribution of relative scores from a given token for each
-token in the input sequence.</p>
+class="math inline">\(\mathrm{softmax}\)</span> operation. The Softmax
+normalizes the scores so they’re all positive and add up to 1. In other
+words, extracts a distribution of relative scores from a given token for
+each token in the input sequence.</p>
 <p>After this multiply the output by the Value matrix: <span
 class="math inline">\(\underset{i \rightarrow}{\mathrm{softmax}}\left(
 \frac{1}{A} W^Q z \left(W^K z\right)^T \right) \cdot W^V \cdot
@@ -453,7 +469,7 @@ and allowing projection of input embeddings into distinct representation
 subspaces, thereby improving overall performance.</p>
 <p>Finally getting the following mathematical form for the <span
 class="math inline">\(\mathrm{MHA}\)</span>:</p>
-<p><span class="math display">\[MHA(z) =  W^o \cdot
+<p><span class="math display">\[\mathrm{MHA}(z) =  W^o \cdot
 \begin{bmatrix}
     \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_1 z
 \left(W^K_1 z\right)^T \right) \cdot W^V_1 \cdot z \\
@@ -488,7 +504,7 @@ connection and a layer normalization is applied to input <span
 class="math inline">\(z\)</span> that has been passed through a <span
 class="math inline">\(\mathrm{sub-block}\)</span>, where a <span
 class="math inline">\(\mathrm{sub-block} \in \{\mathrm{FF},
-MHA\}\)</span>. Together, we can express the function as</p>
+\mathrm{MHA}\}\)</span>. Together, we can express the function as</p>
 <p><span class="math display">\[C(x) =
 \mathrm{layernorm}(\mathrm{residual}(\mathrm{dropout}(\mathrm{sublayer}(z)),
 z)\]</span></p>
@@ -554,20 +570,24 @@ sub-layers in a decoder layer will be <span
 class="math inline">\(\mathrm{MHA}\)</span>-<span
 class="math inline">\(\mathrm{CMHA}\)</span>-<span
 class="math inline">\(\mathrm{FF}\)</span>, i.e.</p>
-<p><span class="math display">\[d^{m+1} = \mathrm{FF}(\mathrm(CMHA(e^N,
-MHA(d^m))).\]</span></p>
+<p><span class="math display">\[d^{m+1} = \mathrm{FF}(\mathrm{CMHA}(e^N,
+\mathrm{MHA}(d^m))).\]</span></p>
 <p>Specifically, the query matrix is computed from the layer below it,
 while the key and value matrix are computed from <span
 class="math inline">\(e^N\)</span>, which can be expressed as</p>
-<p><span class="math display">\[\mathrm{CMHA}(e^N, MHA(d^m)) = W^o \cdot
+<p><span class="math display">\[\mathrm{CMHA}(e^N, \mathrm{MHA}(d^m)) =
+W^o \cdot
 \begin{bmatrix}
     \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_1
-MHA(d^m) \left(W^K_1 e^N\right)^T \right) \cdot W^V_1 \cdot e^N \\
+\mathrm{MHA}(d^m) \left(W^K_1 e^N\right)^T \right) \cdot W^V_1 \cdot e^N
+\\
     \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_2
-MHA(d^m) \left(W^K_2 e^N\right)^T \right) \cdot W^V_2 \cdot e^N \\
+\mathrm{MHA}(d^m) \left(W^K_2 e^N\right)^T \right) \cdot W^V_2 \cdot e^N
+\\
     \cdots\\
     \underset{i \rightarrow}{\mathrm{softmax}}\left( \frac{1}{A} W^Q_D
-MHA(d^m) \left(W^K_D e^N\right)^T \right) \cdot W^V_D \cdot e^N \\
+\mathrm{MHA}(d^m) \left(W^K_D e^N\right)^T \right) \cdot W^V_D \cdot e^N
+\\
 \end{bmatrix}\nonumber.\]</span></p>
 <figure>
 <img src="assets/figs/imgs/encoder_decoder.png" id="fig:encoder_decoder"
@@ -700,9 +720,10 @@ objective is to reconstruct <span
 class="math inline">\(\bar{\textbf{x}}\)</span> from <span
 class="math inline">\(\hat{\textbf{x}}\)</span>:</p>
 <p><span class="math display">\[\begin{aligned}
-max_{\theta}logP_{\theta}(\bar{\textbf{x}}|\hat{\textbf{x}})\approx
-\sum_{t=1}^Tm_tlogP_{\theta}(x_t|\hat{\textbf{x}})
-=\sum_{t=1}^Tm_tlog\frac{exp(H_{\theta}(\hat{\textbf{x}})_t^Te(x_t))}{\sum_{x\prime}
+\max_{\theta} \log P_{\theta}(\bar{\textbf{x}}|\hat{\textbf{x}})\approx
+\sum_{t=1}^T m_t \log P_{\theta}(x_t|\hat{\textbf{x}})
+=\sum_{t=1}^T m_t \log
+\frac{exp(H_{\theta}(\hat{\textbf{x}})_t^Te(x_t))}{\sum_{x\prime}
 {exp(H_{\theta}(\hat{\textbf{x}})_t^Te(x\prime)}}\end{aligned}\]</span></p>
 <p>Where the <span class="math inline">\(\approx\)</span> indicates that
 all <span class="math inline">\(\bar{\textbf{x}}\)</span> elements are
@@ -726,7 +747,9 @@ data-cites="devlin2018bert">(<a href="#ref-devlin2018bert"
 role="doc-biblioref">Devlin et al. 2018</a>)</span> and RoBERTa <span
 class="citation" data-cites="liu2019roberta">(<a
 href="#ref-liu2019roberta" role="doc-biblioref">Liu et al.
-2019</a>)</span>.</p>
+2019</a>)</span>. Note that while encoder-only models remain useful for
+classification and retrieval tasks, the field has largely shifted toward
+decoder-only LLMs for general-purpose language understanding.</p>
 <p><strong>BERT</strong> <span class="citation"
 data-cites="devlin2018bert">(<a href="#ref-devlin2018bert"
 role="doc-biblioref">Devlin et al. 2018</a>)</span> is trained on
@@ -767,10 +790,11 @@ and overall language understanding capabilities.</p>
 <h3 id="training-with-decoders">Training with Decoders</h3>
 <p>Decoder-only or Autoregressive modeling performs pretraining by
 maximizing the likelihood under the forward autoregressive
-factorization: <span
-class="math display">\[max_{\theta}logP_{\theta}(\textbf{x})=\sum_{t=1}^TlogP_{\theta}(x_t|\textbf{x}_{&lt;t})
+factorization: <span class="math display">\[\max_{\theta} \log
+P_{\theta}(\textbf{x})=\sum_{t=1}^T \log
+P_{\theta}(x_t|\textbf{x}_{&lt;t})
 =
-\sum_{t=1}^T{log\frac{exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x_t))}{\sum_{x\prime}exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x\prime))}}\]</span></p>
+\sum_{t=1}^T{\log\frac{exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x_t))}{\sum_{x\prime}exp(h_{\theta}(\textbf{x}_{1:t-1})^Te(x\prime))}}\]</span></p>
 <p>Where the <span
 class="math inline">\(h_{\theta}(\textbf{x}_{1:t-1})\)</span> is the
 context representation produced by the neural model, and it contains
@@ -802,11 +826,21 @@ href="#ref-gpt-4" role="doc-biblioref">OpenAI 2023</a>)</span> being
 subsequently released. Note that since the release of InstructGPT <span
 class="citation" data-cites="instructgpt">(<a href="#ref-instructgpt"
 role="doc-biblioref">Ouyang et al. 2022</a>)</span>, this class of
-language models has been trained with reinforcement learning with human
-feedback <span class="citation" data-cites="rlhf">(<a href="#ref-rlhf"
-role="doc-biblioref">Bai et al. 2022</a>)</span>, which enables the
-model to manifest interesting behaviors that you see when using
-ChatGPT.</p>
+language models has been trained with reinforcement learning from human
+feedback (RLHF) <span class="citation" data-cites="rlhf">(<a
+href="#ref-rlhf" role="doc-biblioref">Bai et al. 2022</a>)</span>, which
+enables the model to follow instructions and exhibit the behaviors you
+see when using ChatGPT.</p>
+<p>Beyond OpenAI’s models, the release of LLaMA <span class="citation"
+data-cites="touvron2023llama">(<a href="#ref-touvron2023llama"
+role="doc-biblioref">Touvron et al. 2023</a>)</span> and its successors
+(LLaMA 2, LLaMA 3) made high-quality decoder-only transformers available
+to the research community. Models such as Mistral <span class="citation"
+data-cites="jiang2023mistral">(<a href="#ref-jiang2023mistral"
+role="doc-biblioref">Jiang et al. 2023</a>)</span> further demonstrated
+that smaller, carefully trained models can match much larger ones. These
+open-weight models have become the dominant platform for NLP
+research.</p>
 <h3 id="training-with-encoder-decoder">Training with
 Encoder-Decoder</h3>
 <p>To leverage the strengths of both Encoder-only and Decoder-only
@@ -933,7 +967,7 @@ train_config.learning_rate = (
 )
 train_config.max_iters = 2000
 train_config.num_workers = 0
-train_config.device = &quot;mps&quot;
+train_config.device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;
 trainer = Trainer(train_config, model, train_dataset)
 
 print(train_config)</code></pre>
@@ -988,13 +1022,13 @@ outputs = model(input_ids, attention_mask=attention_mask, output_attentions=True
 
 head_view(outputs.attentions, tokens=tokens)</code></pre>
 <div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 4.4</div>
-<p>Promoting a GPT-2 model Now that we have trained our own Transformer
+<p>Prompting a GPT-2 model Now that we have trained our own Transformer
 model and gained some understanding of its functioning, let’s explore a
 larger pre-trained model that has been trained on a vast amount of
 natural data. By doing so, we can experience generating output that
 closely resembles human-like responses.</p>
 <pre><code class="language-python">model_type = &quot;gpt2&quot;
-device = &quot;mps&quot;
+device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;
 
 model = GPT.from_pretrained(model_type)
 
@@ -1050,6 +1084,12 @@ Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2018.
 <span>“Bert: Pre-Training of Deep Bidirectional Transformers for
 Language Understanding.”</span> <em>arXiv Preprint
 arXiv:1810.04805</em>.
+</div>
+<div id="ref-jiang2023mistral" class="csl-entry" role="doc-biblioentry">
+Jiang, Albert Q, Alexandre Sablayrolles, Arthur Mensch, Chris Bamford,
+Devendra Singh Chaplot, Diego de las Casas, Florian Bressand, et al.
+2023. <span>“Mistral 7b.”</span> <em>arXiv Preprint
+arXiv:2310.06825</em>.
 </div>
 <div id="ref-lewis-etal-2020-bart" class="csl-entry"
 role="doc-biblioentry">
@@ -1110,6 +1150,17 @@ Machine Translation of Rare Words with Subword Units.”</span> In
 Computational Linguistics (Volume 1: Long Papers)</em>, 1715–25. Berlin,
 Germany: Association for Computational Linguistics. <a
 href="https://doi.org/10.18653/v1/P16-1162">https://doi.org/10.18653/v1/P16-1162</a>.
+</div>
+<div id="ref-su2024roformer" class="csl-entry" role="doc-biblioentry">
+Su, Jianlin, Murtadha Ahmed, Yu Lu, Shengfeng Pan, Wen Bo, and Yunfeng
+Liu. 2024. <span>“Roformer: Enhanced Transformer with Rotary Position
+Embedding.”</span> <em>Neurocomputing</em> 568: 127063.
+</div>
+<div id="ref-touvron2023llama" class="csl-entry" role="doc-biblioentry">
+Touvron, Hugo, Thibaut Lavril, Gautier Izacard, Xavier Martinet,
+Marie-Anne Lachaux, Timothée Lacroix, Baptiste Rozière, et al. 2023.
+<span>“Llama: Open and Efficient Foundation Language Models.”</span>
+<em>arXiv Preprint arXiv:2302.13971</em>.
 </div>
 <div id="ref-vaswani2017attention" class="csl-entry"
 role="doc-biblioentry">

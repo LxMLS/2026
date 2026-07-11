@@ -189,17 +189,17 @@ is not trivial as it requires dealing with specialized hardware.
 Luckily, as it is often the case, we are one Python import away from
 solving this problem.</p>
 <p>For the particular case of deep learning, there is a growing number
-of toolboxes with python bindings that allow you to design custom
-computational graphs for GPUs some of the best known are Theano,
-TensorFlow and Pytorch.</p>
+of toolboxes with Python bindings that allow you to design custom
+computational graphs for GPUs. The two dominant frameworks today are
+PyTorch and TensorFlow. JAX has also gained significant traction in the
+research community.</p>
 <p>In these labs we will be working with Pytorch. Pytorch allows us to
 create computation graphs of arbitrary complexity and automatically
 compute the gradients of the cost with respect to any parameter. It will
-also produce CUDA-compatible code for use with GPUs. One salient
-property of Pytorch, shared with other toolkits such as Dynet or
-Chainer, is that its computation graphs are <em>dynamic</em>. This will
-be a key factor simplifying design once we start dealing with more
-complex models.</p>
+also produce CUDA-compatible code for use with GPUs. A key property of
+Pytorch is that its computation graphs are <em>dynamic</em>, meaning the
+graph is defined at runtime. This will be a key factor simplifying
+design once we start dealing with more complex models.</p>
 <h2 id="computation-graphs">Computation Graphs</h2>
 <h3 id="example-the-computation-graph-of-a-log-linear-model">Example:
 The computation graph of a log-linear model</h3>
@@ -298,10 +298,13 @@ class="math display">\[\mathbf{b} \leftarrow \mathbf{b} - \eta
 \nabla_\mathbf{b}\mathcal{F},\]</span> where <span
 class="math inline">\(\eta\)</span> is the learning rate. Note that in
 practice we will use a mini-batch of examples as opposed to the whole
-train set. Very often, more elaborated learning rules as e.g. momentum
-or Adagrad are used. Bear in mind that, in general, these still require
-the computation of the gradients as the main step. The reasoning here
-outlined will also be applicable to those.</p>
+train set. Very often, more elaborated learning rules such as momentum,
+Adagrad, or Adam <span class="citation" data-cites="kingma2014adam">(<a
+href="#ref-kingma2014adam" role="doc-biblioref">Kingma and Ba
+2014</a>)</span> are used. Adam is the most widely used optimizer in
+modern deep learning practice. Bear in mind that, in general, these
+still require the computation of the gradients as the main step. The
+reasoning here outlined will also be applicable to those.</p>
 <h3
 id="deriving-gradients-in-computation-graphs-using-the-chain-rule">Deriving
 Gradients in Computation Graphs using the Chain Rule</h3>
@@ -533,7 +536,7 @@ print(&quot;Initial accuracy %2.2f %%&quot; % accuracy)
 </code></pre>
 <p>Train the model with simple batch stochastic gradient descent. Be
 sure to understand each of the steps involved, including the code
-running inside of the model class. We will be wokring on a more complex
+running inside of the model class. We will be working on a more complex
 version of the model in the upcoming exercise.</p>
 <pre><code class="language-python"># Epoch loop
 for epoch in range(num_epochs):
@@ -947,16 +950,13 @@ Learning.</p></li>
 <li><p>Dynamic computation graphs. This allows us to change the
 computation graph within each update.</p></li>
 </ul>
-<p>Note that all of these properties are separately available in other
-toolkits. Dynet has very good dynamic graph functionality and cpu
-performance, Tensor Flow is backed by Google and has a large community,
-Amazon’s MXNet of Microsoft’s CNTK are also competing to play a central
-role. It is hard to say at this point which toolkit will be the best
-option in the future. At this point we chose Pytorch because it strikes
-a balance between a strong community, ease of use and dynamic
-computation graphs. Also take into account that transiting from a
-toolkit to another is not very complicated, as the primitives are
-relatively similar across them.</p>
+<p>PyTorch has become the dominant framework in NLP and deep learning
+research, and is our choice for these labs. TensorFlow (backed by
+Google) remains widely used in production settings. JAX is increasingly
+popular for research requiring custom gradient computations or
+hardware-level performance. Transitioning between frameworks is not very
+complicated, as the core primitives are relatively similar across
+them.</p>
 <p>In general, and compared to numpy, computation graph toolkits are
 less easy to use. In the case of Pytorch we will have to consider
 following aspects</p>
@@ -1070,6 +1070,15 @@ model = PytorchMLP(
     activation_functions=activation_functions,
     learning_rate=0.05
 )</code></pre>
+</div>
+<h1 class="unnumbered" id="bibliography">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-kingma2014adam" class="csl-entry" role="doc-biblioentry">
+Kingma, Diederik P, and Jimmy Ba. 2014. <span>“Adam: A Method for
+Stochastic Optimization.”</span> <em>arXiv Preprint
+arXiv:1412.6980</em>.
+</div>
 </div>
 
 					</article>

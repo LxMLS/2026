@@ -108,6 +108,7 @@
 							<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
 <nav>
 <ul>
+<li><a class="toc-h2" href="#todays-assignment">Today’s assignment</a></li>
 <li><a class="toc-h3" href="#feed-forward-networks-unfolded-in-time">Feed Forward Networks
 Unfolded in Time</a></li>
 <li><a class="toc-h3" href="#backpropagating-through-unfolded-networks">Backpropagating
@@ -122,6 +123,7 @@ in Pytorch</a></li>
 				<main class="col-lg-9 col-md-8 guide-main">
 					<article class="guide-content">
 <h1>Sequence Models <small class="text-muted">Day 3</small></h1>
+<h2 id="todays-assignment">Today’s assignment</h2>
 <p>Today’s class will be focused on advanced deep learning concepts,
 mainly Recurrent Neural Networks (RNNs). In the first day we saw how the
 chain-rule allowed us to compute gradients for arbitrary computation
@@ -131,6 +133,11 @@ input data in different points of the graph, which will correspond to
 different time instants. The key factor to consider is that, for a fixed
 number of time steps, this is still a computation graph and all what we
 saw on the first day applies with no need for extra math.</p>
+<p>Although RNNs have been largely superseded by Transformer-based
+models for most NLP tasks, understanding them remains important: they
+introduce the core ideas of sequence modeling, backpropagation through
+time, and the vanishing gradient problem that motivated many subsequent
+architectural innovations, including Transformers.</p>
 <p>If you managed to finish the previous day completely you should aim
 at finishing this as well. If you still have pending exercises from the
 first day e.g. the Pytorch part. It is recommended that you try to solve
@@ -197,14 +204,28 @@ summed up to compute the total gradient.</p></li>
 <p>Despite the lack of formal changes, the fact that we backpropagate an
 error over the length of the entire sequence often leads to numerical
 problems. The problem of <em>vanishing</em> and <em>exploding</em>
-gradients are a well know limitation. A number of solutions are used to
+gradients are a well known limitation. A number of solutions are used to
 mitigate this issue. One simple, yet inelegant, method is clipping the
 gradients to a fixed threshold. Another solution is to resort to more
 complex RNN models that are able to better handle long range
-dependencies and are less sensitive to this phenomena. It is important
-to bear in mind, however, that all RNNs still use backpropagation as
-seen in the previous day, although it is often referred as
-<em>Backpropagation through time</em>.</p>
+dependencies and are less sensitive to this phenomenon, most notably the
+Long Short-Term Memory (LSTM) <span class="citation"
+data-cites="hochreiter1997long">(<a href="#ref-hochreiter1997long"
+role="doc-biblioref">Hochreiter and Schmidhuber 1997</a>)</span> and the
+Gated Recurrent Unit (GRU) <span class="citation"
+data-cites="cho2014learning">(<a href="#ref-cho2014learning"
+role="doc-biblioref">Cho et al. 2014</a>)</span>, both of which use
+gating mechanisms to control information flow across time steps. It is
+important to bear in mind, however, that all RNNs still use
+backpropagation as seen in the previous day, although it is often
+referred as <em>Backpropagation through time</em>.</p>
+<p>The difficulty of training RNNs over long sequences was one of the
+key motivations behind the Transformer architecture <span
+class="citation" data-cites="vaswani2017attention">(<a
+href="#ref-vaswani2017attention" role="doc-biblioref">Vaswani et al.
+2017</a>)</span>, which replaces recurrence with self-attention and
+therefore has no path-length dependence on sequence length during
+gradient flow.</p>
 <figure class="guide-algorithm"><figcaption>Algorithm 3.1: Forward pass of a Recurrent Neural Network (RNN) with embeddings</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b> Initial parameters for an RNN Input \(\Theta=\{\mathbf{W}^e \in \mathbb{R}^{E \times I}, \mathbf{W}^x \in \mathbb{R}^{J \times E}, \mathbf{W}^h \in \mathbb{R}^{J \times J}, \mathbf{W}^y \in \mathbb{R}^{K \times J} \}\) embedding, input, recurrent and output linear transformations respectively.</div>
 <div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> <b>input:</b> Input data matrix \(\mathbf{x} \in \mathbb{R}^{I \times M'}\), representing sentence of \(M'\) time steps. Initial recurrent variable \(\mathbf{h}_0\).</div>
 <div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(m=1\) <b>to</b> \(M'\) <b>do</b></div>
@@ -330,12 +351,12 @@ print(&quot;Test accuracy %2.2f %%&quot; % accuracy)</code></pre>
 </div>
 <h2 id="implementing-your-own-rnn-in-pytorch">Implementing your own RNN
 in Pytorch</h2>
-<p>One of the big advantages of toolkits like Pytorch or Dynet is that
-creating computation graphs that dynamically change size is very simple.
-In many other tookits it is directly not possible to use a Python for
-loop with a variable length to define a computation graph. Again, as in
-other toolkits we will only need to create the forward pass of the RNN
-and the gradients will be computed automatically for us.</p>
+<p>One of the big advantages of toolkits like Pytorch is that creating
+computation graphs that dynamically change size is very simple. In many
+earlier frameworks it was not possible to use a Python for loop with a
+variable length to define a computation graph. Again, we will only need
+to define the forward pass of the RNN and the gradients will be computed
+automatically for us.</p>
 <div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.2</div>
 <p>As we did with the feed-forward network, we will now implement a
 Recurrent Neural Network (RNN) in Pytorch. For this complete the
@@ -391,6 +412,28 @@ data-reference="exercise:rnnnumpy">[exercise:rnnnumpy]</a>.</p>
 <div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.3</div>
 </div>
 <div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.4</div>
+</div>
+<h1 class="unnumbered" id="bibliography">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-cho2014learning" class="csl-entry" role="doc-biblioentry">
+Cho, Kyunghyun, Bart Van Merriënboer, Caglar Gulcehre, Dzmitry Bahdanau,
+Fethi Bougares, Holger Schwenk, and Yoshua Bengio. 2014. <span>“Learning
+Phrase Representations Using RNN Encoder-Decoder for Statistical Machine
+Translation.”</span> <em>arXiv Preprint arXiv:1406.1078</em>.
+</div>
+<div id="ref-hochreiter1997long" class="csl-entry"
+role="doc-biblioentry">
+Hochreiter, Sepp, and Jürgen Schmidhuber. 1997. <span>“Long Short-Term
+Memory.”</span> <em>Neural Computation</em> 9 (8): 1735–80.
+</div>
+<div id="ref-vaswani2017attention" class="csl-entry"
+role="doc-biblioentry">
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion
+Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017.
+<span>“Attention Is All You Need.”</span> <em>Advances in Neural
+Information Processing Systems</em> 30.
+</div>
 </div>
 
 					</article>
