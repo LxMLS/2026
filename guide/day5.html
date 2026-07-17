@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Day 5 Multimodal Models &middot; LxMLS Lab Guide</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link href="../files/css" rel="stylesheet">
+		<link rel="stylesheet" href="../files/open-iconic-bootstrap.min.css">
+		<link rel="stylesheet" href="../files/flaticon.css">
+		<link rel="stylesheet" href="../files/icomoon.css">
+		<link rel="stylesheet" href="../files/style.css">
+		<link rel="stylesheet" href="assets/highlight/github.min.css">
+		<link rel="stylesheet" href="assets/guide.css">
+		<script>
+		window.MathJax = {
+			tex: {
+				inlineMath: [['\\(', '\\)']],
+				displayMath: [['\\[', '\\]']],
+				tags: 'ams',
+				macros: {
+					"D": ["\\frac{\\partial #1}{\\partial #2}", 2],
+					"F": "\\boldsymbol{f}",
+					"Ind": "\\textbf{1}",
+					"KL": "\\mathop{\\rm KL}",
+					"Max": "\\max",
+					"Min": "\\min",
+					"Q": "\\mathcal{Q}",
+					"V": "\\mathcal{V}",
+					"Vs": "\\mathcal{S}",
+					"W": "\\boldsymbol{w}",
+					"X": "\\mathcal{X}",
+					"Xp": "\\mathbf{E}",
+					"XpD": "\\mathbf{\\widehat{E}}",
+					"Y": "\\mathcal{Y}",
+					"argmax": "\\operatorname*{arg\\,max}",
+					"argmin": "\\operatorname*{arg\\,min}",
+					"auxq": "q(\\hseq \\mid \\sent)",
+					"bX": "\\mathbf{X}",
+					"bY": "\\mathbf{Y}",
+					"bZ": "\\mathbf{Z}",
+					"bm": ["\\boldsymbol{#1}", 1],
+					"bx": "\\mathbf{x}",
+					"by": "\\mathbf{y}",
+					"bz": "\\mathbf{z}",
+					"chaptername": "Day",
+					"code": ["\\texttt{#1}", 1],
+					"ensuremath": ["#1", 1],
+					"hs": "\\by",
+					"hseq": "\\bar{\\by}",
+					"hv": "{y}",
+					"hvocab": "\\mathbf{Y}",
+					"independent": "{\\perp\\!\\!\\!\\perp}",
+					"ip": ["#1\\cdot#2 ", 2],
+					"joint": "p_{\\theta}(\\sent ,\\hseq)",
+					"len": ["||#1||", 1],
+					"likelihood": "\\mathcal{L}",
+					"marginal": "p_{\\theta}(\\sent)",
+					"nll": "{\\rm \\emph{null}}",
+					"obj": "\\mathcal{O}",
+					"obs": "\\bx",
+					"pd": ["\\frac{\\partial#1}{\\partial#2}", 2],
+					"pdd": ["\\frac{\\partial^2 #1}{\\partial #2^2}", 2],
+					"pos": "Part-of-Speech",
+					"posi": "Part-of-Speech induction",
+					"posterior": "p_{\\theta}(\\hseq \\mid \\sent)",
+					"sent": "\\bar{\\bx}",
+					"setQ": "\\Q_{\\sent}",
+					"st": "\\operatorname*{s.t.}",
+					"state": "{s}",
+					"statevocab": "\\Lambda",
+					"trex": "\\bar{\\bx},\\bar{\\by} \\in \\mathcal{D}",
+					"vect": ["\\boldsymbol{#1}", 1],
+					"vectornorm": ["\\left|\\left|#1\\right|\\right|_{#2}", 2],
+					"vocab": "\\Sigma",
+					"vv": "{v}"
+				}
+			},
+			options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+		};
+		</script>
+		<script id="MathJax-script" async src="assets/mathjax/tex-chtml.js"></script>
+	</head>
+	<body class="guide-body">
+		<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+			<div class="container">
+				<a class="navbar-brand" href="../index.html"><img alt="LxMLS 2026" src="../images/lxmls-logo.png" width="33%" style="margin:0 5% 0 0"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation"> Menu</button>
+				<div class="collapse navbar-collapse" id="ftco-nav">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item"><a href="../index.html" class="nav-link">Home</a></li>
+						<li class="nav-item"><a href="../index.html#about" class="nav-link">About</a></li>
+						<li class="nav-item"><a href="../index.html#dates" class="nav-link">Dates</a></li>
+						<li class="nav-item"><a href="../index.html#faq" class="nav-link">FAQ</a></li>
+						<li class="nav-item"><a href="../index.html#schedule" class="nav-link">Schedule</a></li>
+						<li class="nav-item"><a href="../index.html#speakers" class="nav-link">Speakers</a></li>
+						<li class="nav-item"><a href="../index.html#organizers" class="nav-link">Organizers</a></li>
+						<li class="nav-item active"><a href="index.html" class="nav-link">Guide</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="guide-wrap container-fluid">
+			<div class="row">
+				<aside class="col-lg-3 col-md-4 guide-sidebar">
+					<div class="guide-sidebar-inner">
+						<button class="guide-sidebar-toggle d-md-none" type="button" data-toggle="collapse" data-target="#guide-toc" aria-expanded="false" aria-controls="guide-toc">Contents</button>
+						<div class="collapse d-md-block" id="guide-toc">
+							<a class="guide-sidebar-home" href="index.html">&larr; Guide contents</a>
+<nav>
+<ul>
+<li><a class="toc-h2" href="#todays-assignment">Today’s assignment</a></li>
+<li><a class="toc-h2" href="#before-diving-into-multimodal-models">Before Diving into
+Multimodal Models</a></li>
+<li><a class="toc-h3" href="#subsec:vit_stuff">Image Tokenization: From Pixels to
+Patches</a></li>
+<li><a class="toc-h3" href="#contrastive-learning">Contrastive Learning</a></li>
+<li><a class="toc-h2" href="#multimodal-architectures">Multimodal Architectures</a></li>
+<li><a class="toc-h3" href="#subsec:clip_stuff">CLIP:</a></li>
+<li><a class="toc-h2" href="#vlm-vision-language-models">VLM: Vision-Language Models</a></li>
+<li><a class="toc-h3" href="#from-retrieval-to-generative-vision-language-models">From
+Retrieval to Generative Vision-Language Models</a></li>
+<li><a class="toc-h3" href="#gemma-3">Gemma 3</a></li>
+</ul>
+</nav>
+						</div>
+					</div>
+				</aside>
+				<main class="col-lg-9 col-md-8 guide-main">
+					<article class="guide-content">
+<h1>Multimodal Models <small class="text-muted">Day 5</small></h1>
+<h2 id="todays-assignment">Today’s assignment</h2>
+<p>Today’s class delves into multimodal architectures, focusing on how
+models learn the relationships between different types of data,
+including images and text. More specifically, we will explore
+<strong>CLIP (Contrastive Language-Image Pre-Training)</strong> <span
+class="citation" data-cites="clip_multimodal_day">(<a
+href="#ref-clip_multimodal_day" role="doc-biblioref">Radford et al.
+2021</a>)</span>: a foundational model that learns visual concepts from
+natural language supervision through a shared embedding space. CLIP’s
+shared embedding space has heavily influenced modern large-scale
+multimodal systems, stemming from its initial application to models like
+<a href="https://openai.com/index/dall-e/">DALL-E</a>. As a means of
+encoding textual prompts and conditioning image synthesis, it enables
+text-driven image generation and manipulation, while also facilitating
+the ranking of generative outputs.</p>
+<p>On that note, the primary focus of this class is to complete this
+lab’s notebook (adapted from a <a
+href="https://github.com/huggingface/transformers/blob/f4fc42216cd56ab6b68270bf80d811614d8d59e4/src/transformers/models/clip/modeling_clip.py#L860">HuggingFace
+PyTorch implementation of CLIP</a>) sustaining the following milestones:
+(i) understand CLIP’s dual-encoder architecture and contrastive
+learning, (ii) encode images and captions into the shared embedding
+space of CLIP, (iii) implement a zero-shot rescoring pipeline by
+sampling candidate sentences, computing CLIP similarity scores, and
+selecting the best match, and (iv) visualizing resulting image-text
+distances of a Gemma <strong>Vision-Language Model (VLM)</strong> and
+how cross-modal tokenization and convolution play a role.</p>
+<p>By the end of this session, you’ll have hands-on experience with the
+core mechanics that make CLIP and many other multimodal systems so
+powerful.</p>
+<h2 id="before-diving-into-multimodal-models">Before Diving into
+Multimodal Models</h2>
+<p>Before building our model, it is essential first to understand the
+core concepts that make multimodal learning possible.</p>
+<h3 id="subsec:vit_stuff">Image Tokenization: From Pixels to
+Patches</h3>
+<p>Transformers operate on sequences of inputs. In the case of natural
+language, as we have seen in the previous day, this involves breaking
+text into smaller pieces through tokenization. A similar concept is
+required for images: we partition a grid of pixels into a sequence of
+patches and feed them into a Vision Transformer (ViT) <span
+class="citation" data-cites="vit_multimodal_day">(<a
+href="#ref-vit_multimodal_day" role="doc-biblioref">Dosovitskiy et al.
+2021</a>)</span>. This process, visually demonstrated in Figure <a
+href="#fig:vit_diagram" data-reference-type="ref"
+data-reference="fig:vit_diagram">1</a>, works through the following
+sequence of operations:</p>
+<ol>
+<li><p><strong>Patch Extraction and Flatenning:</strong> With an input
+image <span class="math inline">\(x \in \mathbb{R}^{H \times W \times
+C}\)</span> (where <span class="math inline">\(H\)</span> and <span
+class="math inline">\(W\)</span> are the height and width of the image
+in pixels, respectively, and <span class="math inline">\(C\)</span> is
+the number of color channels per pixel), split it into a sequence of
+flattened non-overlapping patches (<span class="math inline">\(x_p \in
+\mathbb{R}^{N \times (P^2 \cdot C)}\)</span>), where: <span
+class="math display">\[\begin{aligned}
+        N = \frac{H}{P} \times \frac{W}{P}
+    \end{aligned}\]</span> is the resulting number of patches, each of
+size <span class="math inline">\(P \times P\)</span> (e.g., <span
+class="math inline">\(16 \times 16\)</span> pixels), and where each
+flattened patch is a one-dimensional vector <span
+class="math inline">\(x_p\)</span>, where: <span
+class="math display">\[\begin{aligned}
+        x_p =
+        \bigl[p_{1,1,1},\, p_{1,1,2},\, p_{1,1,3},\, p_{1,2,1},\,
+p_{1,2,2},\, p_{1,2,3},\,\dots \bigr]^\top
+        \;\in\;\mathbb{R}^{P^2 \cdot C}
+    \end{aligned}\]</span> These are then treated as "tokens", similarly
+to word tokens of standard transformers;</p></li>
+<li><p><strong>Linear Projection to Embeddings:</strong> Apply a
+learnable linear layer (<span class="math inline">\(E \in
+\mathbb{R}^{(P^2 \cdot C) \times D}\)</span>) to each flattened patch to
+project each patch into a <span
+class="math inline">\(D\)</span>-dimensional embedding space, such that:
+<span class="math display">\[\begin{aligned}
+\label{eq:linear_projection}
+        x_p^{(i)} = x_p^{(i)}E\quad\in\mathbb{R}^D
+    \end{aligned}\]</span></p></li>
+<li><p><strong>Class Token and Positional Embeddings:</strong> Prepend a
+learnable class embedding (<span class="math inline">\(z_0^0 = x_{class}
+\in \mathbb{R}^D\)</span>), whose final state (<span
+class="math inline">\(z_L^0\)</span>) will represent the entire image,
+and, just like text-based transformers, add a learnable one-dimensional
+positional embedding (<span class="math inline">\(E_{pos} \in
+\mathbb{R}^{(N+1) \times D}\)</span>) to retain spatial information
+about where each patch was located in the original image, such that:
+<span class="math display">\[\begin{aligned}
+\label{eq:class_token_positional_embeddings}
+          z^0 = [x_{class}; x_p^{(1)}E; x_p^{(2)}E;...; x_p^{(N)}E] +
+E_{pos}
+    \end{aligned}\]</span></p></li>
+<li><p><strong>Transformer Encoder:</strong> Feed the previous sequence
+into a standard transformer encoder of <span
+class="math inline">\(L\)</span> layers, enabling the self-attention
+mechanism to weigh the importance of different parts of the image
+relative to one another.</p></li>
+</ol>
+<figure>
+<img src="assets/figs/imgs/ViT.png" id="fig:vit_diagram"
+style="width:75.0%"
+alt="An illustration of the image tokenization process used in ViT. An image is split into fixed-size patches, which are then linearly projected and combined with positional embeddings to form a sequence of input vectors for the transformer encoder." />
+<figcaption aria-hidden="true">An illustration of the image tokenization
+process used in ViT. An image is split into fixed-size patches, which
+are then linearly projected and combined with positional embeddings to
+form a sequence of input vectors for the transformer
+encoder.</figcaption>
+</figure>
+<h3 id="contrastive-learning">Contrastive Learning</h3>
+<p>Contrastive learning, as the name suggests, is a training technique
+where contrastive data samples are evaluated against each other as a
+means of training a model to learn common and distinct attributes among
+samples of different classes (e.g., distinguishing a dog from a cat)
+<span class="citation"
+data-cites="contrastive_learning_multimodal_day">(<a
+href="#ref-contrastive_learning_multimodal_day"
+role="doc-biblioref">Chen et al. 2020</a>)</span>. In doing so, this
+technique tunes a model in such a way that allows it to encode
+embeddings where similar classes are close to one another in the
+embedding space, as opposed to distinct classes, which have a
+significant enough distance that allows the model to distinguish
+them.</p>
+<p>More specifically, data samples are often partitioned into three
+distinct categories: (i) anchors, representing a base class for
+contrast, (ii) positives, with an equal class to that of the anchor, and
+(iii) negatives, representing a distinct class to that of the
+anchor.</p>
+<p>On that note, an encoder is trained via contrastive learning such
+that embeddings of anchor and positive samples are close together, in
+the embedding space, as opposed to negative samples, which should be far
+apart. This is done so by tuning the encoder through a maximization or
+minimization of distance functions (e.g., Euclidean distance or cosine
+similarity) applied to the anchor and multiple positive samples, and the
+anchor and multiple negative samples, respectively, as illustrated in
+Figure <a href="#fig:contrastive_learning" data-reference-type="ref"
+data-reference="fig:contrastive_learning">2</a>, and described through
+the following formalisms:</p>
+<ol>
+<li><p><strong>Encoder and Embedding Definition:</strong> Given an input
+sample <span class="math inline">\(I\)</span> and an encoder <span
+class="math inline">\(\theta\)</span>, the latter produces a <span
+class="math inline">\(d\)</span>‑dimensional embedding from the former:
+<span class="math display">\[\begin{aligned}
+      f = \theta(I) \;\in\;\mathbb{R}^d
+  \end{aligned}\]</span></p></li>
+<li><p><strong>Anchor, Positive, and Negative Samples
+Definition:</strong></p>
+<ul>
+<li><p><em>Anchor</em> <span class="math inline">\(I^a_i\)</span>, <span
+class="math inline">\(i=1,\dots,K\)</span>: Base samples;</p></li>
+<li><p><em>Positive</em> <span class="math inline">\(I^+_i\)</span>,
+<span class="math inline">\(i=1,\dots,K\)</span>: Samples of the same
+class or augmented views of the anchors;</p></li>
+<li><p><em>Negative</em> <span class="math inline">\(I^-_j\)</span>,
+<span class="math inline">\(j=1,\dots,K\)</span>: Samples from different
+classes.</p></li>
+</ul></li>
+<li><p><strong>Embedding Normalization:</strong> For the proper
+application of a distance function, each embedding must be normalized to
+unit norm: <span class="math display">\[\begin{aligned}
+      \hat{f} = \frac{f}{\lVert f\rVert}
+  \end{aligned}\]</span></p></li>
+<li><p><strong>Distance Function:</strong> Compute the similarity
+measure via the distance function (cosine similarity is equivalent to
+the dot product): <span class="math display">\[\begin{aligned}
+      \delta(u, v) = u^\top v
+  \end{aligned}\]</span></p></li>
+<li><p><strong>Contrastive Loss:</strong> Provided an anchor <span
+class="math inline">\(I^a_i\)</span>, with a corresponding positive
+<span class="math inline">\(I^+_i\)</span>, and negatives <span
+class="math inline">\(\{I^-_{i,j}\}_{j=1}^K\)</span>, the loss for the
+anchor <span class="math inline">\(I^a_i\)</span>, where <span
+class="math inline">\(\tau&gt;0\)</span> is a temperature
+hyperparameter, is: <span class="math display">\[\begin{aligned}
+      \mathcal{L}_i = -\log
+      \frac{\exp\bigl(\delta(\hat{f}_i, \hat{f}^+_i)/\tau\bigr)}
+           {\exp\bigl(\delta(\hat{f}_i, \hat{f}^+_i)/\tau\bigr)
+            + \sum_{j=1}^K \exp\bigl(\delta(\hat{f}_i,
+\hat{f}^-_{i,j})/\tau\bigr)}
+    \end{aligned}\]</span></p></li>
+<li><p><strong>Overall Loss:</strong> For a batch of <span
+class="math inline">\(N\)</span> anchors, the overall loss is: <span
+class="math display">\[\begin{aligned}
+      \mathcal{L} = \frac{1}{N} \sum_{i=1}^N \mathcal{L}_i
+    \end{aligned}\]</span></p></li>
+</ol>
+<figure>
+<img src="assets/figs/imgs/Contrastive_Learning.png"
+id="fig:contrastive_learning" style="width:75.0%"
+alt="A high-level illustration of the contrastive learning framework, where an encoder is trained to minimize and maximize the distance function between an anchor and its contrastive positive and negative samples, respectively. Here, the positive sample is a transformation of the original image." />
+<figcaption aria-hidden="true">A high-level illustration of the
+contrastive learning framework, where an encoder is trained to minimize
+and maximize the distance function between an anchor and its contrastive
+positive and negative samples, respectively. Here, the positive sample
+is a transformation of the original image.</figcaption>
+</figure>
+<p>Finally, it is worth mentioning the role of data augmentation in such
+frameworks. Positive samples are either images containing data that fits
+within the same class as the anchor or augmentations of the anchor
+(i.e., multiple patches and transformations), ranging from color
+jittering and rotation to noise injection and random affine
+transformations. This is done to ensure that the model does not conform
+to unwanted patterns (e.g., pixel-level or rotation-specific artifacts),
+but instead learns the core features that characterize these classes
+(e.g., shapes, contours, textures, and spatial configurations), which in
+turn allows for proper generalization. After training, the resulting
+encoder should be capable of accurately distinguishing between similar
+and dissimilar classes, as illustrated in Figure <a
+href="#fig:contrastive_learning_embedding_space"
+data-reference-type="ref"
+data-reference="fig:contrastive_learning_embedding_space">3</a>.</p>
+<figure>
+<img src="assets/figs/imgs/Contrastive_Learning_Embedding_Space.png"
+id="fig:contrastive_learning_embedding_space" style="width:55.0%"
+alt="An illustration of the embedding space of a properly tuned encoder that sets distinct classes far apart, while shortening the distance of similar samples as per contrastive learning. Here, the black data point serves as the anchor, the green data point as the positive sample, and the red data point as the negative sample. Note the difference in distance from the anchor to the positive and negative samples." />
+<figcaption aria-hidden="true">An illustration of the embedding space of
+a properly tuned encoder that sets distinct classes far apart, while
+shortening the distance of similar samples as per contrastive learning.
+Here, the black data point serves as the anchor, the green data point as
+the positive sample, and the red data point as the negative sample. Note
+the difference in distance from the anchor to the positive and negative
+samples.</figcaption>
+</figure>
+<h2 id="multimodal-architectures">Multimodal Architectures</h2>
+<p>The core building block of modern multimodal systems often involves
+combining powerful pre-trained unimodal models. Unlike standard
+Transformers, which operate on a single sequence of tokens, multimodal
+models must compare fundamentally different data structures (e.g., image
+patches and text tokens). The solution is to create a “common language”
+known as the shared embedding space. This is a high-dimensional vector
+space where both images and text can be represented. As such, the goal
+is to train encoders that map semantically similar image-text pairs
+close to each other in this space. There are three main approaches:</p>
+<ol>
+<li><p><strong>Dual Encoders:</strong> This architecture, popularized by
+CLIP, uses two separate encoders—one for each modality (a ViT for images
+and a standard Transformer for language). The encoders are trained
+jointly with the contrastive learning to align their output embedding
+spaces. This design is highly efficient for retrieval tasks.</p></li>
+<li><p><strong>Fusion Encoders:</strong> These models use a single
+Transformer encoder that processes the combined inputs from multiple
+modalities. This enables “cross-attention” between image patches and
+text tokens at a much deeper level, allowing for more complex reasoning.
+Models like ViLT and VisualBERT follow this pattern.</p></li>
+<li><p><strong>Encoder-Decoders:</strong> These models are used for
+generative tasks. An encoder processes one modality (e.g., an image),
+and a decoder uses that representation to generate output in another
+modality (e.g., a text caption). Models like BLIP and Flamingo are
+powerful examples used for image captioning and visual question
+answering.</p></li>
+</ol>
+<p>Even though these models are used for different purposes, their
+architectures are very similar. Today’s exercises, however, will focus
+on the dual encoder architecture, as it provides the clearest
+illustration of cross-modal alignment.</p>
+<h3 id="subsec:clip_stuff">CLIP:</h3>
+<p>As previously detailed, the Contrastive Language-Image Pre-training
+(CLIP) model employs a dual-encoder architecture to encode images and
+text into a shared embedding space, utilizing a Vision Transformer (ViT)
+for images and a standard text Transformer for text <span
+class="citation" data-cites="clip_multimodal_day">(<a
+href="#ref-clip_multimodal_day" role="doc-biblioref">Radford et al.
+2021</a>)</span>. The core idea is to train this system via contrastive
+learning on a massive dataset of image-text pairs. This process is
+designed to maximize the similarity of correctly paired image and text
+embeddings while simultaneously minimizing the similarity of disparate
+pairs. For instance, the embedding of the sentence “a gray British
+shorthair cat” should be mathematically close to the embedding of an
+image of that cat, but distant from the embedding of a picture of a dog.
+More specifically, focusing on the base case for image classification,
+the model takes a given number of text embeddings – usually derived from
+descriptive captions – and a corresponding set of image embeddings.
+Next, the dot product, which represents the cosine similarity, is
+calculated for every possible image-text embedding pair. The model is
+then iteratively trained to ensure that the similarity score for
+matching image-text embeddings is high, pulling them closer together in
+the embedding space. At the same time, the score for dissimilar pairs is
+low, causing them to be pushed far apart. This direct application of
+contrastive learning is illustrated in Figure <a
+href="#fig:clip_contrastive_pre_training" data-reference-type="ref"
+data-reference="fig:clip_contrastive_pre_training">4</a>.</p>
+<p>The true power of this methodology is revealed in CLIP’s
+groundbreaking capability for zero-shot classification. This allows the
+model to accurately classify images from categories it was never
+explicitly trained to recognize, establishing relationships that serve a
+myriad of purposes, from basic classification to sophisticated
+integrations in generative scenarios. Instead of relying on a predefined
+label, it dynamically classifies an image by finding the best match
+between the image’s embedding and the text embeddings of potential
+descriptions. A surprising and powerful example of this is CLIP’s
+ability to match the accuracy level of the famous ResNet-50 on the
+ImageNet benchmark, crucially, without having been trained on the
+specific labeled dataset that ResNet-50 was trained on.</p>
+<figure>
+<img src="assets/figs/imgs/CLIP_Contrastive_Pre_Training.png"
+id="fig:clip_contrastive_pre_training" style="width:75.0%"
+alt="An illustration of CLIP’s dual encoder architecture. Images and texts are embedded and individually paired with one another via a distance function to rank for similarity. The model is then iteratively tuned to achieve proper distance values and enable accurate classification (the values of the matrix’s diagonal should be minimized and the remaining cells maximized)." />
+<figcaption aria-hidden="true">An illustration of CLIP’s dual encoder
+architecture. Images and texts are embedded and individually paired with
+one another via a distance function to rank for similarity. The model is
+then iteratively tuned to achieve proper distance values and enable
+accurate classification (the values of the matrix’s diagonal should be
+minimized and the remaining cells maximized).</figcaption>
+</figure>
+<p>This last step is done symmetrically—by performing a loss through
+both ways (i.e., text-to-image and image-to-text), which is later
+averaged into one component—to ensure proper alignment between both
+modalities. Since CLIP learns broad vision–language alignments from
+large-scale web data, it can be applied in zero-shot fashion to
+downstream tasks without further fine-tuning, simply by filling out a
+default prompt of the form “a photo of a {class}”, where ’{class}’ is
+replaced by the label whose text embedding is most similar to the
+embedding of the image (see Figure <a href="#fig:clip_zero_shot"
+data-reference-type="ref"
+data-reference="fig:clip_zero_shot">5</a>).</p>
+<p>Formally speaking, CLIP uses a dual‑encoder architecture to map
+images and text into a shared <span
+class="math inline">\(d\)</span>‑dimensional embedding space, and trains
+via a symmetric contrastive objective as per the following
+formalisms:</p>
+<ol>
+<li><p><strong>Encoders and Embeddings Definition:</strong> Given an
+image domain <span class="math inline">\(I\)</span> and a text domain
+<span class="math inline">\(T\)</span>, where <span
+class="math inline">\(f_i = \theta(I_i)\)</span> and <span
+class="math inline">\(g_i = \phi(T_i)\)</span>, we have: <span
+class="math display">\[\begin{aligned}
+      \theta : I \to \mathbb{R}^d,\quad
+      \phi : T \to \mathbb{R}^d
+  \end{aligned}\]</span></p></li>
+<li><p><strong>Embedding Normalization:</strong> Each embedding must be
+normalized to unit form for proper application of the distance function:
+<span class="math display">\[\begin{aligned}
+\label{eq:embedding_normalization}
+      \hat f_i = \frac{f_i}{\lVert f_i\rVert},\quad
+      \hat g_i = \frac{g_i}{\lVert g_i\rVert}
+  \end{aligned}\]</span></p></li>
+<li><p><strong>Distance Function:</strong> Compute the distance between
+each image-text embedding pair via cosine similarity: <span
+class="math display">\[\begin{aligned}
+\label{eq:cosine_similarity}
+      \delta_{ij} = \hat f_i \cdot \hat g_j
+    \end{aligned}\]</span></p></li>
+<li><p><strong>Symmetric Contrastive Loss:</strong> For a batch of <span
+class="math inline">\(N\)</span> matched image-text pairs <span
+class="math inline">\((I_i,T_i)\)</span>, we have a loss function for
+each direction (i.e., image-to-text and text-to-image), together with
+the total loss: <span class="math display">\[\begin{aligned}
+      \mathcal{L}_{\mathrm{I2T}} = -\frac{1}{N}\sum_{i=1}^N
+      \log\frac{\exp(\delta_{ii})}{\sum_{j=1}^N \exp(\delta_{ij})},
+    \end{aligned}\]</span> <span class="math display">\[\begin{aligned}
+      \mathcal{L}_{\mathrm{T2I}} = -\frac{1}{N}\sum_{j=1}^N
+      \log\frac{\exp(\delta_{jj})}{\sum_{i=1}^N \exp(\delta_{ij})},
+    \end{aligned}\]</span> <span class="math display">\[\begin{aligned}
+      \mathcal{L} = \frac{1}{2}\bigl(\mathcal{L}_{\mathrm{I2T}} +
+\mathcal{L}_{\mathrm{T2I}}\bigr)
+    \end{aligned}\]</span></p></li>
+<li><p><strong>Zero‑Shot Classification:</strong> Given an image <span
+class="math inline">\(I\)</span> and a set of <span
+class="math inline">\(K\)</span> candidate class names <span
+class="math inline">\(c_k\)</span>, form prompts <span
+class="math inline">\(\,T_k = \text{“A photo of a }c_k\text{”}\)</span>,
+normalize each prompt to unit norm, and compute the probability of class
+<span class="math inline">\(k\)</span> matching image <span
+class="math inline">\(I\)</span>: <span
+class="math display">\[\begin{aligned}
+      p(y=k\mid I) = \frac{\exp\bigl(\hat f\cdot \hat g_k)}{\sum_{j=1}^K
+\exp\bigl(\hat f\cdot \hat g_j)}
+    \end{aligned}\]</span></p></li>
+</ol>
+<figure>
+<img src="assets/figs/imgs/CLIP_Zero_Shot.png" id="fig:clip_zero_shot"
+style="width:75.0%"
+alt="An illustration of CLIP’s zero-shot classification. After training, CLIP is capable of properly classifying an image provided the properly tuned weights that result from the pre-training. Similarity measures are computed between the image and each possible text pair and the shortest distance denotes the right class." />
+<figcaption aria-hidden="true">An illustration of CLIP’s zero-shot
+classification. After training, CLIP is capable of properly classifying
+an image provided the properly tuned weights that result from the
+pre-training. Similarity measures are computed between the image and
+each possible text pair and the shortest distance denotes the right
+class.</figcaption>
+</figure>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 5.1</div>
+<p>Let us now apply the previous principles in practice. You will
+implement multiple functions, each serving a different purpose, covering
+the processing, embedding, and classification of image-text pairs. In
+essence, you will be feeding a ViT and a standard Transformer with the
+intended data, which will enable image-text pair classification using
+CLIP’s approach. To that end, this exercise will guide you through the
+completion of the corresponding yet-to-be-completed notebook cells
+present in
+<code>lxmls/labs/notebooks/multimodal/clip_exercise.ipynb</code>:</p>
+<ol>
+<li><p><strong>Basic setup:</strong> Run the first two cells of the
+notebook to import all necessary dependencies for proper execution of
+all code cells.</p></li>
+<li><p><strong>Data and model setup:</strong> Run all subsequent cells
+until Cell 19 (inclusive). This will enable you to execute the following
+steps automatically:</p>
+<ul>
+<li><p>Prepare the ViT’s input (i.e., loading an example image of two
+cats);</p></li>
+<li><p>Initialize the GPT model from the previous day for image
+labelling;</p></li>
+<li><p>Prepare a string to use as a default for image classification
+(this will later append individual GPT-generated labels);</p></li>
+<li><p>Load and prepare a CLIP model;</p></li>
+<li><p>Convert the example image using the image processor;</p></li>
+<li><p>Load a tokenizer and tokenize the previously defined image
+labels;</p></li>
+<li><p>Embed the image labels and visualize the outcome of splitting the
+example image into fixed size patches;</p></li>
+<li><p>Store the learned weights for linearly projecting the
+image.</p></li>
+</ul></li>
+<li><p><strong>Prepare the image for projection to the embedding
+space:</strong> You will now implement a function whose purpose is to
+project the image, in its entirety, to the embedding space. For that to
+happen, define the following steps in sequence:</p>
+<ul>
+<li><p>Break the image into multiple patches of fixed size (patch_size,
+patch_size) (Hint: Take a peek at Cell 18. How can we declare
+patches?);</p></li>
+<li><p>Apply a learnable linear layer to each patch (Hint: Take a peek
+at Cell 19 and Eq. <a href="#eq:linear_projection"
+data-reference-type="ref"
+data-reference="eq:linear_projection">[eq:linear_projection]</a>);</p></li>
+<li><p>Assign each linearly projected patch embedding to the
+<code>manual_patch_embeds</code> variable.</p></li>
+</ul>
+<pre><code class="language-python">def get_patch_embeddings(pixel_values, filter_weights):
+&quot;&quot;&quot;using a similar code as the visualization above, project the image patches in the embedding space&quot;&quot;&quot;
+    assert len(pixel_values) == 1 # we do it for a single image for the example
+    manual_patch_embeds = torch.zeros(num_patches, num_patches, filter_weights.shape[0], device=model.device)
+    
+    # YOUR SOLUTION HERE
+    
+    return manual_patch_embeds</code></pre></li>
+<li><p><strong>Flatten the embeddings and check for
+correctness:</strong> Run all subsequent cells until Cell 22
+(inclusive). This will enable you to automatically execute the following
+steps:</p>
+<ul>
+<li><p>Retrieve the linearly projected patch embeddings, as per the
+function you’ve just defined, and flatten it (notice the difference in
+shape before and after flattening);</p></li>
+<li><p>Compare your results with the original implementation to assure
+correctness (this will allow you to test if you implemented the previous
+function as intended).</p></li>
+</ul></li>
+<li><p><strong>Prepare the class token and positional
+embeddings:</strong> You will now implement a function that serves the
+following purposes:</p>
+<ul>
+<li><p>Prepend a learnable class embedding to the previously defined
+patch embeddings (already implemented for convenience)</p></li>
+<li><p>Add a learnable positional embedding to retain information about
+each patch’s location in the original image (Hint: Take a peek at Eq. <a
+href="#eq:class_token_positional_embeddings" data-reference-type="ref"
+data-reference="eq:class_token_positional_embeddings">[eq:class_token_positional_embeddings]</a>,
+look through the possible method calls of the model, and respective
+arguments)</p></li>
+</ul>
+<pre><code class="language-python">def get_add_cls_and_position(manual_patch_embeds):
+    &quot;&quot;&quot;The only thing left to do is to add class and position embedding&quot;&quot;&quot;
+    class_embeds = model.vision_model.embeddings.class_embedding.expand(batch_size, 1, -1)
+    hidden_states = torch.cat([class_embeds, manual_patch_embeds], dim=1)
+    
+    # YOUR SOLUTION HERE
+    
+    hidden_states = model.vision_model.pre_layrnorm(hidden_states)
+    return hidden_states</code></pre></li>
+<li><p><strong>Conclude the image embedding and project the image-text
+pairs:</strong> Run all subsequent cells until Cell 27 (inclusive). This
+will enable you to automatically execute the following steps:</p>
+<ul>
+<li><p>Retrieve the class and positional embeddings in conjunction with
+the patch embeddings;</p></li>
+<li><p>Feed the previously declared embeddings to the ViT;</p></li>
+<li><p>Extract the class token representation;</p></li>
+<li><p>Apply the final normalization to obtain the image
+embedding;</p></li>
+<li><p>Project both the text and image embeddings to the shared
+embedding space (see Figure <a href="#fig:clip_contrastive_pre_training"
+data-reference-type="ref"
+data-reference="fig:clip_contrastive_pre_training">4</a> for a visual
+explanation)</p></li>
+</ul></li>
+<li><p><strong>Define the distance function:</strong> You will now
+implement a function whose purpose is extracting the similarities
+between all image-text embedding pairs. To accomplish that, define the
+following steps in sequence:</p>
+<ul>
+<li><p>Normalize each embedding (Hint: Take a peek at Eq. <a
+href="#eq:embedding_normalization" data-reference-type="ref"
+data-reference="eq:embedding_normalization">[eq:embedding_normalization]</a>);</p></li>
+<li><p>Apply the cosine similarity to the embeddings (Hint: Take a peek
+at Eq. <a href="#eq:cosine_similarity" data-reference-type="ref"
+data-reference="eq:cosine_similarity">[eq:cosine_similarity]</a>)</p></li>
+</ul>
+<pre><code class="language-python">def get_sim(text_embedding, image_embedding):
+
+    # YOUR SOLUTION HERE
+    
+    return similarities</code></pre></li>
+<li><p><strong>Retrieve the similarities:</strong> Run Cell 29 to
+retrieve the similarities as per the function you’ve just
+defined.</p></li>
+<li><p><strong>Define a rerank function:</strong> You will now implement
+a function whose purpose is reranking the retrieved similarities between
+all image-text embedding pairs, in descending order, such that the class
+with highest probability stays on top:</p>
+<pre><code class="language-python">def rerank(similarities):
+    &quot;&quot;&quot;All is left to do is sort the similarities to rerank the text&quot;&quot;&quot;
+    
+    # YOUR SOLUTION HERE
+
+    return ranking</code></pre></li>
+<li><p><strong>Analyze the results:</strong> Run all remaining cells.
+This will enable you to automatically execute the following steps:</p>
+<ul>
+<li><p>Apply the reranking function to the similarity scores;</p></li>
+<li><p>Print the resulting similarities in descending order,
+guaranteeing that the classification with the highest probability stays
+on top (see Figure <a href="#fig:clip_zero_shot"
+data-reference-type="ref" data-reference="fig:clip_zero_shot">5</a> for
+a visual description).</p></li>
+</ul>
+<p>What can you conclude by analyzing the results? Does your
+implementation work as intended?</p></li>
+</ol>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 5.2</div>
+</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 5.3</div>
+</div>
+<h2 id="vlm-vision-language-models">VLM: Vision-Language Models</h2>
+<h3 id="from-retrieval-to-generative-vision-language-models">From
+Retrieval to Generative Vision-Language Models</h3>
+<p>The next step in multimodality is to go beyond retrieval-based
+alignment (like in CLIP) to <strong>generative vision language models
+(VLMs)</strong> that can produce novel text conditioned on images.
+Instead of merely ranking or classifying images via a shared embedding
+space, generative VLMs take an image (and optionally text) as input and
+output descriptive or explanatory text. This enables rich tasks such as
+image captioning, visual question answering, and even multimodal
+dialogue.</p>
+<p>A typical design pattern in these models is to use a pre-trained
+image encoder to transform an image into a sequence of vector
+embeddings, then feed those <em>visual tokens</em> into a language model
+that generates text. Intuitively, the image is ‘translated’ into the
+same token space as the text, allowing a transformer to handle both
+modalities jointly. Unlike dual encoders that map each modality to a
+separate embedding space (e.g., CLIP), generative VLMs typically
+integrate both within one model, often an encoder-decoder or a
+decoder-only transformer with modified attention. This enables the model
+to generate natural language grounded in visual context, rather than
+merely comparing embeddings.</p>
+<h3 id="gemma-3">Gemma 3</h3>
+<p>A recent state-of-the-art VLM is <strong>Gemma 3</strong> <span
+class="citation" data-cites="gemma3">(<a href="#ref-gemma3"
+role="doc-biblioref">Kamath et al. 2025</a>)</span>, released by Google
+in 2025. It builds upon the Gemma language model family and extends it
+to handle both text and images using a unified architecture. Gemma 3
+comes in sizes up to 27B parameters and is capable of zero-shot
+generation, captioning, and multimodal dialogue.</p>
+<p>At its core, Gemma 3 uses a vision encoder based on
+<strong>SigLIP</strong> <span class="citation"
+data-cites="tsimpoukelli2023siglip">(<a
+href="#ref-tsimpoukelli2023siglip" role="doc-biblioref">Zhai et al.
+2023</a>)</span>, which improves upon CLIP’s contrastive training by
+using a pairwise sigmoid loss. In SigLIP, each image–text pair is
+treated as an independent binary classification task, avoiding the need
+for large softmax normalization over batch entries. CLIP relies on a
+symmetric contrastive loss that computes a full <span
+class="math inline">\(N \times N\)</span> similarity matrix across all
+image-text pairs in a batch, requiring both <em>image-to-text</em> and
+<em>text-to-image</em> losses. This results in quadratic computational
+complexity and necessitates substantial batch sizes (32k+) to maintain a
+diverse set of negative samples.</p>
+<p>In contrast, SigLIP replaces this formulation with a <strong>pairwise
+sigmoid loss</strong>, which allows each image-text pair to be evaluated
+independently: <span class="math display">\[\mathcal{L}_{\text{SigLIP}}
+= -\frac{1}{|B|^2} \sum_{i,j \in B} \log \sigma(z_{ij} \cdot (t \cdot
+x_i^\top y_j - b))\]</span> where <span class="math inline">\(z_{ij} \in
+\{+1, -1\}\)</span> indicates whether the pair is a true match, <span
+class="math inline">\(t\)</span> is a learnable temperature parameter,
+and <span class="math inline">\(b\)</span> is a learnable bias. The use
+of the sigmoid function <span class="math inline">\(\sigma\)</span> in
+this context means the model no longer depends on global normalization
+over the entire batch. Most importantly, SigLIP performs robustly with
+much smaller batch sizes—enabling high-quality training with batch sizes
+between 2k and 8k—making it a more accessible and efficient choice.</p>
+<p>The SigLIP vision encoder of Gemma 3 only processes images of size
+<span class="math inline">\(896\times 896\)</span> pixels. If an image
+has a different aspect ratio, a “Pan and Scan” strategy is applied to
+crop it into one or more square patches. Each patch is passed through
+the SigLIP ViT encoder and then passed through a multimodal projector,
+essentially a Linear layer, before being interleaved into the text
+embeddings for causal generation.</p>
+<p>During generation, Gemma 3 uses a single decoder-only transformer
+that attends over both visual and textual tokens. Visual tokens receive
+<strong>bidirectional attention</strong> allowing image patch tokens to
+see all other patches in the same image, while text tokens are attended
+to causally. Text tokens can freely attend to prior text and visual
+tokens, but not to subsequent text, thereby preserving autoregressive
+generation.</p>
+<p>An overview of the Gemma 3 architecture, including the SigLIP-based
+vision encoder, multimodal token projector, and unified decoder, is
+illustrated in Figure <a href="#fig:gemma3_arch"
+data-reference-type="ref" data-reference="fig:gemma3_arch">6</a>.</p>
+<figure>
+<img src="assets/figs/imgs/vlm/gemma-3-4b-2.png" id="fig:gemma3_arch"
+style="width:75.0%"
+alt="Architecture diagram of Gemma 3 (4B variant), highlighting the visual encoder, token projector, and decoder with mixed attention." />
+<figcaption aria-hidden="true">Architecture diagram of Gemma 3 (4B
+variant), highlighting the visual encoder, token projector, and decoder
+with mixed attention.</figcaption>
+</figure>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 5.4</div>
+<p>As the final exercise, we will implement a function for multimodal
+tokenization and test multimodal generation with Gemma 3. This exercise
+will guide you through completing the corresponding notebook located at
+<code>lxmls/labs/notebooks/multimodal/vlm_exercise.ipynb</code>,
+focusing on the key steps required to process interleaved image and text
+data for a VLM.</p>
+<ol>
+<li><p><strong>Setup:</strong> Begin by running the first cell in the
+notebook to import the necessary libraries.</p></li>
+<li><p><strong>Tokenisation without padding using Image
+Placeholders</strong> Your first task is to complete the
+<code>tokenize_without_padding</code> function, which translates a
+multimodal sequence of text and images into a list of token IDs. Your
+implementation should:</p>
+<ul>
+<li><p>Start the token sequence with a single beginning-of-sequence
+(<code>[BOS]</code>) token.</p></li>
+<li><p>Iterate through the prompt. If an element is a string, encode it
+into token IDs. If it is an image, you must insert a specific sequence
+of special tokens: a newline, a beginning-of-image token, a set of image
+placeholder tokens, and an end-of-image token. Each of these tokens are
+accessed as part of the <code>Tokenizer</code> class defined in
+“lxmls/multimodal/gemma3/processor.py”.</p></li>
+<li><p>As hinted in the notebook, the number of placeholder tokens is
+determined by the architecture of the vision model. It corresponds to
+the number of feature vectors generated by the SigLIP encoder for each
+image. Refer to the definition of the SigLIP encoder in
+“lxmls/multimodal/gemma3/siglip_vision/model.py” and its config in
+“lxmls/multimodal/gemma3/siglip_vision/model.py” to find this
+value.</p></li>
+<li><p>Finally, collect all PIL Images into a separate list to be
+processed by the vision encoder later.</p></li>
+</ul>
+<pre><code class="language-python">def tokenize_without_padding(
+    prompt: Sequence[str | torch.Tensor],
+    tokenizer: Tokenizer,
+    vis_cfg: SiglipVisionModelConfig,
+) -&gt; Tuple[list[int], list[torch.Tensor]]:
+    &quot;&quot;&quot;
+    Processes a single preprocessed prompt containing text and image tensors.
+    &quot;&quot;&quot;
+    token_ids: List[int] = []
+    images: List[torch.Tensor] = []
+
+    # YOUR SOLUTION HERE
+
+    return token_ids, images</code></pre></li>
+<li><p><strong>Padding the Sequences</strong> Most deep learning models
+process data in batches for efficiency. Since different prompts will
+have different lengths of text and numbers of images, we must pad them
+to uniform dimensions.</p>
+<ul>
+<li><p>Complete the <code>pad_token_sequences</code> function to pad
+each token list to the maximum sequence length in the batch using the
+tokenizer’s <code>pad_id</code>.</p></li>
+<li><p>Next, complete the <code>pad_image_sequences</code> function.
+This function should pad the list of images with zero-tensors and create
+a boolean <code>image_presence_mask</code> to differentiate real images
+from padding.</p></li>
+</ul>
+<pre><code class="language-python">def pad_token_sequences(all_token_ids: List[List[int]], max_seq_len: int, pad_id: int) -&gt; List[List[int]]:
+    &quot;&quot;&quot;
+    Pads each token sequence in a batch to a specified maximum length.
+    &quot;&quot;&quot;
+    # YOUR SOLUTION HERE
+    
+    return finalised_token_ids
+    
+def pad_image_sequences(
+    all_images: List[List[torch.Tensor]],
+    max_num_images: int,
+    vis_cfg: SiglipVisionModelConfig,
+    device: Any,
+) -&gt; Tuple[List[List[torch.Tensor]], List[List[bool]]]:
+    &quot;&quot;&quot;
+    Pads each list of images in a batch to a specified maximum number.
+    &quot;&quot;&quot;
+    # YOUR SOLUTION HERE
+    
+    return image_batch, image_presence_mask</code></pre></li>
+<li><p><strong>Execution and Generation:</strong> The notebook provides
+the main <code>tokenize</code> and <code>generate</code> functions that
+orchestrate the steps you’ve implemented.</p>
+<ul>
+<li><p>Review the logic in these functions to understand how your helper
+functions are used in the complete pipeline.</p></li>
+<li><p>Run the final cells to test your implementation. Observe the
+model’s responses to the text-only, single-image, and interleaved
+prompts.</p></li>
+<li><p>How does the model’s output for the final prompt demonstrate its
+ability to ground language in visual context?</p></li>
+</ul></li>
+</ol>
+</div>
+<h1 class="unnumbered" id="bibliography">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-contrastive_learning_multimodal_day" class="csl-entry"
+role="doc-biblioentry">
+Chen, Ting, Simon Kornblith, Mohammad Norouzi, and Geoffrey Hinton.
+2020. <span>“A <span>Simple</span> <span>Framework</span> for
+<span>Contrastive</span> <span>Learning</span> of <span>Visual</span>
+<span>Representations</span>.”</span> arXiv. <a
+href="https://doi.org/10.48550/arXiv.2002.05709">https://doi.org/10.48550/arXiv.2002.05709</a>.
+</div>
+<div id="ref-vit_multimodal_day" class="csl-entry"
+role="doc-biblioentry">
+Dosovitskiy, Alexey, Lucas Beyer, Alexander Kolesnikov, Dirk
+Weissenborn, Xiaohua Zhai, Thomas Unterthiner, Mostafa Dehghani, et al.
+2021. <span>“An <span>Image</span> Is <span>Worth</span> 16x16
+<span>Words</span>: <span>Transformers</span> for <span>Image</span>
+<span>Recognition</span> at <span>Scale</span>.”</span> arXiv. <a
+href="https://doi.org/10.48550/arXiv.2010.11929">https://doi.org/10.48550/arXiv.2010.11929</a>.
+</div>
+<div id="ref-gemma3" class="csl-entry" role="doc-biblioentry">
+Kamath, Gemma Team: Aishwarya, Johan Ferret, Shreya Pathak, Nino
+Vieillard, Ramona Merhej, Sarah Perrin, Tatiana Matejovicova, et al.
+2025. <span>“Gemma 3 Technical Report.”</span> <em>arXiv Preprint
+arXiv:2503.19786</em>. <a
+href="https://arxiv.org/abs/2503.19786">https://arxiv.org/abs/2503.19786</a>.
+</div>
+<div id="ref-clip_multimodal_day" class="csl-entry"
+role="doc-biblioentry">
+Radford, Alec, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+Sandhini Agarwal, Girish Sastry, et al. 2021. <span>“Learning
+<span>Transferable</span> <span>Visual</span> <span>Models</span>
+<span>From</span> <span>Natural</span> <span>Language</span>
+<span>Supervision</span>.”</span> arXiv. <a
+href="https://doi.org/10.48550/arXiv.2103.00020">https://doi.org/10.48550/arXiv.2103.00020</a>.
+</div>
+<div id="ref-tsimpoukelli2023siglip" class="csl-entry"
+role="doc-biblioentry">
+Zhai, Xiaohua, Basil Mustafa, Alexander Kolesnikov, and Lucas Beyer.
+2023. <span>“SigLIP: Scaling Language-Image Pretraining with a Simple
+and Effective Loss.”</span> <em>arXiv Preprint arXiv:2303.15343</em>. <a
+href="https://arxiv.org/abs/2303.15343">https://arxiv.org/abs/2303.15343</a>.
+</div>
+</div>
+
+					</article>
+<nav class="guide-pagenav">
+<a class="prev" href="day4.html"><span class="label">Previous</span><span class="title">&larr; Day 4 &middot; Transformers</span></a>
+<span></span>
+</nav>
+				</main>
+			</div>
+		</div>
+
+		<footer class="ftco-footer ftco-bg-dark ftco-section">
+			<div class="container">
+				<div class="row mb-5">
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<img src="../images/lxmls-logo-2.png" width="63%" style="margin:0 5% 0 0">
+						</div>
+					</div>
+					<div class="col-md">
+						<div class="ftco-footer-widget mb-4">
+							<h2 class="ftco-heading-2">Contact us!</h2>
+							<div class="block-23 mb-3">
+								<ul>
+									<li><span class="text">IT &ndash; Lisboa, Instituto Superior T&eacute;cnico - Torre Norte - Piso 10,<br>
+									Av. Rovisco Pais, 1, 1049 - 001 LISBOA, Portugal</span></li>
+									<li><a href="mailto:lxmls-2026@googlegroups.com"><span class="text">lxmls-2026@googlegroups.com</span></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<p style="font-size:80%">
+							Copyright &copy;2021-<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with by <a href="https://colorlib.com/" target="_blank">Colorlib</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<script src="../files/jquery.min.js"></script>
+		<script src="../files/popper.min.js"></script>
+		<script src="../files/bootstrap.min.js"></script>
+		<script src="assets/highlight/highlight.min.js"></script>
+		<script>hljs.highlightAll();</script>
+		<script src="assets/copy-button.js"></script>
+	</body>
+</html>
