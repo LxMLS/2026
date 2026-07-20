@@ -1,0 +1,430 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//LxMLS 2026//Schedule//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:LxMLS 2026
+X-WR-TIMEZONE:Europe/Lisbon
+BEGIN:VTIMEZONE
+TZID:Europe/Lisbon
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0000
+TZOFFSETTO:+0100
+TZNAME:WEST
+DTSTART:19700329T010000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0000
+TZNAME:WET
+DTSTART:19701025T020000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:lxmls2026-001@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260720T080000
+DTEND;TZID=Europe/Lisbon:20260720T084500
+SUMMARY:Registration
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-002@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260720T084500
+DTEND;TZID=Europe/Lisbon:20260720T090000
+SUMMARY:Presentation and Welcome
+DESCRIPTION:Speaker: Bruno Martins
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Bruno Martins:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-003@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260720T090000
+DTEND;TZID=Europe/Lisbon:20260720T103000
+SUMMARY:Learning with Linear Models (Part 1)
+DESCRIPTION:Speaker: Mário Figueiredo
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Mário Figueiredo:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-004@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260720T103000
+DTEND;TZID=Europe/Lisbon:20260720T110000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-005@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260720T110000
+DTEND;TZID=Europe/Lisbon:20260720T123000
+SUMMARY:Learning with Linear Models (Part 2)
+DESCRIPTION:Speaker: Mário Figueiredo
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Mário Figueiredo:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-006@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260720T123000
+DTEND;TZID=Europe/Lisbon:20260720T140000
+SUMMARY:Lunch Break
+LOCATION:University Canteen (Pavilhão de Civil)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-007@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260720T140000
+DTEND;TZID=Europe/Lisbon:20260720T170000
+SUMMARY:Labs: Introduction to the Labs and Machine Learning Fundamentals
+LOCATION:Pavilhão de Informática I / III\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-008@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260720T170000
+DTEND;TZID=Europe/Lisbon:20260720T190000
+SUMMARY:Welcome Reception
+DESCRIPTION:Note: no fixed end time listed in the schedule (shown as open-e
+ nded)\; duration set to 2h as a placeholder.
+LOCATION:Jardim Norte\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+GEO:38.7375159;-9.1394666
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-009@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260721T090000
+DTEND;TZID=Europe/Lisbon:20260721T103000
+SUMMARY:Introduction to Deep Learning (Part 1)
+DESCRIPTION:Speaker: Bhiksha Raj
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Bhiksha Raj:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-010@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260721T103000
+DTEND;TZID=Europe/Lisbon:20260721T110000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-011@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260721T110000
+DTEND;TZID=Europe/Lisbon:20260721T123000
+SUMMARY:Introduction to Deep Learning (Part 2)
+DESCRIPTION:Speaker: Bhiksha Raj
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Bhiksha Raj:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-012@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260721T123000
+DTEND;TZID=Europe/Lisbon:20260721T140000
+SUMMARY:Lunch Break
+LOCATION:University Canteen (Pavilhão de Civil)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-013@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260721T140000
+DTEND;TZID=Europe/Lisbon:20260721T163000
+SUMMARY:Labs: Introduction to Deep Learning and Pytorch
+LOCATION:Pavilhão de Informática I / III\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-014@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260721T163000
+DTEND;TZID=Europe/Lisbon:20260721T170000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-015@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260721T170000
+DTEND;TZID=Europe/Lisbon:20260721T180000
+SUMMARY:The Fiction Machine
+DESCRIPTION:Speaker: Leon Bottou
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Leon Bottou:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-016@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260722T090000
+DTEND;TZID=Europe/Lisbon:20260722T103000
+SUMMARY:Introduction to Sequence Models (Part 1)
+DESCRIPTION:Speaker: Noah Smith
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Noah Smith:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-017@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260722T103000
+DTEND;TZID=Europe/Lisbon:20260722T110000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-018@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260722T110000
+DTEND;TZID=Europe/Lisbon:20260722T123000
+SUMMARY:Introduction to Sequence Models (Part 2)
+DESCRIPTION:Speaker: Noah Smith
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Noah Smith:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-019@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260722T123000
+DTEND;TZID=Europe/Lisbon:20260722T140000
+SUMMARY:Lunch Break
+LOCATION:University Canteen (Pavilhão de Civil)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-020@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260722T140000
+DTEND;TZID=Europe/Lisbon:20260722T163000
+SUMMARY:Labs: Sequence Models
+LOCATION:Pavilhão de Informática I / III\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-021@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260722T163000
+DTEND;TZID=Europe/Lisbon:20260722T170000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-022@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260722T170000
+DTEND;TZID=Europe/Lisbon:20260722T180000
+SUMMARY:TBD
+DESCRIPTION:Speaker: Eric Xing
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Eric Xing:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-023@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260722T193000
+DTEND;TZID=Europe/Lisbon:20260722T213000
+SUMMARY:Banquet Dinner
+DESCRIPTION:Note: no fixed end time listed in the schedule (shown as open-e
+ nded)\; duration set to 2h as a placeholder.
+LOCATION:Casa do Alentejo\, R. das Portas de Santo Antão 58\, 1150-268 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-024@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260723T090000
+DTEND;TZID=Europe/Lisbon:20260723T103000
+SUMMARY:Transformers and Large Pretrained Models (Part 1)
+DESCRIPTION:Speaker: André Martins
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=André Martins:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-025@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260723T103000
+DTEND;TZID=Europe/Lisbon:20260723T110000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-026@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260723T110000
+DTEND;TZID=Europe/Lisbon:20260723T123000
+SUMMARY:Transformers and Large Pretrained Models (Part 2)
+DESCRIPTION:Speaker: André Martins
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=André Martins:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-027@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260723T123000
+DTEND;TZID=Europe/Lisbon:20260723T140000
+SUMMARY:Lunch Break
+LOCATION:University Canteen (Pavilhão de Civil)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-028@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260723T140000
+DTEND;TZID=Europe/Lisbon:20260723T163000
+SUMMARY:Labs: Transformers
+LOCATION:Pavilhão de Informática I / III\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-029@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260723T163000
+DTEND;TZID=Europe/Lisbon:20260723T170000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-030@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260723T170000
+DTEND;TZID=Europe/Lisbon:20260723T180000
+SUMMARY:TBD
+DESCRIPTION:Speaker: Zita Marinho
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Zita Marinho:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-031@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260724T090000
+DTEND;TZID=Europe/Lisbon:20260724T103000
+SUMMARY:Causality (Part 1)
+DESCRIPTION:Speaker: Adèle Ribeiro
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Adèle Ribeiro:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-032@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260724T103000
+DTEND;TZID=Europe/Lisbon:20260724T110000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-033@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260724T110000
+DTEND;TZID=Europe/Lisbon:20260724T123000
+SUMMARY:Causality (Part 2)
+DESCRIPTION:Speaker: Adèle Ribeiro
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Adèle Ribeiro:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-034@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260724T123000
+DTEND;TZID=Europe/Lisbon:20260724T140000
+SUMMARY:Lunch Break
+LOCATION:University Canteen (Pavilhão de Civil)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-035@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260724T140000
+DTEND;TZID=Europe/Lisbon:20260724T153000
+SUMMARY:Panel Discussion
+DESCRIPTION:Speaker: Isabel Trancoso (Moderator)
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Isabel Trancoso (Moderator):MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-036@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260724T153000
+DTEND;TZID=Europe/Lisbon:20260724T170000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-037@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260724T170000
+DTEND;TZID=Europe/Lisbon:20260724T180000
+SUMMARY:TBD
+DESCRIPTION:Speaker: Ivan Titov
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Ivan Titov:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-038@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260725T090000
+DTEND;TZID=Europe/Lisbon:20260725T103000
+SUMMARY:Vision and Language (Part 1)
+DESCRIPTION:Speaker: Desmond Elliott
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Desmond Elliott:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-039@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260725T103000
+DTEND;TZID=Europe/Lisbon:20260725T110000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-040@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260725T110000
+DTEND;TZID=Europe/Lisbon:20260725T123000
+SUMMARY:Vision and Language (Part 2)
+DESCRIPTION:Speaker: Desmond Elliott
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Desmond Elliott:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-041@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260725T123000
+DTEND;TZID=Europe/Lisbon:20260725T140000
+SUMMARY:Lunch Break
+LOCATION:University Canteen (Pavilhão de Civil)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-042@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260725T140000
+DTEND;TZID=Europe/Lisbon:20260725T163000
+SUMMARY:Labs: Vision and Language
+LOCATION:Pavilhão de Informática I / III\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-043@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260725T163000
+DTEND;TZID=Europe/Lisbon:20260725T170000
+SUMMARY:Coffee Break and Networking Activity
+LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-044@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260725T170000
+DTEND;TZID=Europe/Lisbon:20260725T180000
+SUMMARY:Modelling Multimodal Human Cognition with VLMs
+DESCRIPTION:Speaker: Raquel Fernández
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Raquel Fernández:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+BEGIN:VEVENT
+UID:lxmls2026-045@lxmls.it.pt
+DTSTAMP:20260720T074040Z
+DTSTART;TZID=Europe/Lisbon:20260725T180000
+DTEND;TZID=Europe/Lisbon:20260725T183000
+SUMMARY:Closing Session
+DESCRIPTION:Speaker: Ramón Astudillo
+LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
+ORGANIZER;CN=Ramón Astudillo:MAILTO:noreply@lxmls.it.pt
+END:VEVENT
+END:VCALENDAR

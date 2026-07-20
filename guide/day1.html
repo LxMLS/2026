@@ -93,7 +93,7 @@
 						<li class="nav-item"><a href="../index.html#schedule" class="nav-link">Schedule</a></li>
 						<li class="nav-item"><a href="../index.html#speakers" class="nav-link">Speakers</a></li>
 						<li class="nav-item"><a href="../index.html#organizers" class="nav-link">Organizers</a></li>
-						<li class="nav-item active"><a href="index.html" class="nav-link">Guide</a></li>
+						<li class="nav-item active"><a href="index.html" class="nav-link">Labs</a></li>
 					</ul>
 				</div>
 			</div>
@@ -859,7 +859,8 @@ class="math inline">\(30\)</span> times in total, then the principle of
 maximum entropy would lead us to estimate <span
 class="math inline">\(P(1)=P(2)=P(3)=1/12\)</span> and <span
 class="math inline">\(P(4)=P(5)=P(6)=1/4\)</span> (i.e., outcomes would
-be uniform within each of the two groups).</p>
+be uniform within each of the two groups).<a href="#fn6"
+class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <p>This example could be presented in a more formal way. Suppose that we
 want to use binary features to represent the outcome of the die throw.
 We use two features: <span class="math inline">\(f_{123}(x,y) =
@@ -878,14 +879,14 @@ class="math inline">\(P_{\boldsymbol{w}}(Y|X)\)</span>, which makes
 value of 0.75. These constraints, <span class="math inline">\(E[f_{123}]
 = 0.25\)</span> and <span class="math inline">\(E[f_{456}] =
 0.75\)</span>, are known as <em>first moment matching
-constraints</em>.<a href="#fn6" class="footnote-ref" id="fnref6"
-role="doc-noteref"><sup>6</sup></a></p>
+constraints</em>.<a href="#fn7" class="footnote-ref" id="fnref7"
+role="doc-noteref"><sup>7</sup></a></p>
 <p>An important fundamental result, which we will not prove here, is
 that the maximum entropy distribution <span
 class="math inline">\(P_{\boldsymbol{w}}(Y|X)\)</span> under first
 moment matching constraints is a <em>log-linear model</em>. <a
-href="#fn7" class="footnote-ref" id="fnref7"
-role="doc-noteref"><sup>7</sup></a> It has the following parametric
+href="#fn8" class="footnote-ref" id="fnref8"
+role="doc-noteref"><sup>8</sup></a> It has the following parametric
 form: <span class="math display">\[\label{eq:loglinear}
 P_{\boldsymbol{w}}(y|x) = \frac{\exp(\boldsymbol{w} \cdot
 \boldsymbol{f}(x,y))}{Z(\boldsymbol{w},x)}\]</span> The denominator in
@@ -928,8 +929,8 @@ class="math display">\[\begin{aligned}
 \argmin_{\boldsymbol{w}} -\mathcal{L}(\boldsymbol{w}; \mathcal{D}) +
 \frac{\lambda}{2} \|\boldsymbol{w}\|^2.\end{aligned}\]</span> Here we
 use the squared <span class="math inline">\(L_2\)</span>-norm as the
-regularizer, <a href="#fn8" class="footnote-ref" id="fnref8"
-role="doc-noteref"><sup>8</sup></a> but other norms are possible. The
+regularizer, <a href="#fn9" class="footnote-ref" id="fnref9"
+role="doc-noteref"><sup>9</sup></a> but other norms are possible. The
 scalar <span class="math inline">\(\lambda \ge 0\)</span> controls the
 amount of regularization. Unlike the naïve Bayes examples, this
 optimization problem does not have a closed form solution in general;
@@ -1086,8 +1087,9 @@ href="#ref-Schoelkopf2002" role="doc-biblioref">Schölkopf and Smola
 2002</a>; <a href="#ref-ShaweTaylor2004"
 role="doc-biblioref">Shawe-Taylor and Cristianini 2004</a>)</span>
 mostly focused on the <em>dual</em> formulation. We will not discuss
-non-linear kernels or this dual formulation here. <a href="#fn9"
-class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a></p>
+non-linear kernels or this dual formulation here. <a href="#fn10"
+class="footnote-ref" id="fnref10"
+role="doc-noteref"><sup>10</sup></a></p>
 <p>Consider <span class="math inline">\(\rho(y&#39;,y)\)</span> as a
 non-negative cost function, representing the cost of assigning a label
 <span class="math inline">\(y&#39;\)</span> when the correct label was
@@ -1096,8 +1098,8 @@ the <span class="math inline">\(0/1\)</span>-cost defined by Equation <a
 href="#eq:costfunc" data-reference-type="ref"
 data-reference="eq:costfunc">[eq:costfunc]</a> (but keep in mind that
 other cost functions are possible). The <em>hinge loss</em> <a
-href="#fn10" class="footnote-ref" id="fnref10"
-role="doc-noteref"><sup>10</sup></a> is the function <span
+href="#fn11" class="footnote-ref" id="fnref11"
+role="doc-noteref"><sup>11</sup></a> is the function <span
 class="math display">\[\label{eq:hingeloss}
 \ell(\boldsymbol{w}; x,y) = \max_{y&#39; \in \mathcal{Y}}
 \left[\boldsymbol{w} \cdot \boldsymbol{f}(x,y&#39;) - \boldsymbol{w}
@@ -1434,36 +1436,42 @@ Information Theory, we recommend <span class="citation"
 data-cites="Cover1991">Cover et al. (<a href="#ref-Cover1991"
 role="doc-biblioref">1991</a>)</span>.<a href="#fnref5"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6" role="doc-endnote"><p>In general, these constraints mean
+<li id="fn6" role="doc-endnote"><p>For an introduction of maximum
+entropy models, along with pointers to the literature, see <a
+href="http://www.cs.cmu.edu/~aberger/maxent.html"
+class="uri">http://www.cs.cmu.edu/~aberger/maxent.html</a>.<a
+href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7" role="doc-endnote"><p>In general, these constraints mean
 that feature expectations under that distribution <span
 class="math inline">\(\frac{1}{M}\sum_m E_{Y \sim
 P_{\boldsymbol{w}}}[\boldsymbol{f}(x_m,Y)]\)</span> must match the
 observed relative frequencies <span
 class="math inline">\(\frac{1}{M}\sum_m
-\boldsymbol{f}(x_m,y_m)\)</span>.<a href="#fnref6" class="footnote-back"
+\boldsymbol{f}(x_m,y_m)\)</span>.<a href="#fnref7" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
-<li id="fn7" role="doc-endnote"><p>Also called a a Boltzmann
+<li id="fn8" role="doc-endnote"><p>Also called a a Boltzmann
 distribution, or an exponential family of distributions.<a
-href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8" role="doc-endnote"><p>In a Bayesian perspective, this
+href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9" role="doc-endnote"><p>In a Bayesian perspective, this
 corresponds to choosing independent Gaussian priors <span
 class="math inline">\(p(w_d) \sim \mathcal{N}(0; 1/\lambda^2)\)</span>
-for each dimension of the weight vector.<a href="#fnref8"
+for each dimension of the weight vector.<a href="#fnref9"
 class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9" role="doc-endnote"><p>The main reason why we prefer to
+<li id="fn10" role="doc-endnote"><p>The main reason why we prefer to
 discuss the primal formulation with linear kernels is that the resulting
 algorithms run in linear time (or less), while known kernel-based
 methods are quadratic with respect to <span
 class="math inline">\(M\)</span>. In large-scale problems (large <span
 class="math inline">\(M\)</span>) the former are thus more appealing.<a
-href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10" role="doc-endnote"><p>The hinge loss for the <span
+href="#fnref10" class="footnote-back"
+role="doc-backlink">↩︎</a></p></li>
+<li id="fn11" role="doc-endnote"><p>The hinge loss for the <span
 class="math inline">\(0/1\)</span> cost is sometimes defined as <span
 class="math inline">\(\ell(\boldsymbol{w}; x,y) = \max\{0, \max_{y&#39;
 \ne y} \boldsymbol{w} \cdot \boldsymbol{f}(x,y&#39;) - \boldsymbol{w}
 \cdot\boldsymbol{f}(x,y) + 1\}\)</span>. Given our definition of <span
 class="math inline">\(\rho(\hat{y},y)\)</span>, note that the two
-definitons are equivalent.<a href="#fnref10" class="footnote-back"
+definitons are equivalent.<a href="#fnref11" class="footnote-back"
 role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

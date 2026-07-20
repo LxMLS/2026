@@ -93,7 +93,7 @@
 						<li class="nav-item"><a href="../index.html#schedule" class="nav-link">Schedule</a></li>
 						<li class="nav-item"><a href="../index.html#speakers" class="nav-link">Speakers</a></li>
 						<li class="nav-item"><a href="../index.html#organizers" class="nav-link">Organizers</a></li>
-						<li class="nav-item active"><a href="index.html" class="nav-link">Guide</a></li>
+						<li class="nav-item active"><a href="index.html" class="nav-link">Labs</a></li>
 					</ul>
 				</div>
 			</div>
@@ -116,8 +116,7 @@ Installing the Tools in your own Computer</a></li>
 Troubleshooting</a></li>
 <li><a class="toc-h3" href="#deciding-on-the-ide-and-interactive-shell-to-use">Deciding on
 the IDE and interactive shell to use</a></li>
-<li><a class="toc-h3" href="#jupyter-notebook-and-jupyterlab">Jupyter Notebook and
-JupyterLab</a></li>
+<li><a class="toc-h3" href="#jupyter-notebook">Jupyter Notebook</a></li>
 <li><a class="toc-h2" href="#sec:SolvingExercises">Solving the Exercises</a></li>
 <li><a class="toc-h2" href="#sec:Python">Python</a></li>
 <li><a class="toc-h3" href="#python-basics">Python Basics</a></li>
@@ -194,26 +193,33 @@ class="uri">https://github.com/LxMLS/lxmls-toolkit/tree/student#readme</a>.</p><
 </ul>
 <p>The <code>student</code> branch contains the same code as
 <code>master</code> branch, with some parts deleted, which you must
-complete in the following exercises.</p>
-<p>The basic install instructions use miniconda. If this is not your
-tool of choice, you can install it with <code>pip</code> as an
-alternative. In order to do this, you first need to run</p>
-<p><code>python3 -m venv lxmls_venv</code></p>
-<p>where <code>lxmls_venv</code> is the name (and path) to your virtual
-environment. Then, you activate the environment with</p>
-<p><code>source lxmls_venv/bin/activate</code></p>
-<p>and afterwards you install jupyter with pip:</p>
-<p><code>pip install jupyter</code></p>
-<p>Note that, after activating the environment with the command
-<code>source</code>, the name of the environment should be shown between
-parentheses in the command line. Make sure this is the case before
-installing jupyter. After this, you can double check the installation
-worked by running the following command:</p>
-<p><code>pip install ipykernel</code></p>
-<p>if this installation also worked, then you just need to run the
-following command so your new virtual environment is also shown in the
-jupyter notebooks as an interpreter of your choice.</p>
-<p><code>python -m ipykernel install --user --name lxmls_venv --display-name “LxMLS venv"</code></p>
+complete in the following exercises. The following install instructions
+are same as the one on GitHub, provided here for completeness.</p>
+<p>The basic install instructions use <code>uv</code>. If you are on
+Linux or MacOS, install <code>uv</code> with
+<code>curl -LsSf https://astral.sh/uv/install.sh | sh</code> If you are
+on Windows, use search to find and start the <code>CMD</code> command
+line utility. Then call on it
+<code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code>
+to install <code>uv</code>.</p>
+<p>If you don’t have Python on your system or want to install a specific
+version (the labs require the Python version to be between 3.9 and 3.12)
+you can install it using <code>uv</code>:
+<code>uv python install 3.10</code></p>
+<p>You can then install all required dependencies and create a virtual
+environment using the one-liner: <code>uv sync –extra cpu</code></p>
+<p>If your device has access to an Nvidia GPU, you can replace
+<code>cpu</code> with <code>cu118</code>, <code>cu124</code>, or
+<code>cu126</code> depending on the CUDA version your GPU supports. Use
+<code>nvidia-smi</code> or <code>nvcc –version</code> to check the CUDA
+version.</p>
+<p>To activate your virtual environment with all installed dependencies
+on Linux or MacOS use <code>source .venv/bin/activate</code>. To do so
+on Windows use <code>.venv\Scripts\activate</code></p>
+<p>Check if your virtual environment is active by running
+<code>python –version &amp;&amp; which python</code>. This should
+display the correct version of python with a path from within the
+current virtual environment.</p>
 <h3 id="deciding-on-the-ide-and-interactive-shell-to-use">Deciding on
 the IDE and interactive shell to use</h3>
 <p>An Integrated Development Environment (IDE) includes a text editor
@@ -225,7 +231,7 @@ be obvious the first days since we will be seeing simpler examples.</p>
 feel free to use the software you feel more comfortable with. PyCharm
 and other well known IDEs like Spyder are provided with the Anaconda
 installation.</p>
-<p>Aside of an IDE, you will need an interactive command line to run
+<p>Besides an IDE, you will need an interactive command line to run
 commands. This is very useful to explore variables and functions and
 quickly debug the exercises. For the most complex exercises you will
 still need an IDE to modify particular segments of the provided code. As
@@ -234,20 +240,20 @@ comes installed with Anaconda and is part of the pip-installed packages.
 The Jupyter notebook is described in the next section. In case you run
 into problems or you feel uncomfortable with the Jupyter notebook you
 can use the simpler iPython command line.</p>
-<h3 id="jupyter-notebook-and-jupyterlab">Jupyter Notebook and
-JupyterLab</h3>
+<h3 id="jupyter-notebook">Jupyter Notebook</h3>
 <p>Jupyter is a good choice for writing Python code. It is an
 interactive computational environment for data science and scientific
 computing, where you can combine code execution, rich text, mathematics,
 plots and rich media. The Jupyter Notebook is a web application that
-allows you to create and share documents which contain live code,
-equations, visualizations and explanatory text. It is very popular for
-data cleaning, numerical simulation, statistical modeling, and machine
-learning.</p>
-<p>The modern interface is <strong>JupyterLab</strong>, which replaces
-the classic Jupyter Notebook with a more complete IDE-like environment
-while remaining fully compatible with <code>.ipynb</code> notebook
-files. Both are installed as part of the toolkit setup.</p>
+allows you to create and share documents, which contains live code,
+equations, visualizations and explanatory text. It is very popular in
+the areas of data cleaning and transformation, numerical simulation,
+statistical modeling, machine learning and so on. It supports more than
+40 programming languages, including all those popular ones used in Data
+Science such as Python, R, and Scala. It can also produce many different
+types of output such as images, videos, LaTex and JavaScript. More over
+with its interactive widgets, you can manipulate and visualize data in
+real time.</p>
 <p>The main features and advantages using the Jupyter Notebook are the
 following:</p>
 <ul>
@@ -301,9 +307,8 @@ troubleshooting)</td>
 </table>
 </div>
 </div>
-<p>A more detailed user guide can be found at <a
-href="https://docs.jupyter.org/en/latest/"
-class="uri">https://docs.jupyter.org/en/latest/</a>.</p>
+<p>A more detailed user guide can be found here:</p>
+<pre><code class="nohighlight">http://jupyter-notebook-beginner-guide.readthedocs.io/en/latest/index.html</code></pre>
 <h2 id="sec:SolvingExercises">Solving the Exercises</h2>
 <p>In the student branch we provide the <code>solve.py</code> script.
 This can be used to solve the exercises of each day, e.g.,</p>
@@ -927,9 +932,10 @@ following commands:</p>
 (3, 2)
 print(a.dtype.name)
 float64</code></pre>
-<p>This shows you that “a” is an 3*2 array of type float64. By default,
-arrays contain 64 bit floating point numbers. You can specify the
-particular array type by using the keyword dtype.</p>
+<p>This shows you that “a” is a <span class="math inline">\(3 \times
+2\)</span> array of type float64. By default, arrays contain 64 bit
+floating point numbers. You can specify the particular array type by
+using the keyword dtype.</p>
 <pre><code class="language-python">a = np.zeros([m,n],dtype=int)
 print(a.dtype)
 int64</code></pre>
