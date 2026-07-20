@@ -37,6 +37,7 @@ DTSTART;TZID=Europe/Lisbon:20260720T084500
 DTEND;TZID=Europe/Lisbon:20260720T090000
 SUMMARY:Presentation and Welcome
 DESCRIPTION:Speaker: Bruno Martins
+URL:https://lxmls.github.io/2026/slides/opening.pdf
 LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
 ORGANIZER;CN=Bruno Martins:MAILTO:noreply@lxmls.it.pt
 END:VEVENT
@@ -172,7 +173,7 @@ UID:lxmls2026-017@lxmls.it.pt
 DTSTAMP:20260720T074040Z
 DTSTART;TZID=Europe/Lisbon:20260722T103000
 DTEND;TZID=Europe/Lisbon:20260722T110000
-SUMMARY:Coffee Break and Networking Activity
+SUMMARY:Coffee Break and Group Photo in Front of the Main Building
 LOCATION:IST Congress Centre (room 2)\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
 END:VEVENT
 BEGIN:VEVENT
@@ -214,7 +215,8 @@ UID:lxmls2026-022@lxmls.it.pt
 DTSTAMP:20260720T074040Z
 DTSTART;TZID=Europe/Lisbon:20260722T170000
 DTEND;TZID=Europe/Lisbon:20260722T180000
-SUMMARY:TBD
+SUMMARY:The ladder of intelligence – Toward Reasoning\, Planning\, and Acti
+ ng Beyond Book Intelligence
 DESCRIPTION:Speaker: Eric Xing
 LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
 ORGANIZER;CN=Eric Xing:MAILTO:noreply@lxmls.it.pt
@@ -286,7 +288,7 @@ UID:lxmls2026-030@lxmls.it.pt
 DTSTAMP:20260720T074040Z
 DTSTART;TZID=Europe/Lisbon:20260723T170000
 DTEND;TZID=Europe/Lisbon:20260723T180000
-SUMMARY:TBD
+SUMMARY:Reinforcement Learning and Test Time Adaptation
 DESCRIPTION:Speaker: Zita Marinho
 LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
 ORGANIZER;CN=Zita Marinho:MAILTO:noreply@lxmls.it.pt
@@ -332,8 +334,10 @@ UID:lxmls2026-035@lxmls.it.pt
 DTSTAMP:20260720T074040Z
 DTSTART;TZID=Europe/Lisbon:20260724T140000
 DTEND;TZID=Europe/Lisbon:20260724T153000
-SUMMARY:Panel Discussion
-DESCRIPTION:Speaker: Isabel Trancoso (Moderator)
+SUMMARY:Panel Discussion: From Tokens to Thoughts: The Changing Roles of La
+ nguage and Learning
+DESCRIPTION:Moderator: Isabel Trancoso\\nPanelists: Adèle H. Ribeiro\, Arli
+ ndo Oliveira\, Ivan Titov\, Mário Figueiredo\, and Raquel Fernández
 LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
 ORGANIZER;CN=Isabel Trancoso (Moderator):MAILTO:noreply@lxmls.it.pt
 END:VEVENT
@@ -350,7 +354,8 @@ UID:lxmls2026-037@lxmls.it.pt
 DTSTAMP:20260720T074040Z
 DTSTART;TZID=Europe/Lisbon:20260724T170000
 DTEND;TZID=Europe/Lisbon:20260724T180000
-SUMMARY:TBD
+SUMMARY:Post-training for Reasoning in LLMs: Learning vs reshaping\, genera
+ lization and failure modes
 DESCRIPTION:Speaker: Ivan Titov
 LOCATION:IST Congress Centre\, Av. Rovisco Pais 1\, 1049-001 Lisboa\, Portugal
 ORGANIZER;CN=Ivan Titov:MAILTO:noreply@lxmls.it.pt
