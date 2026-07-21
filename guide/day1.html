@@ -336,11 +336,6 @@ class="math display">\[\begin{aligned}
 P(\mathcal{D}) &amp;=&amp; \prod_{m=1}^M P(x^m,y^m) \nonumber\\
 &amp;=&amp; \prod_{m=1}^M P(y^m)\prod_{j=1}^J P(x^m_j|y^m).
 \end{aligned}\]</span></p>
-<div class="guide-box guide-box"><div class="guide-box-title">Example 1.1 (2-D Gaussians)</div>
-</div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.1</div>
-<p><span id="exer:simplenb" label="exer:simplenb"></span></p>
-</div>
 <h3
 id="example-multinomial-naïve-bayes-for-document-classification">Example:
 Multinomial Naïve Bayes for Document Classification</h3>
@@ -403,7 +398,7 @@ documents with that class.</p>
 <h2 id="assignment">Assignment</h2>
 <p>With the previous theoretical background, you will be able to solve
 today’s assignment.</p>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.2</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.1</div>
 <p>In this exercise we will use the Amazon sentiment analysis data <span
 class="citation" data-cites="blitzer2007biographies">(<a
 href="#ref-blitzer2007biographies" role="doc-biblioref">Blitzer, Dredze,
@@ -621,8 +616,6 @@ prediction rule of the form <span class="math display">\[\begin{aligned}
 {\hat y} &amp;=&amp; \arg\max_{y \in \mathcal{Y}} \boldsymbol{w}_y \cdot
 \boldsymbol{g}(x). \end{aligned}\]</span></p>
 </div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.3</div>
-</div>
 <h3 id="online-discriminative-algorithms">Online Discriminative
 Algorithms</h3>
 <p>We now discuss two discriminative classification algorithms. These
@@ -678,7 +671,7 @@ are separable, the perceptron will eventually find a separating
 hyperplane <span class="math inline">\(\boldsymbol{w}\)</span>.</p>
 <p>There are other variants of the perceptron (e.g., with
 regularization) which we omit for brevity.</p>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.4</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.2</div>
 <p>We provide an implementation of the perceptron algorithm in the class
 <span><code>Perceptron</code></span> (file
 <span><code>perceptron.py</code></span>).</p>
@@ -800,7 +793,7 @@ role="doc-biblioref">2006</a>)</span>.</p>
 <div class="algo-line" style="padding-left:4.5em"><span class="algo-num">10:</span> compute stepsize: \(\eta^t = \min\left\{\lambda^{-1}, \frac{\ell^t}{\|\boldsymbol{f}(x^m,y^m) - \boldsymbol{f}(x^m,\hat{y})\|^2}\right\}\)</div>
 <div class="algo-line" style="padding-left:4.5em"><span class="algo-num">11:</span> update the model:  	\(\boldsymbol{w}^{t+1} \leftarrow  \boldsymbol{w}^{t} + \eta^t  (\boldsymbol{f}(x^m,y^m) - \boldsymbol{f}(x^m,\hat{y}))\)</div>
 <div class="algo-line" style="padding-left:1.5em"><span class="algo-num">12:</span> <b>output:</b> the averaged model \(\hat{\boldsymbol{w}} \leftarrow \frac{1}{t}\sum_{i=1}^{t} \boldsymbol{w}^i\)</div></div></figure>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.5</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.3</div>
 <p>We provide an implementation of the MIRA algorithm. Compare it with
 the perceptron for various values of <span
 class="math inline">\(\lambda\)</span></p>
@@ -1016,7 +1009,7 @@ partition or with cross-validation.</p>
 <div class="algo-line" style="padding-left:3.0em"><span class="algo-num">6:</span> compute the feature vector expectation:   	\(E_{\boldsymbol{w}}[\boldsymbol{f}(x^m,Y)] = \sum_{y' \in \mathcal{Y}} P_{\boldsymbol{w}^t}(y'|x^m) \boldsymbol{f}(x^m,y')\)</div>
 <div class="algo-line" style="padding-left:3.0em"><span class="algo-num">7:</span> update the model:  	\(\boldsymbol{w}^{t+1} \leftarrow (1-\lambda \eta_t) \boldsymbol{w}^{t} + \eta_t \left( \boldsymbol{f}(x^{m},y^{m})  	- E_{\boldsymbol{w}}[\boldsymbol{f}(x^{m},Y)]\right)\)</div>
 <div class="algo-line" style="padding-left:1.5em"><span class="algo-num">8:</span> <b>output:</b> \(\hat{\boldsymbol{w}} \leftarrow \boldsymbol{w}^{T+1}\)</div></div></figure>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.6</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.4</div>
 <p>We provide an implementation of the L-BFGS algorithm for training
 maximum entropy models in the class
 <span><code>MaxEnt_batch</code></span>, as well as an implementation of
@@ -1198,9 +1191,7 @@ href="#alg:svm_ssd" data-reference-type="ref"
 data-reference="alg:svm_ssd">[alg:svm_ssd]</a>) and the online
 algorithms seen above (perceptron and MIRA).</p>
 </div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.7</div>
-</div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.8</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.5</div>
 <p>Run the SVM primal algorithm. Then, repeat the MaxEnt exercise now
 using SVMs, for several values of <span
 class="math inline">\(\lambda\)</span>:</p>
@@ -1294,7 +1285,7 @@ comparison among the different algorithms discussed in this chapter.</p>
 </tbody>
 </table>
 </div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.9</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 1.6</div>
 <ul>
 <li><p>Using the simple dataset run the different algorithms varying
 some characteristics of the data: like the number of points, variance
