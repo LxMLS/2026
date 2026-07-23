@@ -233,15 +233,15 @@ gradient flow.</p>
 <div class="algo-line" style="padding-left:3.0em"><span class="algo-num">5:</span> Apply linear transformation combining embedding and recurrent signals         \(z_{jm}^h = \sum_{d=1}^{E} W_{jd}^x z_{dm}^e + \sum_{j'=1}^{J} W_{jj'}^h h_{j'm-1}\)</div>
 <div class="algo-line" style="padding-left:3.0em"><span class="algo-num">6:</span> Apply non-linear transformation e.g. sigmoid (hereby denoted \(\sigma()\))         \(h_{jm} = \sigma(z_{jm}^h)  = \frac{1}{1+\exp(-z_{jm}^h)}\)</div>
 <div class="algo-line" style="padding-left:1.5em"><span class="algo-num">7:</span> Apply final linear transformation to each of the recurrent variables \(\mathbf{h}_1 \cdots \mathbf{h}_{M'}\)  \(z_{km}^y = \sum_{j=1}^{J} W_{kj}^y h_{jm}\)</div>
-<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">8:</span> Apply final non-linear transformation e.g. softmax     \(p(y_m=k|\mathbf{x}_{1:m+1}) = \tilde{z}_{km}^y  = \frac{\exp(z_{km}^y)}{\sum_{k'=1}^{K} \exp(z_{k'm}^y)}\)</div></div></figure>
+<div class="algo-line" style="padding-left:1.5em"><span class="algo-num">8:</span> Apply final non-linear transformation e.g. softmax     \(p(y_m=k|\mathbf{x}_{1:m+1}) = h_{km}^y  = \frac{\exp(z_{km}^y)}{\sum_{k'=1}^{K} \exp(z_{k'm}^y)}\)</div></div></figure>
 <figure class="guide-algorithm"><figcaption>Algorithm 3.2: Backpropagation for a Recurrent Neural Network (RNN) with embeddings</figcaption><div class="algo-body"><div class="algo-line" style="padding-left:1.5em"><span class="algo-num">1:</span> <b>input:</b>         Data \(\mathcal{D}=\{\mathcal{D}_1,\mathcal{D}_2,...,\mathcal{D}_B\}\) split into \(B\) sequences (batch size 1) of size \(M'\). RNN with parameters \(\Theta=\{\mathbf{W}^e \in \mathbb{R}^{E \times I}, \mathbf{W}^x \in \mathbb{R}^{J \times E}, \mathbf{W}^h \in \mathbb{R}^{J \times J}, \mathbf{W}^y \in \mathbb{R}^{K \times J} \}\) embedding, input, recurrent and output linear transformations respectively. Number of rounds \(T\), learning rate \(\eta\)</div>
 <div class="algo-line" style="padding-left:1.5em"><span class="algo-num">2:</span> initialize parameters \(\Theta\) randomly</div>
 <div class="algo-line" style="padding-left:1.5em"><span class="algo-num">3:</span> <b>for</b> \(t=1\) <b>to</b> \(T\) <b>do</b></div>
 <div class="algo-line" style="padding-left:3.0em"><span class="algo-num">4:</span> <b>for</b> \(b=1\) <b>to</b> \(B\)}  	\vspace{0.3cm <b>do</b></div>
 <div class="algo-line" style="padding-left:4.5em"><span class="algo-num">5:</span> <b>for</b> \(m=1\) <b>to</b> \(M'\) <b>do</b></div>
-<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">6:</span> Compute the {forward pass} for sentence \(b\) (\(M'\) time steps);         keep not only \(\tilde{z}_{km}^y\) but also, the RNN layer activations \(h_{jm}\) and the embedding layer activations \(z^e_{dm}\).</div>
+<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">6:</span> Compute the {forward pass} for sentence \(b\) (\(M'\) time steps);         keep not only \(h_{km}^y\) but also, the RNN layer activations \(h_{jm}\) and the embedding layer activations \(z^e_{dm}\).</div>
 <div class="algo-line" style="padding-left:4.5em"><span class="algo-num">7:</span> <b>for</b> \(m=1\) <b>to</b> \(M'\) <b>do</b></div>
-<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">8:</span> {Initialize the error at last layer for a CE cost and backpropagate it through the output linear layer:         \(\mathbf{e}^m_{y} = (\mathbf{W}^y)^T \Big(\mathrm{\mathbf{1}}_{k(m)} - \tilde{\mathbf{z}}_{m}^y \Big).\)}</div>
+<div class="algo-line" style="padding-left:6.0em"><span class="algo-num">8:</span> {Initialize the error at last layer for a CE cost and backpropagate it through the output linear layer:         \(\mathbf{e}^m_{y} = (\mathbf{W}^y)^T \Big(\mathrm{\mathbf{1}}_{k(m)} - \mathbf{h}_{m}^y \Big).\)}</div>
 <div class="algo-line" style="padding-left:4.5em"><span class="algo-num">9:</span> Initialize recurrent layer error \(\mathbf{e}_r\) to a vector of zeros of size \(J\)</div>
 <div class="algo-line" style="padding-left:4.5em"><span class="algo-num">10:</span> <b>for</b> \(m=M'\) <b>to</b> \(1\) <b>do</b></div>
 <div class="algo-line" style="padding-left:6.0em"><span class="algo-num">11:</span> Add the recurrent layer backpropagated error and backpropagate through the sigmoid non-linearity:         \(\mathbf{e}^m_{h} = \Big(\mathbf{e}_{r} + \mathbf{e}^m_y\Big) \odot \mathbf{h}_m \odot (\mathbf{\mathrm{1}}-\mathbf{h}_m)\)</div>
@@ -408,10 +408,6 @@ plt.show()</code></pre>
 you can run it on the POS task using the Pytorch code from the
 Exercise <a href="#exercise:rnnnumpy" data-reference-type="ref"
 data-reference="exercise:rnnnumpy">[exercise:rnnnumpy]</a>.</p>
-</div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.3</div>
-</div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 3.4</div>
 </div>
 <h1 class="unnumbered" id="bibliography">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent"

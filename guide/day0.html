@@ -1142,15 +1142,13 @@ class="math inline">\(\|\textbf{x}\|_{2} = 1\)</span>), It follows that
 <span
 class="math display">\[\textbf{U}^{T}\textbf{U}=\textbf{I}=\textbf{UU}^{T}.\]</span></p></li>
 </ul>
-<div class="guide-box guide-box"><div class="guide-box-title">Example 0.1</div>
-</div>
 <h2 id="probability-theory">Probability Theory</h2>
 <p>Probability is the most used mathematical language for quantifying
 uncertainty. The <span><strong>sample space</strong></span> <span
 class="math inline">\(\mathcal{X}\)</span> is the set of possible
 outcomes of an experiment. <span><strong>Events</strong></span> are
 subsets of <span class="math inline">\(\mathcal{X}\)</span>.</p>
-<div class="guide-box guide-box"><div class="guide-box-title">Example 0.2</div>
+<div class="guide-box guide-box"><div class="guide-box-title">Example 0.1</div>
 <p>[<span><em>discrete space</em></span>] Let H denote “heads” and T
 denote “tails.” If we toss a coin twice, then <span
 class="math inline">\(\mathcal{X}=\{ HH, HT, TH, TT\}\)</span>. The
@@ -1293,7 +1291,7 @@ about the random variable. The CDF is right-continuous, non-decreasing
 and is normalized (lim<span class="math inline">\(_{x\rightarrow
 -\infty} F(x) = 0\)</span> and lim<span
 class="math inline">\(_{x\rightarrow \infty} F(x)=1\)</span>).</p>
-<div class="guide-box guide-box"><div class="guide-box-title">Example 0.3</div>
+<div class="guide-box guide-box"><div class="guide-box-title">Example 0.2</div>
 <p>[<span><em>discrete CDF</em></span>] Flip a fair coin twice and let X
 be the random variable indicating the number of heads. Then <span
 class="math inline">\(P(X=0)=P(X=2)= 1/4\)</span> and <span
@@ -1392,13 +1390,6 @@ class="math display">\[f(x_1,...,x_n;p_1,...,p_n) =
 \frac{n!}{x_{1}!...x_{n}!} p_{1}^{x_{1}}...p_{n}^{x_{n}}.\]</span> Where
 parameters <span class="math inline">\(p_1,...,p_n\)</span> represent
 the occurrence probability of the respective outcome.</p>
-<div class="guide-box guide-theorem"><div class="guide-box-title">Theorem 0.2</div>
-<p><span><strong>(Multinomial theorem)</strong></span> Let <span
-class="math inline">\(m\)</span> and <span
-class="math inline">\(n\)</span> be positive integers. Let <span
-class="math inline">\(A\)</span> be the set of vectors <span
-class="math inline">\(x=(x_{1},\ldots,x_{n})\)</span></p>
-</div>
 <h3 id="gaussian-distribution"><span id="gaussian"
 label="gaussian"></span> Gaussian Distribution</h3>
 <p>A very important theorem in probability theory is the
@@ -1724,7 +1715,7 @@ class="math inline">\(u=g(x)\)</span>, then:</p>
 <p><span class="math display">\[\frac{\partial h}{\partial
 x}=\frac{\partial f}{\partial u}\cdot\frac{\partial g}{\partial
 x}\]</span></p>
-<div class="guide-box guide-box"><div class="guide-box-title">Example 0.4</div>
+<div class="guide-box guide-box"><div class="guide-box-title">Example 0.3</div>
 <p>Consider the function <span
 class="math inline">\(h(x)=\exp(x^{2})\)</span>, this can be decomposed
 as <span class="math inline">\(h(x)=f(g(x))=f(u)=\exp(u)\)</span>, where
@@ -1978,14 +1969,6 @@ very efficient implementations.</p>
 <h2 id="python-exercises">Python Exercises</h2>
 <h3 id="numpy-and-matplotlib">Numpy and Matplotlib</h3>
 <div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.13</div>
-</div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.14</div>
-</div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.15</div>
-</div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.16</div>
-</div>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.17</div>
 <p>Consider the linear regression problem (ordinary least squares) on
 the Galton dataset, with a single response variable</p>
 <p><span class="math display">\[y = x^T w + \varepsilon\]</span>.</p>
@@ -2027,7 +2010,7 @@ solution.</p></li>
 <p>Please refer to the notebook for solutions.</p>
 </div>
 <h3 id="debugging">Debugging</h3>
-<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.18</div>
+<div class="guide-box guide-exercise"><div class="guide-box-title">Exercise 0.14</div>
 <p>Use the debugger to debug the <code>buggy.py</code> script which
 attempts to repeatedly perform the following computation:</p>
 <ol>
